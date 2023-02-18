@@ -1,0 +1,45 @@
+version: "3"
+
+###########################################################################
+# Prerequisites
+
+#  SonarQube :-
+#    sysctl -w vm.max_map_count=524288
+#    sysctl -w fs.file-max=131072
+#    ulimit -n 131072
+#    ulimit -u 8192
+
+# Reference: https://hub.docker.com/_/SonarQube
+############################################################################
+
+services:
+  sonarqube:
+    image: sonarqube:lts-community
+    depends_on:
+      - postgresdb
+    environment:
+      SONAR_JDBC_URL: ${SONARQUBE_JDBC_URL:-jdbc:postgresql://postgresdb:5432/sonar}
+      SONAR_JDBC_USERNAME: ${SONARQUBE_USER:-sonar}
+      SONAR_JDBC_PASSWORD: ${SONARQUBE_PASSWORD:-sonar}
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    ports:
+      - "9000:9000"
+
+  postgresdb:
+    image: postgres:15.2-alpine3.17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-sonar}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sonar}
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  postgresql:
+  postgresql_data:
