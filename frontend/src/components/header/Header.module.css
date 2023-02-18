@@ -1,0 +1,51 @@
+.header-box {
+  border: 2px solid red;
+  padding-left: 0px;
+}
+
+.app-bar {
+  background-color: #2874F0;
+  height: 56px;
+
+}
+
+.icon-box {
+  margin-left: 197px;
+  line-height: 0;
+  align-self: flex-start;
+  margin-top: 0.62%;
+}
+
+.navbar-icon {
+  width: 75px;
+  height: 20px;
+  justify-self: flex-start;
+}
+
+.icon-sublink {
+  margin-top: -5%;
+}
+
+.icon-sublink:hover {
+  text-decoration: underline;
+}
+
+.icon-sublink a {
+  color: #EEE;
+  font-style: italic;
+  font-family: Roboto, 'Courier New', Courier, monospace;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 0.62rem;
+  line-height: 0px;
+}
+
+.icon-sublink span {
+  color: #eeee13;
+  font-weight: 600;
+}
+
+.icon-sublink span img {
+  height: 1em;
+  margin-left: -1%;
+}
