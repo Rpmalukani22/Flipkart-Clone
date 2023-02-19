@@ -1,25 +1,26 @@
 .header-box {
+  display: flex;
+  flex-grow: 1;
   padding-left: 0px;
-  flex-wrap: nowrap;
 }
 
 .appbar {
   background-color: #2874F0;
   height: 56px;
-
 }
 
 .toolbar {
+  display: flex;
   padding-left: 0px;
   min-height: 55px;
 }
 
-
-.icon-box {
+.logo-box {
+  display: flex;
+  flex-direction: column;
   margin-left: 197px;
   line-height: 0;
   align-self: center;
-  /* margin-top: 0.7%; */
 }
 
 .navbar-icon {
@@ -54,4 +55,18 @@
 .icon-sublink span img {
   height: 1em;
   margin-left: -1%;
+}
+.nav-links{
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.login-button{
+  margin-left: 6.5%;
+  padding: 0.7% 6%;
+  border-radius: 0;
+  background-color: white;
+  color: #2874F0;
+  font-weight: bold;
+  text-transform: none;
 }

@@ -5,10 +5,14 @@ import Search from "./Search/Search";
 
 export default function Header() {
   return (
-    <Box sx={{ flexGrow: 1 }} className={styles["header-box"]}>
-      <AppBar position="static" className={styles["appbar"]}>
+    <Box
+      position="sticky"
+      className={styles["header-box"]}
+    >
+      <AppBar className={styles["appbar"]}>
         <Toolbar className={styles["toolbar"]}>
-          <Box sx={{ flexDirection: "column" }} className={styles["icon-box"]}>
+          {/*----------------------------------- Flipkart Navbar Logo ---------------------------------------------------- */}
+          <Box className={styles["logo-box"]}>
             <img
               src="./flipkart-text-logo.png"
               className={styles["navbar-icon"]}
@@ -27,13 +31,16 @@ export default function Header() {
               </a>
             </Typography>
           </Box>
+
+          {/*---------------------------------------------Navbar Searchbar---------------------------------------------*/}
+
           <Search />
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1 }}
-          ></Typography>
-          <Button color="inherit">Login</Button>
+
+          {/*---------------------------------------------Navbar Links---------------------------------------------*/}
+
+          <Box className={styles["nav-links"]}>
+            <Button className={styles["login-button"]}>Login</Button>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

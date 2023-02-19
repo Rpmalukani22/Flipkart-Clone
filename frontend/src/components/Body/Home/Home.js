@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Home() {
   return (
-    <div style={{height:"90vh"}}>Home</div>
+    <div style={{height:"150vh",paddingTop:"56px"}}>Home</div>
   )
 }
