@@ -46,7 +46,7 @@ export default function Login() {
               >
                 <b>New Customer?</b>{" "}
                 <Link
-                  to="https://www.google.com"
+                  to="/signup"
                   style={{ textDecoration: "none" }}
                 >
                   <b>SignUp</b>
