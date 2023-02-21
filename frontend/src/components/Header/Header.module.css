@@ -1,6 +1,8 @@
 .appbar {
   background-color: #2874F0;
   height: 56px;
+  padding-left: 13%;
+  padding-right: 5%;
 }
 
 .toolbar {
@@ -14,7 +16,7 @@
 .logo-box {
   display: flex;
   flex-direction: column;
-  margin-left: 13%;
+  /* margin-left: 13%; */
   line-height: 0;
   align-self: center;
 }
@@ -55,7 +57,34 @@
 
 .nav-links {
   display: flex;
+  flex-wrap: nowrap;
   flex-grow: 1;
   flex-basis: 0;
 }
 
+.nav-link {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: none;
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  font-family: Roboto, Arial, sans-serif;
+  padding: 0;
+  /* margin: auto; */
+  /* margin-left: 40px; */
+  letter-spacing: 0.5px;
+  text-shadow: -1px -1px 0 #0000ff42, 1px -1px 0 #0000ff42, -1px 1px 0 #0000ff42, 1px 1px 0 #0000ff42;
+  box-shadow: none;
+}
+
+.nav-link:hover {
+  color: white;
+  text-decoration: none;
+  background-color: transparent;
+  box-shadow: none;
+}

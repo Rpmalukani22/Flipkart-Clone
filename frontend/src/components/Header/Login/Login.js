@@ -1,14 +1,10 @@
 import React from "react";
 import styles from "./Login.module.css";
-import InboxIcon from "@mui/icons-material/Inbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import ListItemIcon from "@mui/icons-material/List";
+import {Link} from "react-router-dom";
 import PopOverLink from "../../UtilityComponents/PopOverLink/PopOverLink";
 import {
   Box,
   Divider,
-  Icon,
-  Link,
   List,
   ListItem,
   ListItemButton,
@@ -40,7 +36,7 @@ export default function Login() {
       <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         <List>
           <ListItem disablePadding>
-            <Box sx={{ p: 3, width: "100%" }}>
+            <Box sx={{ p: 2, width: "100%" }}>
               <Typography
                 sx={{
                   display: "flex",
@@ -50,27 +46,26 @@ export default function Login() {
               >
                 <b>New Customer?</b>{" "}
                 <Link
-                  href="https://www.google.com"
+                  to="https://www.google.com"
                   style={{ textDecoration: "none" }}
                 >
                   <b>SignUp</b>
                 </Link>
               </Typography>
-
             </Box>
           </ListItem>
           <Divider />
           {loginListItems.map((item, index) => {
             return (
-              <>
-                <ListItem disablePadding key={item.text}>
+              <div key={item.text}>
+                <ListItem disablePadding>
                   <ListItemButton disableRipple>
                     <img src={item.iconPath} />
                     <ListItemText primary={item.text} sx={{ ml: "5%" }} />
                   </ListItemButton>
                 </ListItem>
-                {index !== loginListItems.length-1 ? <Divider /> : ""}
-              </>
+                {index !== loginListItems.length - 1 ? <Divider /> : ""}
+              </div>
             );
           })}
         </List>

@@ -1,8 +1,11 @@
 import React from "react";
-import styles from "./Header.module.css";
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import More from "./More/More";
 import Search from "./Search/Search";
 import Login from "./Login/Login";
+import styles from "./Header.module.css";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Link } from "react-router-dom";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 
 export default function Header() {
   return (
@@ -20,12 +23,12 @@ export default function Header() {
             variant="caption"
             component="div"
           >
-            <a href="http://www.google.com">
+            <Link to="/flipkart-plus">
               Explore{" "}
               <span>
                 Plus <img src="./flipkart-plus-logo.png"></img>
               </span>
-            </a>
+            </Link>
           </Typography>
         </Box>
 
@@ -33,10 +36,29 @@ export default function Header() {
 
         <Search />
 
-        {/*---------------------------------------------Navbar Links---------------------------------------------*/}
-
-        <Box className={styles["nav-links"]}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            gap: 0,
+          }}
+          className={styles["nav-links"]}
+        >
+          {/*---------------------------------------------Navbar Login---------------------------------------------*/}
           <Login />
+          {/*---------------------------------------------Become a Seller---------------------------------------------*/}
+          <Link to="/become-a-seller" className={styles["nav-link"]}>
+            Become a Seller
+          </Link>
+          {/*---------------------------------------------More---------------------------------------------*/}
+          <More className={styles["nav-link"]} />
+          {/*---------------------------------------------Cart---------------------------------------------*/}
+
+          <Link to="/cart" className={styles["nav-link"]} style={{gap:5}}>
+            <ShoppingCartIcon  sx={{fontSize:"1.5rem",marginTop:"5%"}}/>
+            Cart
+          </Link>
         </Box>
       </Toolbar>
     </AppBar>
