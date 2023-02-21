@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Header.module.css";
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import Search from "./Search/Search";
+import Login from "./Login/Login";
 
 export default function Header() {
   return (
@@ -36,7 +36,7 @@ export default function Header() {
         {/*---------------------------------------------Navbar Links---------------------------------------------*/}
 
         <Box className={styles["nav-links"]}>
-          <Button className={styles["login-button"]}>Login</Button>
+          <Login />
         </Box>
       </Toolbar>
     </AppBar>

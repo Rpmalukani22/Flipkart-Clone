@@ -59,12 +59,3 @@
   flex-basis: 0;
 }
 
-.login-button {
-  margin-left: 6.5%;
-  padding: 0.7% 6%;
-  border-radius: 0;
-  background-color: white;
-  color: #2874F0;
-  font-weight: bold;
-  text-transform: none;
-}
