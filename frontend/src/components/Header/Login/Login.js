@@ -7,6 +7,7 @@ import PopOverLink from "../../UtilityComponents/PopOverLink/PopOverLink";
 import {
   Box,
   Divider,
+  Icon,
   Link,
   List,
   ListItem,
@@ -15,6 +16,17 @@ import {
   Typography,
 } from "@mui/material";
 export default function Login() {
+  const loginListItems = [
+    { iconPath: "./login-popover-icons/my-profile.svg", text: "My Profile" },
+    {
+      iconPath: "./login-popover-icons/flipkart-plus.svg",
+      text: "Flipkart Plus Zone",
+    },
+    { iconPath: "./login-popover-icons/orders.svg", text: "Orders" },
+    { iconPath: "./login-popover-icons/wishlist.svg", text: "Wishlist" },
+    { iconPath: "./login-popover-icons/giftcard.svg", text: "Gift Cards" },
+    { iconPath: "./login-popover-icons/rewards.svg", text: "Rewards" },
+  ];
   return (
     <PopOverLink
       id="loginPopOver"
@@ -37,20 +49,30 @@ export default function Login() {
                 }}
               >
                 <b>New Customer?</b>{" "}
-                <Link href="https://www.google.com" style={{textDecoration:'none'}}><b>SignUp</b></Link>
+                <Link
+                  href="https://www.google.com"
+                  style={{ textDecoration: "none" }}
+                >
+                  <b>SignUp</b>
+                </Link>
               </Typography>
 
-              <Divider sx={{ marginTop: "20px" }} />
             </Box>
           </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" sx={{ ml: "2%" }} />
-            </ListItemButton>
-          </ListItem>
+          <Divider />
+          {loginListItems.map((item, index) => {
+            return (
+              <>
+                <ListItem disablePadding key={item.text}>
+                  <ListItemButton disableRipple>
+                    <img src={item.iconPath} />
+                    <ListItemText primary={item.text} sx={{ ml: "5%" }} />
+                  </ListItemButton>
+                </ListItem>
+                {index !== loginListItems.length-1 ? <Divider /> : ""}
+              </>
+            );
+          })}
         </List>
       </Box>
     </PopOverLink>
