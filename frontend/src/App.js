@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { StyledEngineProvider } from "@mui/material/styles";
 import Home from "./components/Body/Home/Home";
 import Header from "./components/Header/Header";

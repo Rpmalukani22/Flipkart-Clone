@@ -3,6 +3,7 @@
   height: 56px;
   padding-left: 13%;
   padding-right: 5%;
+  box-shadow: none;
 }
 
 .toolbar {
@@ -38,7 +39,7 @@
 .icon-sublink a {
   color: #EEE;
   font-style: italic;
-  font-family: Roboto, 'Courier New', Courier, monospace;
+  font-family: Roboto, Arial, sans-serif;;
   text-decoration: none;
   font-weight: 400;
   font-size: 0.62rem;
