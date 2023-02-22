@@ -13,11 +13,13 @@ export default function Header() {
       <Toolbar className={styles["toolbar"]}>
         {/*----------------------------------- Flipkart Navbar Logo ---------------------------------------------------- */}
         <Box className={styles["logo-box"]}>
-          <img
-            src="./flipkart-text-logo.png"
-            className={styles["navbar-icon"]}
-            alt="Flipkart Logo"
-          />
+          <Link to="/">
+            <img
+              src="./flipkart-text-logo.png"
+              className={styles["navbar-icon"]}
+              alt="Flipkart Logo"
+            />
+          </Link>
           <Typography
             className={styles["icon-sublink"]}
             variant="caption"
@@ -55,8 +57,8 @@ export default function Header() {
           <More className={styles["nav-link"]} />
           {/*---------------------------------------------Cart---------------------------------------------*/}
 
-          <Link to="/cart" className={styles["nav-link"]} style={{gap:5}}>
-            <ShoppingCartIcon  sx={{fontSize:"1.5rem",marginTop:"5%"}}/>
+          <Link to="/cart" className={styles["nav-link"]} style={{ gap: 5 }}>
+            <ShoppingCartIcon sx={{ fontSize: "1.5rem", marginTop: "5%" }} />
             Cart
           </Link>
         </Box>
