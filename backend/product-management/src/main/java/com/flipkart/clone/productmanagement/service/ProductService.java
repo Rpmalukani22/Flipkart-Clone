@@ -1,33 +1,19 @@
 package com.flipkart.clone.productmanagement.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
+
+import org.springframework.data.domain.Sort.Direction;
 
 import com.flipkart.clone.productmanagement.dto.ProductRequest;
-import com.flipkart.clone.productmanagement.entity.Product;
-import com.flipkart.clone.productmanagement.repository.ProductRepository;
+import com.flipkart.clone.productmanagement.dto.ProductResponse;
 
-import lombok.extern.slf4j.Slf4j;
+public interface ProductService {
+    public List<ProductResponse> getAllProducts(int pageSize,int pageNumber, String sortBy, Direction order);
 
-@Service
-@Slf4j
-public class ProductService {
-    @Autowired
-    ProductRepository productRepository;
+    public ProductResponse getProductById(String productId);
 
-    public void createProduct(ProductRequest productRequest) {
-        Product product = Product.builder()
-                                 .productUrl(productRequest.getProductUrl())
-                                 .category(productRequest.getCategory())
-                                 .retailPrice(productRequest.getRetailPrice())
-                                 .discountedPrice(productRequest.getDiscountedPrice())
-                                 .imageUrls(productRequest.getImageUrls())
-                                 .description(productRequest.getDescription())
-                                 .brand(productRequest.getBrand())
-                                 .productSpecifications(productRequest.getProductSpecifications())
-                                 .build();
+    public void createProduct(ProductRequest productRequest);
 
-        productRepository.save(product);
-        log.info("ProductService: product has been saved successfully!");
-    }
+    public void bulkCreateProducts(List<ProductRequest> productRequestList);
+
 }
