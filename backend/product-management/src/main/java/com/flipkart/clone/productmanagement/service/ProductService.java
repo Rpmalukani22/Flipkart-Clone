@@ -8,12 +8,16 @@ import com.flipkart.clone.productmanagement.dto.ProductRequest;
 import com.flipkart.clone.productmanagement.dto.ProductResponse;
 
 public interface ProductService {
-    public List<ProductResponse> getAllProducts(int pageSize,int pageNumber, String sortBy, Direction order);
+    public List<ProductResponse> getAllProducts(int pageSize, int pageNumber, String sortBy, Direction order);
 
     public ProductResponse getProductById(String productId);
 
     public void createProduct(ProductRequest productRequest);
 
     public void bulkCreateProducts(List<ProductRequest> productRequestList);
+
+    public void removeProductById(String productId);
+
+    public void bulkRemoveProducts(List<String> productIdList);
 
 }

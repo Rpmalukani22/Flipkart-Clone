@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductRequest {
+    private String name;
     private String productUrl;
     private String category;
     private double retailPrice;

@@ -3,6 +3,7 @@ package com.flipkart.clone.productmanagement.entity;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +19,9 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     private String id;
+    private String name;
+    @Indexed(unique = true)
+    private String slug;
     private String productUrl;
     private String category;
     private double retailPrice;
@@ -26,5 +30,4 @@ public class Product {
     private String description;
     private String brand;
     private Object productSpecifications;
-
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,11 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
+    @DeleteMapping("/{id}")
+    public void removeProducts(@PathVariable String id) {
+        productService.removeProductById(id);
+    }
+
     @GetMapping
     public List<ProductResponse> getProducts(
             @Min(1) @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
@@ -49,4 +55,11 @@ public class ProductController {
     public void addProducts(@RequestBody List<ProductRequest> productRequestList) {
         productService.bulkCreateProducts(productRequestList);
     }
+
+    @DeleteMapping("/bulk")
+    public void removeProducts(@RequestParam List<String> productIdList) {
+        productService.bulkRemoveProducts(productIdList);
+    }
 }
+
+// TODO: Exception Handling with Status Codes

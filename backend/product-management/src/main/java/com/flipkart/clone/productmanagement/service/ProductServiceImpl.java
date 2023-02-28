@@ -14,6 +14,7 @@ import com.flipkart.clone.productmanagement.dto.ProductRequest;
 import com.flipkart.clone.productmanagement.dto.ProductResponse;
 import com.flipkart.clone.productmanagement.entity.Product;
 import com.flipkart.clone.productmanagement.repository.ProductRepository;
+import com.github.slugify.Slugify;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createProduct(ProductRequest productRequest) {
         Product product = Product.builder()
+                .name(productRequest.getName())
                 .productUrl(productRequest.getProductUrl())
                 .category(productRequest.getCategory())
                 .retailPrice(productRequest.getRetailPrice())
@@ -47,6 +49,8 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productsPage.getContent();
         return products.stream().map(product -> ProductResponse.builder()
                 .id(product.getId())
+                .name(product.getName())
+                .slug(product.getSlug())
                 .productUrl(product.getProductUrl())
                 .category(product.getCategory())
                 .retailPrice(product.getRetailPrice())
@@ -66,6 +70,8 @@ public class ProductServiceImpl implements ProductService {
             Product product = productCheck.get();
             productResponse = ProductResponse.builder()
                     .id(product.getId())
+                    .name(product.getName())
+                    .slug(product.getSlug())
                     .productUrl(product.getProductUrl())
                     .category(product.getCategory())
                     .retailPrice(product.getRetailPrice())
@@ -86,7 +92,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void bulkCreateProducts(List<ProductRequest> productRequestList) {
         List<Product> products = productRequestList.stream()
-                .map(productRequest -> Product.builder().productUrl(productRequest.getProductUrl())
+                .map(productRequest -> Product.builder()
+                        .name(productRequest.getName())
+                        .slug(Slugify.builder().build().slugify(productRequest.getName()))
+                        .productUrl(productRequest.getProductUrl())
                         .category(productRequest.getCategory())
                         .retailPrice(productRequest.getRetailPrice())
                         .discountedPrice(productRequest.getDiscountedPrice())
@@ -98,5 +107,17 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.insert(products);
         log.info("All Products were added successfully!");
+    }
+
+    @Override
+    public void removeProductById(String productId) {
+        productRepository.deleteById(productId);
+        log.info("Product Deleted Successfully!");
+    }
+
+    @Override
+    public void bulkRemoveProducts(List<String> productIdList) {
+        productRepository.deleteAllById(productIdList);
+        log.info("Products Deleted Successfully!");
     }
 }

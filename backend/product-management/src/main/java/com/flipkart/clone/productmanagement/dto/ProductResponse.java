@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductResponse {
     private String id;
+    private String name;
+    private String slug;
     private String productUrl;
     private String category;
     private double retailPrice;
