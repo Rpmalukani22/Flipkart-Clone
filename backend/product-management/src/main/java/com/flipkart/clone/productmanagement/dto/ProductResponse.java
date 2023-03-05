@@ -2,6 +2,8 @@ package com.flipkart.clone.productmanagement.dto;
 
 import java.util.List;
 
+import com.flipkart.clone.productmanagement.entity.Category;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +18,10 @@ public class ProductResponse {
     private String name;
     private String slug;
     private String productUrl;
-    private String category;
+    private List<Category> categoryList;
     private double retailPrice;
     private double discountedPrice;
-    private List<String> imageUrls;
+    private List<String> imageUrlList;
     private String description;
     private String brand;
     private Object productSpecifications;

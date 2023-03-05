@@ -13,11 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductRequest {
     private String name;
-    private String productUrl;
-    private String category;
+    private List<CategoryRequest> categoryPaths;
     private double retailPrice;
     private double discountedPrice;
-    private List<String> imageUrls;
+    private List<String> imageUrlList;
     private String description;
     private String brand;
     private Object productSpecifications;

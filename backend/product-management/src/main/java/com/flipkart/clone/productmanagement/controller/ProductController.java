@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flipkart.clone.commons.PageResponse;
 import com.flipkart.clone.productmanagement.dto.ProductRequest;
 import com.flipkart.clone.productmanagement.dto.ProductResponse;
 import com.flipkart.clone.productmanagement.service.ProductService;
@@ -38,7 +39,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponse> getProducts(
+    public PageResponse<ProductResponse> getProducts(
             @Min(1) @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
             @Min(0) @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
             @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
@@ -51,12 +52,12 @@ public class ProductController {
         productService.createProduct(productRequest);
     }
 
-    @PostMapping("/bulk")
+    @PostMapping("/_bulk")
     public void addProducts(@RequestBody List<ProductRequest> productRequestList) {
         productService.bulkCreateProducts(productRequestList);
     }
 
-    @DeleteMapping("/bulk")
+    @DeleteMapping("/_bulk")
     public void removeProducts(@RequestParam List<String> productIdList) {
         productService.bulkRemoveProducts(productIdList);
     }
