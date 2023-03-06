@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
+import com.flipkart.clone.productmanagement.commons.exception.ProductNotFoundException;
 import com.flipkart.clone.productmanagement.controller.ProductController;
 import com.flipkart.clone.productmanagement.dto.CategoryRequest;
 import com.flipkart.clone.productmanagement.dto.ProductRequest;
@@ -89,22 +90,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductResponse> getAllProducts(int pageSize, int pageNumber, String sortBy, Direction order) {
+    public Page<ProductResponse> getAllProducts(int pageSize, int pageNumber, String sortBy, Direction order) throws ProductNotFoundException {
+        try{
         Pageable pagable = PageRequest.of(pageNumber, pageSize, order, sortBy);
         Page<Product> productsPage = productRepository.findAll(pagable);
         return productsPage.map(this::productToProductResponseMapper);
+        }catch(Exception e){
+            throw new ProductNotFoundException(e.getMessage());
+        }
     }
 
     @Override
-    public ProductResponse getProductById(String productId) {
+    public ProductResponse getProductById(String productId) throws ProductNotFoundException {
         Optional<Product> productCheck = productRepository.findById(productId);
         ProductResponse productResponse;
         if (productCheck.isPresent()) {
             Product product = productCheck.get();
             productResponse = productToProductResponseMapper(product);
         } else {
-            // TODO: raise 404
-            return null;
+            throw new ProductNotFoundException("Requested Product with Product Id "+productId+" Not Found");
         }
         log.info("ProductService: Returned Product successfully!");
         return productResponse;

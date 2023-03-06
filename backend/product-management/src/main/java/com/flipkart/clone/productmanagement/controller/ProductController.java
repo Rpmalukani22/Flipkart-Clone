@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flipkart.clone.productmanagement.commons.exception.ProductNotFoundException;
 import com.flipkart.clone.productmanagement.dto.ProductRequest;
 import com.flipkart.clone.productmanagement.dto.ProductResponse;
 import com.flipkart.clone.productmanagement.service.ProductService;
@@ -33,7 +34,7 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/{id}")
-    public ProductResponse getProductById(@PathVariable String id) {
+    public ProductResponse getProductById(@PathVariable String id) throws ProductNotFoundException {
         return productService.getProductById(id);
     }
 
@@ -48,7 +49,7 @@ public class ProductController {
             @Min(0) @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
             @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
             @RequestParam(value = "order", defaultValue = "ASC", required = false) Direction order,
-            @Parameter(hidden = true) PagedResourcesAssembler<ProductResponse> pagedResourcesAssembler) {
+            @Parameter(hidden = true) PagedResourcesAssembler<ProductResponse> pagedResourcesAssembler) throws ProductNotFoundException {
         return pagedResourcesAssembler.toModel(productService.getAllProducts(pageSize, pageNumber, sortBy, order));
     }
 
