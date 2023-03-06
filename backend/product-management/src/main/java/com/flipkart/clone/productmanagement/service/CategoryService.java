@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort.Direction;
 
 import com.flipkart.clone.productmanagement.dto.CategoryRequest;
 import com.flipkart.clone.productmanagement.dto.CategoryResponse;
-import com.flipkart.clone.productmanagement.entity.Category;
+import com.flipkart.clone.productmanagement.model.Category;
 
 public interface CategoryService {
     public Page<CategoryResponse> getAllCategories(int pageSize, int pageNumber, String sortBy,

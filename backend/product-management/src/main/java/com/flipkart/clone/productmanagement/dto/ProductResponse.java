@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.flipkart.clone.productmanagement.entity.Category;
+import com.flipkart.clone.productmanagement.model.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

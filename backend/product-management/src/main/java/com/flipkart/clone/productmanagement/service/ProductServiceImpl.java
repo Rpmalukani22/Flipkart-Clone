@@ -16,8 +16,8 @@ import com.flipkart.clone.productmanagement.controller.ProductController;
 import com.flipkart.clone.productmanagement.dto.CategoryRequest;
 import com.flipkart.clone.productmanagement.dto.ProductRequest;
 import com.flipkart.clone.productmanagement.dto.ProductResponse;
-import com.flipkart.clone.productmanagement.entity.Category;
-import com.flipkart.clone.productmanagement.entity.Product;
+import com.flipkart.clone.productmanagement.model.Category;
+import com.flipkart.clone.productmanagement.model.Product;
 import com.flipkart.clone.productmanagement.repository.ProductRepository;
 import com.github.slugify.Slugify;
 

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.flipkart.clone.productmanagement.controller.CategoryController;
 import com.flipkart.clone.productmanagement.dto.CategoryRequest;
 import com.flipkart.clone.productmanagement.dto.CategoryResponse;
-import com.flipkart.clone.productmanagement.entity.Category;
+import com.flipkart.clone.productmanagement.model.Category;
 import com.flipkart.clone.productmanagement.repository.CategoryRepository;
 import com.github.slugify.Slugify;
 
