@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flipkart.clone.commons.PageResponse;
 import com.flipkart.clone.productmanagement.dto.ProductRequest;
 import com.flipkart.clone.productmanagement.dto.ProductResponse;
 import com.flipkart.clone.productmanagement.service.ProductService;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.Min;
 
 @RestController
@@ -38,13 +42,14 @@ public class ProductController {
         productService.removeProductById(id);
     }
 
-    @GetMapping
-    public PageResponse<ProductResponse> getProducts(
+    @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    public PagedModel<EntityModel<ProductResponse>> getProducts(
             @Min(1) @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
             @Min(0) @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
             @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
-            @RequestParam(value = "order", defaultValue = "ASC", required = false) Direction order) {
-        return productService.getAllProducts(pageSize, pageNumber, sortBy, order);
+            @RequestParam(value = "order", defaultValue = "ASC", required = false) Direction order,
+            @Parameter(hidden = true) PagedResourcesAssembler<ProductResponse> pagedResourcesAssembler) {
+        return pagedResourcesAssembler.toModel(productService.getAllProducts(pageSize, pageNumber, sortBy, order));
     }
 
     @PostMapping

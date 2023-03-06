@@ -2,14 +2,14 @@ package com.flipkart.clone.productmanagement.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort.Direction;
 
-import com.flipkart.clone.commons.PageResponse;
 import com.flipkart.clone.productmanagement.dto.ProductRequest;
 import com.flipkart.clone.productmanagement.dto.ProductResponse;
 
 public interface ProductService {
-    public PageResponse<ProductResponse> getAllProducts(int pageSize, int pageNumber, String sortBy, Direction order);
+    public Page<ProductResponse> getAllProducts(int pageSize, int pageNumber, String sortBy, Direction order);
 
     public ProductResponse getProductById(String productId);
 

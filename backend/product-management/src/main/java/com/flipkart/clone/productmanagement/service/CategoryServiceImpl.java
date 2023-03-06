@@ -3,15 +3,15 @@ package com.flipkart.clone.productmanagement.service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
-import com.flipkart.clone.commons.PageResponse;
+import com.flipkart.clone.productmanagement.controller.CategoryController;
 import com.flipkart.clone.productmanagement.dto.CategoryRequest;
 import com.flipkart.clone.productmanagement.dto.CategoryResponse;
 import com.flipkart.clone.productmanagement.entity.Category;
@@ -27,19 +27,39 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @Override
-    public PageResponse<CategoryResponse> getAllCategories(int pageSize, int pageNumber, String sortBy,
-            Direction order) {
-        Pageable pagable = PageRequest.of(pageNumber, pageSize, order, sortBy);
-        Page<Category> categoryPage = categoryRepository.findAll(pagable);
-        List<Category> categories = categoryPage.getContent();
-        List<CategoryResponse> responseContent = categories.stream().map(category -> CategoryResponse.builder()
+    // Mappers
+
+    private Category categoryRequestToCategoryMapper(CategoryRequest categoryRequest) {
+        Slugify slugify = Slugify.builder().build();
+        List<String> categories = Arrays.asList(categoryRequest.getCategoryPath().split(">>")).stream()
+                .map(String::trim).toList();
+        String categoryPath = String.join(">>", categories);
+        return Category.builder()
+                .slug(slugify.slugify(categoryPath))
+                .categoryPath(categoryPath)
+                .build();
+    }
+
+    private CategoryResponse categoryToCategoryResponseMapper(Category category) {
+        CategoryResponse categoryResponse = CategoryResponse.builder()
                 .id(category.getId())
                 .slug(category.getSlug())
                 .categoryPath(category.getCategoryPath())
-                .build()).toList();
-        return new PageResponse<>(categoryPage.getTotalElements(), categoryPage.getTotalPages(),
-                pageNumber, pageSize, responseContent);
+                .build();
+        categoryResponse.add(WebMvcLinkBuilder.linkTo(CategoryController.class)
+                .slash(categoryResponse.getId())
+                .withSelfRel());
+        return categoryResponse;
+
+    }
+
+    @Override
+    public Page<CategoryResponse> getAllCategories(int pageSize, int pageNumber, String sortBy,
+            Direction order) {
+        Pageable pagable = PageRequest.of(pageNumber, pageSize, order, sortBy);
+        Page<Category> categoryPage = categoryRepository.findAll(pagable);
+        return categoryPage.map(this::categoryToCategoryResponseMapper);
+
     }
 
     @Override
@@ -48,11 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryResponse categoryResponse;
         if (categoryCheck.isPresent()) {
             Category category = categoryCheck.get();
-            categoryResponse = CategoryResponse.builder()
-                    .id(category.getId())
-                    .slug(category.getSlug())
-                    .categoryPath(category.getCategoryPath())
-                    .build();
+            categoryResponse = categoryToCategoryResponseMapper(category);
         } else {
             // TODO: raise 404
             return null;
@@ -63,8 +79,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void createCategory(CategoryRequest categoryRequest) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createCategory'");
+        Category category = categoryRequestToCategoryMapper(categoryRequest);
+        categoryRepository.save(category);
+        log.info("Category is saved successfully!");
+
     }
 
     @Override
@@ -75,16 +93,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private List<Category> mapToCategoryList(List<CategoryRequest> categoryRequestList) {
-        Slugify slugify = Slugify.builder().build();
-        return categoryRequestList.stream().map(categoryRequest -> {
-            List<String> categories = Arrays.asList(categoryRequest.getCategoryPath().split(">>")).stream()
-                    .map(String::trim).toList();
-            List<String> categorySlugs = categories.stream().map(slugify::slugify).toList();
-            return Category.builder()
-                    .slug(String.join(">>", categorySlugs))
-                    .categoryPath(String.join(">>", categories))
-                    .build();
-        }).toList();
+        return categoryRequestList.stream().map(this::categoryRequestToCategoryMapper).toList();
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.flipkart.clone.productmanagement.dto;
 
 import java.util.List;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.flipkart.clone.productmanagement.entity.Category;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductResponse {
+public class ProductResponse extends RepresentationModel<ProductResponse> {
     private String id;
     private String name;
     private String slug;
