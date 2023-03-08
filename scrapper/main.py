@@ -7,8 +7,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-from modules.best_of_deals_items import get_best_of_deals_items
 from modules.category_tree import get_category_tree
+from modules.best_of_deals_items import get_best_of_deals_items
 
 # Browser Settings
 chrome_options = Options()
