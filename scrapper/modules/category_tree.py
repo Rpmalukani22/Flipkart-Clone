@@ -1,9 +1,7 @@
-import json
-import pandas as pd
 import os
+import json
 import pathlib
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 
 
 def get_category_tree(browser, scroll):
