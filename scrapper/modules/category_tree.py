@@ -1,5 +1,7 @@
 import json
 import pandas as pd
+import os
+import pathlib
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
@@ -40,7 +42,9 @@ def get_category_tree(browser, scroll):
             browser.switch_to.window(browser.window_handles[0])
         except Exception as e:
             pass
-    with open("categories.json", "w") as f:
+    with open(
+        os.path.join(pathlib.Path(__file__).parent.parent, "categories.json"), "w"
+    ) as f:
         json.dump(categories, f)
 
 

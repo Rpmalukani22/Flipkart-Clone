@@ -1,3 +1,5 @@
+import os
+import pathlib
 import pandas as pd
 from selenium.webdriver.common.by import By
 
@@ -7,7 +9,7 @@ def get_best_of_deals_items(browser, scroll):
     Return type: void
 
     Creates csv of best of deals items from the front page.
-    
+
     Args:
         browser (WebDriver): Selenium WebDriver
         scroll (function): Function to scroll down
@@ -44,4 +46,7 @@ def get_best_of_deals_items(browser, scroll):
         except Exception as e:
             print(e)
 
-    pd.DataFrame(data).to_csv("best_of_deals_items.csv", index=False)
+    pd.DataFrame(data).to_csv(
+        os.path.join(pathlib.Path(__file__).parent.parent, "best_of_deals_items.csv"),
+        index=False,
+    )
