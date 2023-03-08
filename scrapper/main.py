@@ -7,8 +7,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-from best_of_deals_items import get_best_of_deals_items
-from category_tree import get_category_tree
+from modules.best_of_deals_items import get_best_of_deals_items
+from modules.category_tree import get_category_tree
 
 # Browser Settings
 chrome_options = Options()
@@ -45,5 +45,5 @@ def scroll(speed=2):
 
 
 if __name__ == "__main__":
-    # get_best_of_deals_items(browser, scroll)
-    get_category_tree(browser,scroll)
+    get_best_of_deals_items(browser, scroll)
+    get_category_tree(browser, scroll)
