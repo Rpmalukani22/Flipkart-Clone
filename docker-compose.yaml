@@ -51,7 +51,33 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_USER:-root}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD:-example}
       ME_CONFIG_MONGODB_URL: ${MONGODB_CONNECTION_URL:-mongodb://root:example@mongodb:27017/}
-
+  s3server:
+    build: ./docker-services/cloudserver
+    volumes:
+      - ./docker-services/cloudserver/data:/usr/src/app/localData
+      - ./docker-services/cloudserver/metadata:/usr/src/app/localMetadata
+    environment:
+      S3BACKEND: file
+      ENDPOINT: http://localhost
+      REMOTE_MANAGEMENT_DISABLE: 1 
+      SCALITY_ACCESS_KEY_ID: ${S3_SERVER_ACCESS_KEY_ID:-accessKey1}
+      SCALITY_SECRET_ACCESS_KEY: ${S3_SERVER_SECRET_ACCESS_KEY:-verySecretKey1}
+    ports:
+      - "8000:8000"
+  s3manager:
+    container_name: s3manger
+    hostname: s3manager
+    image: mastertinner/s3manager
+    ports:
+      - 8001:8081
+    environment:
+      PORT: 8081
+      ENDPOINT: ${S3_SERVER_ENDPOINT:-s3server:8000}
+      ACCESS_KEY_ID: ${S3_SERVER_ACCESS_KEY_ID:-accessKey1}
+      SECRET_ACCESS_KEY: ${S3_SERVER_SECRET_ACCESS_KEY:-verySecretKey1}
+      USE_SSL: false
+    depends_on:
+      - s3server
 volumes:
   sonarqube_data:
   sonarqube_extensions:
