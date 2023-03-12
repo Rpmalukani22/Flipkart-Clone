@@ -1,13 +1,13 @@
-package com.flipkart.clone.productmanagement.service;
+package com.flipkart.clone.productmanagement.service.catalog;
 
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort.Direction;
 
-import com.flipkart.clone.productmanagement.dto.CategoryRequest;
-import com.flipkart.clone.productmanagement.dto.CategoryResponse;
-import com.flipkart.clone.productmanagement.model.Category;
+import com.flipkart.clone.productmanagement.dto.catalog.CategoryRequest;
+import com.flipkart.clone.productmanagement.dto.catalog.CategoryResponse;
+import com.flipkart.clone.productmanagement.model.catalog.Category;
 
 public interface CategoryService {
     public Page<CategoryResponse> getAllCategories(int pageSize, int pageNumber, String sortBy,

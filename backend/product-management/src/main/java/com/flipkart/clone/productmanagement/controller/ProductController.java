@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flipkart.clone.productmanagement.commons.exception.ProductNotFoundException;
-import com.flipkart.clone.productmanagement.dto.ProductRequest;
-import com.flipkart.clone.productmanagement.dto.ProductResponse;
-import com.flipkart.clone.productmanagement.service.ProductService;
+import com.flipkart.clone.productmanagement.dto.catalog.ProductRequest;
+import com.flipkart.clone.productmanagement.dto.catalog.ProductResponse;
+import com.flipkart.clone.productmanagement.service.catalog.ProductService;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.Min;
@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void removeProducts(@PathVariable String id) {
+    public void removeProductById(@PathVariable String id) {
         productService.removeProductById(id);
     }
 

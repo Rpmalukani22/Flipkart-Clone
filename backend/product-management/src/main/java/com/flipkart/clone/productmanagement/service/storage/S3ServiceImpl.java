@@ -1,4 +1,4 @@
-package com.flipkart.clone.productmanagement.service;
+package com.flipkart.clone.productmanagement.service.storage;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +25,7 @@ import com.amazonaws.services.s3.transfer.MultipleFileUpload;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3control.model.BucketAlreadyExistsException;
+import com.flipkart.clone.productmanagement.commons.utility.FileUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,15 +38,6 @@ import lombok.extern.slf4j.Slf4j;
 public class S3ServiceImpl implements S3Service {
     @Autowired
     AmazonS3 amazonS3;
-
-    private String cleanPath(String path, String pathDelim, boolean trailingDelim) {
-        if (!path.endsWith(pathDelim))
-            path = path + pathDelim;
-        path = path.replaceAll("(" + pathDelim + ")" + "+", pathDelim).trim();
-        if (!trailingDelim)
-            path = path.replaceAll("(" + pathDelim + ")" + "$", "");
-        return path;
-    }
 
     private void deleteFile(File file) {
         try {
@@ -65,7 +57,7 @@ public class S3ServiceImpl implements S3Service {
     public PutObjectResult saveObject(String bucketName, String parentPath, File file) {
         try {
             final String fileName = file.getName();
-            final String fileS3Path = cleanPath(String.join("/", parentPath, fileName), "/", false);
+            final String fileS3Path = FileUtil.cleanPath(String.join("/", parentPath, fileName), "/", false);
             log.info("Uploading file with file path {}", fileS3Path);
             final PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileS3Path, file);
             PutObjectResult result = amazonS3.putObject(putObjectRequest);

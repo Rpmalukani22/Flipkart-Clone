@@ -1,4 +1,4 @@
-package com.flipkart.clone.productmanagement.dto;
+package com.flipkart.clone.productmanagement.dto.catalog;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

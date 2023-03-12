@@ -1,10 +1,10 @@
-package com.flipkart.clone.productmanagement.dto;
+package com.flipkart.clone.productmanagement.dto.catalog;
 
 import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.flipkart.clone.productmanagement.model.Category;
+import com.flipkart.clone.productmanagement.model.catalog.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

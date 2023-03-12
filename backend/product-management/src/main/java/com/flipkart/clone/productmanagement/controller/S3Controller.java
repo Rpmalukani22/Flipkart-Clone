@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.flipkart.clone.productmanagement.commons.utility.FileUtil;
-import com.flipkart.clone.productmanagement.service.S3Service;
+import com.flipkart.clone.productmanagement.service.storage.S3Service;
 
+import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -51,7 +54,17 @@ public class S3Controller {
         s3Service.deleteBucket(bucketName, true);
     }
 
-    @PostMapping(path = "/buckets/files/{bucketName}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @GetMapping("/buckets/{bucketName}/files")
+    public ResponseEntity<Object> getObjectByName(@PathVariable String bucketName, @RequestParam String fileName) {
+        return ResponseEntity
+                .ok()
+                .cacheControl(CacheControl.noCache())
+                .header("Content-type", "application/octet-stream")
+                .header("Content-disposition", "attachment; filename=\"" + fileName + "\"")
+                .body(new InputStreamResource(s3Service.findObjectByName(bucketName, fileName)));
+    }
+
+    @PostMapping(path = "/buckets/{bucketName}/files", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PutObjectResult> saveFile(@PathVariable String bucketName,
             @RequestParam(value = "parentPath", required = false) String parentPath,
             @RequestPart("file") MultipartFile multipartFile) {
@@ -60,13 +73,13 @@ public class S3Controller {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @PostMapping(path = "/buckets/files/_bulk/{bucketName}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/buckets/{bucketName}/files/_bulk/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> saveAllFiles(@PathVariable String bucketName,
             @RequestParam(value = "parentPath", required = false) String parentPath,
             @RequestPart("file") MultipartFile[] multipartFiles) {
         log.info("Bulk Upload Started!");
         List<File> tempFiles = Arrays.stream(multipartFiles).map(FileUtil::convertMultiPartFileToFile).toList();
-        s3Service.saveAllObjects(bucketName, parentPath,tempFiles);
+        s3Service.saveAllObjects(bucketName, parentPath, tempFiles);
         log.info("Notifying Bulk Upload Started!");
         return new ResponseEntity<>("File Uploaded Started!", HttpStatus.ACCEPTED);
     }

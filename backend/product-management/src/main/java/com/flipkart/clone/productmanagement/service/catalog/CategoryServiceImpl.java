@@ -1,4 +1,4 @@
-package com.flipkart.clone.productmanagement.service;
+package com.flipkart.clone.productmanagement.service.catalog;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,10 +12,10 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
 import com.flipkart.clone.productmanagement.controller.CategoryController;
-import com.flipkart.clone.productmanagement.dto.CategoryRequest;
-import com.flipkart.clone.productmanagement.dto.CategoryResponse;
-import com.flipkart.clone.productmanagement.model.Category;
-import com.flipkart.clone.productmanagement.repository.CategoryRepository;
+import com.flipkart.clone.productmanagement.dto.catalog.CategoryRequest;
+import com.flipkart.clone.productmanagement.dto.catalog.CategoryResponse;
+import com.flipkart.clone.productmanagement.model.catalog.Category;
+import com.flipkart.clone.productmanagement.repository.catalog.CategoryRepository;
 import com.github.slugify.Slugify;
 
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.flipkart.clone.productmanagement.model;
+package com.flipkart.clone.productmanagement.model.catalog;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

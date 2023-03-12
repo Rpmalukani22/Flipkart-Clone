@@ -1,4 +1,4 @@
-package com.flipkart.clone.productmanagement.service;
+package com.flipkart.clone.productmanagement.service.storage;
 
 import java.io.File;
 import java.util.List;

@@ -21,4 +21,13 @@ public class FileUtil {
         }
         return file;
     }
+
+    public static String cleanPath(String path, String pathDelim, boolean trailingDelim) {
+        if (!path.endsWith(pathDelim))
+            path = path + pathDelim;
+        path = path.replaceAll("(" + pathDelim + ")" + "+", pathDelim).trim();
+        if (!trailingDelim)
+            path = path.replaceAll("(" + pathDelim + ")" + "$", "");
+        return path;
+    }
 }

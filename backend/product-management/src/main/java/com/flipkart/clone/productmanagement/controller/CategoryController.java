@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flipkart.clone.productmanagement.dto.CategoryRequest;
-import com.flipkart.clone.productmanagement.dto.CategoryResponse;
-import com.flipkart.clone.productmanagement.service.CategoryService;
+import com.flipkart.clone.productmanagement.dto.catalog.CategoryRequest;
+import com.flipkart.clone.productmanagement.dto.catalog.CategoryResponse;
+import com.flipkart.clone.productmanagement.service.catalog.CategoryService;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.Min;

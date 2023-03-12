@@ -1,4 +1,4 @@
-package com.flipkart.clone.productmanagement.model;
+package com.flipkart.clone.productmanagement.model.catalog;
 
 import java.util.List;
 

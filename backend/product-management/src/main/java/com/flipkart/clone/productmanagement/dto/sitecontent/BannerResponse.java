@@ -1,4 +1,4 @@
-package com.flipkart.clone.productmanagement.dto;
+package com.flipkart.clone.productmanagement.dto.sitecontent;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -8,13 +8,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class CategoryResponse extends RepresentationModel<CategoryResponse> {
-    private String id;
-    private String slug;
-    private String categoryPath;
+public class BannerResponse extends RepresentationModel<BannerResponse> {
+    String id;
+    String imgUrl;
+    String targetHref;
 }

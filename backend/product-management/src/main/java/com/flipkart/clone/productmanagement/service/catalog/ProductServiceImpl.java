@@ -1,4 +1,4 @@
-package com.flipkart.clone.productmanagement.service;
+package com.flipkart.clone.productmanagement.service.catalog;
 
 import java.net.URI;
 import java.util.List;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 import com.flipkart.clone.productmanagement.commons.exception.ProductNotFoundException;
 import com.flipkart.clone.productmanagement.controller.ProductController;
-import com.flipkart.clone.productmanagement.dto.CategoryRequest;
-import com.flipkart.clone.productmanagement.dto.ProductRequest;
-import com.flipkart.clone.productmanagement.dto.ProductResponse;
-import com.flipkart.clone.productmanagement.model.Category;
-import com.flipkart.clone.productmanagement.model.Product;
-import com.flipkart.clone.productmanagement.repository.ProductRepository;
+import com.flipkart.clone.productmanagement.dto.catalog.CategoryRequest;
+import com.flipkart.clone.productmanagement.dto.catalog.ProductRequest;
+import com.flipkart.clone.productmanagement.dto.catalog.ProductResponse;
+import com.flipkart.clone.productmanagement.model.catalog.Category;
+import com.flipkart.clone.productmanagement.model.catalog.Product;
+import com.flipkart.clone.productmanagement.repository.catalog.ProductRepository;
 import com.github.slugify.Slugify;
 
 import lombok.extern.slf4j.Slf4j;
