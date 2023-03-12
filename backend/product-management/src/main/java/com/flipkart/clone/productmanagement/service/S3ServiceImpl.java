@@ -1,32 +1,30 @@
 package com.flipkart.clone.productmanagement.service;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.event.ProgressListener;
+import com.amazonaws.services.redshift.model.BucketNotFoundException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.transfer.MultipleFileUpload;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
+import com.amazonaws.services.s3control.model.BucketAlreadyExistsException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,15 +47,12 @@ public class S3ServiceImpl implements S3Service {
         return path;
     }
 
-    // Utility Function
-    private File convertMultiPartFileToFile(final MultipartFile multipartFile) {
-        final File file = new File(multipartFile.getOriginalFilename());
-        try (final FileOutputStream outputStream = new FileOutputStream(file)) {
-            outputStream.write(multipartFile.getBytes());
-        } catch (IOException e) {
-            log.error("Error {} occurred while converting the multipart file", e.getLocalizedMessage());
+    private void deleteFile(File file) {
+        try {
+            Files.delete(file.toPath());
+        } catch (IOException ex) {
+            log.error("Error {} occurred while deleting temporary file", ex.getLocalizedMessage());
         }
-        return file;
     }
 
     @Override
@@ -67,68 +62,65 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public void saveObject(String bucketName, String parentPath, MultipartFile multipartFile) {
+    public PutObjectResult saveObject(String bucketName, String parentPath, File file) {
         try {
-            final File file = convertMultiPartFileToFile(multipartFile);
             final String fileName = file.getName();
             final String fileS3Path = cleanPath(String.join("/", parentPath, fileName), "/", false);
             log.info("Uploading file with file path {}", fileS3Path);
             final PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileS3Path, file);
-            amazonS3.putObject(putObjectRequest);
-            Files.delete(file.toPath());
+            PutObjectResult result = amazonS3.putObject(putObjectRequest);
+            deleteFile(file);
+            return result;
         } catch (AmazonServiceException e) {
             log.error("Error {} occurred while uploading file", e.getLocalizedMessage());
-        } catch (IOException ex) {
-            log.error("Error {} occurred while deleting temporary file", ex.getLocalizedMessage());
+            throw e;
         }
     }
 
     @Override
-    public void saveAllObjects(String bucketName, String parentPath, MultipartFile[] multipartFiles) {
+    @Async
+    public void saveAllObjects(String bucketName, String parentPath, List<File> files) {
+        log.info("inside saveAllObject");
+        TransferManager transfer = TransferManagerBuilder.standard().withS3Client(amazonS3).build();
+
+        final ProgressListener progressListener = progressEvent -> {
+            if (progressEvent.getBytesTransferred() > 0) {
+                double percentTransferred = progressEvent.getBytesTransferred() * 100.0 / progressEvent.getBytes();
+                log.info("Transferred " + percentTransferred + "%");
+            }
+        };
+
         try {
-            TransferManager transfer = TransferManagerBuilder.standard().withS3Client(amazonS3).build();
-            List<File> files = Arrays.stream(multipartFiles).map(this::convertMultiPartFileToFile).toList();
             MultipleFileUpload upload = transfer.uploadFileList(bucketName, parentPath, new File("."),
                     files);
+            upload.addProgressListener(progressListener);
             upload.waitForCompletion();
-            files.forEach(file -> {
-                try {
-                    Files.delete(file.toPath());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-
-        } catch (AmazonClientException | InterruptedException e) {
+        } catch (AmazonClientException e) {
             e.printStackTrace();
+            throw e;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("Thread was interrupted. All files Could not be uploaded.");
+            throw new AmazonServiceException("All files Could not be uploaded. Please Try again.");
+
+        } finally {
+            transfer.shutdownNow(false);
+            files.forEach(this::deleteFile);
         }
 
     }
 
     @Override
-    public void createEmptyDir(String bucketName, String parentPath, String dirName) {
-        try {
-            String folderPath = cleanPath(String.join("/", parentPath, dirName), "/", true);
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentLength(0L);
-            InputStream inputStream = new ByteArrayInputStream(new byte[0]);
-            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, folderPath, inputStream, metadata);
-            amazonS3.putObject(putObjectRequest);
-        } catch (AmazonServiceException e) {
-            log.error("Error {} occurred while uploading file", e.getLocalizedMessage());
-        }
-
-    }
-
-    @Override
-    public void createS3Bucket(String bucketName) {
+    public Bucket createBucket(String bucketName) {
         if (amazonS3.doesBucketExistV2(bucketName)) {
             log.info("Duplicate bucket name. Please try another name.");
+            throw new BucketAlreadyExistsException("Duplicate bucket name. Please try another name.");
         } else {
             try {
-                amazonS3.createBucket(bucketName);
+                return amazonS3.createBucket(bucketName);
             } catch (AmazonS3Exception e) {
-                log.error(e.getErrorMessage());
+                e.printStackTrace();
+                throw e;
             }
         }
 
@@ -136,7 +128,10 @@ public class S3ServiceImpl implements S3Service {
 
     @Override
     public List<Bucket> listBuckets() {
-        return amazonS3.listBuckets();
+        List<Bucket> bucketList = amazonS3.listBuckets();
+        if (bucketList.isEmpty())
+            throw new BucketNotFoundException("Bucket List is Empty.");
+        return bucketList;
     }
 
     @Override

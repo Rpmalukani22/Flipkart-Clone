@@ -1,15 +1,15 @@
 package com.flipkart.clone.productmanagement.service;
 
+import java.io.File;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
 public interface S3Service {
 
-    public void createS3Bucket(String bucketName);
+    public Bucket createBucket(String bucketName);
 
     public List<Bucket> listBuckets();
 
@@ -17,10 +17,8 @@ public interface S3Service {
 
     public S3ObjectInputStream findObjectByName(String bucketName, String fileName);
 
-    public void saveObject(String bucketName, String parentPath, final MultipartFile multipartFile);
+    public PutObjectResult saveObject(String bucketName, String parentPath, final File file);
 
-    public void saveAllObjects(String bucketName, String parentPath, final MultipartFile[] multipartFiles);
-
-    public void createEmptyDir(String bucketName, String parentPath, String dirName);
+    public void saveAllObjects(String bucketName, String parentPath, final List<File> files);
 
 }
