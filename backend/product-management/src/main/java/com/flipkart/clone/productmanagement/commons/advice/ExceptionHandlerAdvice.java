@@ -49,12 +49,12 @@ public class ExceptionHandlerAdvice {
         return new ResponseEntity<>(errorMap, HttpStatusCode.valueOf(exception.getStatusCode()));
     }
 
-    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    // @ExceptionHandler(Exception.class)
-    // public Map<String, String> handleOtherExceptions(Exception exception) {
-    //     Map<String, String> errorMap = new HashMap<>();
-    //     errorMap.put("message", exception.getMessage());
-    //     return errorMap;
-    // }
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public Map<String, String> handleOtherExceptions(Exception exception) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("message", exception.getMessage());
+        return errorMap;
+    }
 
 }

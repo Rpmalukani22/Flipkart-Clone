@@ -11,7 +11,7 @@ public interface SiteContentService {
 
     public List<BannerResponse> getBanners();
 
-    public BannerResponse getBannerById(String id);
+    public BannerResponse getBannerById(String bannerId);
 
     public BannerResponse createBanner(BannerRequest bannerRequest);
 

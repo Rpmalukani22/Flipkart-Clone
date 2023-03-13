@@ -17,5 +17,6 @@ public class Banner {
     @Id
     String id;
     String imgUrl;
+    String imgFileName;
     String targetHref;
 }

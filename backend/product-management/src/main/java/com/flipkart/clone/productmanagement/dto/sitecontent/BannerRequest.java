@@ -1,7 +1,5 @@
 package com.flipkart.clone.productmanagement.dto.sitecontent;
 
-import java.io.File;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;

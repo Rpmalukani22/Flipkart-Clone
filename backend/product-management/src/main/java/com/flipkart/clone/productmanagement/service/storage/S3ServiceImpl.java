@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -48,9 +49,9 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public S3ObjectInputStream findObjectByName(String bucketName, String fileName) {
-        log.info("Downloading file with name {}", fileName);
-        return amazonS3.getObject(bucketName, fileName).getObjectContent();
+    public S3ObjectInputStream findObjectByKey(String bucketName, String key) {
+        log.info("Downloading file with name {}", key);
+        return amazonS3.getObject(bucketName, key).getObjectContent();
     }
 
     @Override
@@ -71,7 +72,7 @@ public class S3ServiceImpl implements S3Service {
 
     @Override
     @Async
-    public void saveAllObjects(String bucketName, String parentPath, List<File> files) {
+    public CompletableFuture<String>  saveAllObjects(String bucketName, String parentPath, List<File> files) {
         log.info("inside saveAllObject");
         TransferManager transfer = TransferManagerBuilder.standard().withS3Client(amazonS3).build();
 
@@ -83,7 +84,7 @@ public class S3ServiceImpl implements S3Service {
         };
 
         try {
-            MultipleFileUpload upload = transfer.uploadFileList(bucketName, parentPath, new File("."),
+            MultipleFileUpload upload = transfer.uploadFileList(bucketName, parentPath, new File(System.getProperty("user.dir")),
                     files);
             upload.addProgressListener(progressListener);
             upload.waitForCompletion();
@@ -99,7 +100,7 @@ public class S3ServiceImpl implements S3Service {
             transfer.shutdownNow(false);
             files.forEach(this::deleteFile);
         }
-
+        return CompletableFuture.completedFuture("Upload Process Finished.");
     }
 
     @Override
@@ -149,6 +150,11 @@ public class S3ServiceImpl implements S3Service {
             log.error(e.getErrorMessage());
         }
 
+    }
+
+    @Override
+    public void deleteObjectByKey(String bucketName, String key) {
+        amazonS3.deleteObject(bucketName, key);
     }
 
 }

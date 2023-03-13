@@ -1,6 +1,8 @@
 package com.flipkart.clone.productmanagement.controller;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +28,6 @@ import com.amazonaws.services.s3.model.PutObjectResult;
 import com.flipkart.clone.productmanagement.commons.utility.FileUtil;
 import com.flipkart.clone.productmanagement.service.storage.S3Service;
 
-import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -55,13 +56,15 @@ public class S3Controller {
     }
 
     @GetMapping("/buckets/{bucketName}/files")
-    public ResponseEntity<Object> getObjectByName(@PathVariable String bucketName, @RequestParam String fileName) {
+    public ResponseEntity<Object> getObjectByName(@PathVariable String bucketName, @RequestParam String key) {
+        key=URLDecoder.decode(key,StandardCharsets.UTF_8);
+        log.info("url decode "+ key);
         return ResponseEntity
                 .ok()
                 .cacheControl(CacheControl.noCache())
                 .header("Content-type", "application/octet-stream")
-                .header("Content-disposition", "attachment; filename=\"" + fileName + "\"")
-                .body(new InputStreamResource(s3Service.findObjectByName(bucketName, fileName)));
+                .header("Content-disposition", "attachment; filename=\"" + key + "\"")
+                .body(new InputStreamResource(s3Service.findObjectByKey(bucketName, key)));
     }
 
     @PostMapping(path = "/buckets/{bucketName}/files", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -82,6 +85,15 @@ public class S3Controller {
         s3Service.saveAllObjects(bucketName, parentPath, tempFiles);
         log.info("Notifying Bulk Upload Started!");
         return new ResponseEntity<>("File Uploaded Started!", HttpStatus.ACCEPTED);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(path = "/buckets/{bucketName}/files/")
+    public void deleteObjectByKey(@PathVariable String bucketName,
+            @RequestParam String key) {
+        key = URLDecoder.decode(key, StandardCharsets.UTF_8);
+        s3Service.deleteObjectByKey(bucketName, key);
+
     }
 
 }

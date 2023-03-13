@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BannerResponse extends RepresentationModel<BannerResponse> {
     String id;
+    String imgFileName;
     String imgUrl;
     String targetHref;
 }
