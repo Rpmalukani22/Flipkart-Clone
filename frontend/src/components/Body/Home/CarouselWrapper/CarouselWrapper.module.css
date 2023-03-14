@@ -1,0 +1,28 @@
+.carousel-arrow {
+    display: flex;
+    position: absolute;
+    width: 50px;
+    height: 100px;
+    z-index: 20;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-arrow svg {
+    transform: scale(2);
+}
+
+#carousel-arrow-left {
+    left: 0;
+    border-top-right-radius: 3px;
+}
+
+#carousel-arrow-right {
+    right: 0;
+    border-top-left-radius: 3px;
+
+}

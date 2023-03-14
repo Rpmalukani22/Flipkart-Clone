@@ -24,10 +24,10 @@ def get_category_paths(category, parent=""):
 
 if __name__ == "__main__":
     category_requests = []
-    # for category in categories:
-    #     category_paths = get_category_paths(category)
-    #     for path in category_paths:
-    #         category_requests.append({"categoryPath": path})
-    # with open("category_bulk_request.json", "w") as f:
-    #     json.dump(category_requests,f)
-    print([get_category_paths(category) for category in categories])
+    for category in categories:
+        category_paths = get_category_paths(category)
+        for path in category_paths:
+            category_requests.append({"categoryPath": path})
+    with open("category_bulk_request.json", "w") as f:
+        json.dump(category_requests,f)
+    # print([get_category_paths(category) for category in categories])

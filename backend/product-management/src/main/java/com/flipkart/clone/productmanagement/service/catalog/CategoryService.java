@@ -11,7 +11,7 @@ import com.flipkart.clone.productmanagement.model.catalog.Category;
 
 public interface CategoryService {
     public Page<CategoryResponse> getAllCategories(int pageSize, int pageNumber, String sortBy,
-            Direction order);
+            Direction order,String rootCategory);
 
     public CategoryResponse getCategoryById(String categoryId);
 

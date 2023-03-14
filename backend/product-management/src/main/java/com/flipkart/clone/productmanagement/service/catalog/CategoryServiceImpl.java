@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
         Slugify slugify = Slugify.builder().build();
         List<String> categories = Arrays.asList(categoryRequest.getCategoryPath().split(">>")).stream()
                 .map(String::trim).toList();
-        String categoryPath = String.join(">>", categories);
+        String categoryPath = ">>"+String.join(">>", categories)+">>";
         return Category.builder()
                 .slug(slugify.slugify(categoryPath))
                 .categoryPath(categoryPath)
@@ -55,9 +55,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Page<CategoryResponse> getAllCategories(int pageSize, int pageNumber, String sortBy,
-            Direction order) {
+            Direction order,String rootCategory) {
         Pageable pagable = PageRequest.of(pageNumber, pageSize, order, sortBy);
-        Page<Category> categoryPage = categoryRepository.findAll(pagable);
+        Page<Category> categoryPage;
+        if(rootCategory.equals(""))
+            categoryPage= categoryRepository.findAll(pagable);
+        else{
+            log.info("Using Regex ....");
+            categoryPage=categoryRepository.findByRegex(">>"+rootCategory+">>",pagable);
+        }
         return categoryPage.map(this::categoryToCategoryResponseMapper);
 
     }

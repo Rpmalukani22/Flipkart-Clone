@@ -50,8 +50,9 @@ public class CategoryController {
             @Min(0) @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
             @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
             @RequestParam(value = "order", defaultValue = "ASC", required = false) Direction order,
+            @RequestParam(value = "rootCategory", defaultValue = "", required = false) String rootCategory,
             @Parameter(hidden = true) PagedResourcesAssembler<CategoryResponse> pagedResourcesAssembler) {
-        return pagedResourcesAssembler.toModel(categoryService.getAllCategories(pageSize, pageNumber, sortBy, order));
+        return pagedResourcesAssembler.toModel(categoryService.getAllCategories(pageSize, pageNumber, sortBy, order, rootCategory));
     }
 
     @PostMapping("/_bulk")
