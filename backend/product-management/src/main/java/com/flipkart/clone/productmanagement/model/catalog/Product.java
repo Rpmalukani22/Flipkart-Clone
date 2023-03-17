@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class Product {
     @Indexed(unique = true)
     private String slug;
     private String productUrl;
+    @DBRef
     private List<Category> categoryList;
     private double retailPrice;
     private double discountedPrice;

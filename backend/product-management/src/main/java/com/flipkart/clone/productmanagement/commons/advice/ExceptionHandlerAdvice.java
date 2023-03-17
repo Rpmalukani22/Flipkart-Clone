@@ -54,6 +54,7 @@ public class ExceptionHandlerAdvice {
     public Map<String, String> handleOtherExceptions(Exception exception) {
         Map<String, String> errorMap = new HashMap<>();
         errorMap.put("message", exception.getMessage());
+        exception.printStackTrace();
         return errorMap;
     }
 

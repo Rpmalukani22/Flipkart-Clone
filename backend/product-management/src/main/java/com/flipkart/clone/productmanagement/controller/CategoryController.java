@@ -61,6 +61,11 @@ public class CategoryController {
         log.info("Categories Created successfully!");
     }
 
+    @GetMapping("/sub-categories")
+    public List<String> getFirstOrderSubCategories(@RequestParam(value = "category", defaultValue = "", required = false) String category){
+            return categoryService.getSubCategories(category);
+    }
+
 }
 
 // TODO: Exception Handling with Status Codes

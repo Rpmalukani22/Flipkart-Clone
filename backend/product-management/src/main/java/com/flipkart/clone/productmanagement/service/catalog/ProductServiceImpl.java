@@ -3,6 +3,8 @@ package com.flipkart.clone.productmanagement.service.catalog;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -38,7 +40,8 @@ public class ProductServiceImpl implements ProductService {
 
     // Mappers
     private Product productRequestToProductMapper(ProductRequest productRequest) {
-        String productSlug = Slugify.builder().build().slugify(productRequest.getName());
+        log.info(productRequest.toString());
+        String productSlug = Slugify.builder().build().slugify(UUID.randomUUID().toString()+"-"+productRequest.getName());
         Product product;
         URI frontendURI = URI.create(frontendWebOrigin);
         String productUrl = frontendURI.resolve(frontendURI.getPath() + '/' + productSlug).toString();

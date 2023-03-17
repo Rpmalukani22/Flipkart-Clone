@@ -25,4 +25,6 @@ public interface CategoryService {
 
     public List<Category> getValidatedCategories(List<CategoryRequest> categoryRequestList);
 
+    public List<String> getSubCategories(String category);
+
 }

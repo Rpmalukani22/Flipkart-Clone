@@ -1,6 +1,8 @@
 package com.flipkart.clone.productmanagement.service.catalog;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +30,16 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
 
     // Mappers
+    private String getCategoryPathFromCategoryRequest(CategoryRequest categoryRequest) {
+        List<String> categories = Arrays.asList(categoryRequest.getCategoryPath().split(">>")).stream()
+                .map(String::trim).toList();
+        String categoryPath = ">>" + String.join(">>", categories) + ">>";
+        return categoryPath;
+    }
 
     private Category categoryRequestToCategoryMapper(CategoryRequest categoryRequest) {
         Slugify slugify = Slugify.builder().build();
-        List<String> categories = Arrays.asList(categoryRequest.getCategoryPath().split(">>")).stream()
-                .map(String::trim).toList();
-        String categoryPath = ">>"+String.join(">>", categories)+">>";
+        String categoryPath = getCategoryPathFromCategoryRequest(categoryRequest);
         return Category.builder()
                 .slug(slugify.slugify(categoryPath))
                 .categoryPath(categoryPath)
@@ -55,14 +61,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Page<CategoryResponse> getAllCategories(int pageSize, int pageNumber, String sortBy,
-            Direction order,String rootCategory) {
+            Direction order, String rootCategory) {
         Pageable pagable = PageRequest.of(pageNumber, pageSize, order, sortBy);
         Page<Category> categoryPage;
-        if(rootCategory.equals(""))
-            categoryPage= categoryRepository.findAll(pagable);
-        else{
+        if (rootCategory.equals(""))
+            categoryPage = categoryRepository.findAll(pagable);
+        else {
             log.info("Using Regex ....");
-            categoryPage=categoryRepository.findByRegex(">>"+rootCategory+">>",pagable);
+            categoryPage = categoryRepository.findByRegexPaged(">>" + rootCategory + ">>", pagable);
         }
         return categoryPage.map(this::categoryToCategoryResponseMapper);
 
@@ -116,15 +122,49 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getValidatedCategories(List<CategoryRequest> categoryRequestList) {
-        List<String> slugList = mapToCategoryList(categoryRequestList).stream().map(Category::getSlug).toList();
-        List<Category> categoryList = categoryRepository.findBySlugIn(slugList);
-        if (categoryList.size() == slugList.size()) {
+        // List<String> slugList =
+        // mapToCategoryList(categoryRequestList).stream().map(Category::getSlug).toList();
+        // List<Category> categoryList = categoryRepository.findBySlugIn(slugList);
+        List<Category> categoryList = categoryRequestList.stream()
+                .map(categoryRequest -> categoryRepository
+                        .findByRegex("^" + getCategoryPathFromCategoryRequest(categoryRequest)))
+                .flatMap(List::stream).toList();
+        if (categoryList.size() != 0) {
             return categoryList;
         } else {
             // TODO: Exception Handling with Status Codes.
-            throw new IllegalStateException("There is atleast one invalid category!");
+            log.info(categoryRequestList.toString());
+            // log.info(slugList.toString());
+            log.info(categoryList.toString());
+            return Collections.emptyList();
+            // throw new IllegalStateException("There is atleast one invalid category!");
         }
 
+    }
+
+    @Override
+    public List<String> getSubCategories(String category) {
+        if (category.trim().equals("")) {
+            return categoryRepository.findAll().stream().map(categoryModel -> {
+                String[] strCategoryList = categoryModel.getCategoryPath().split(">>");
+                if (strCategoryList.length > 0)
+                    return strCategoryList[1];
+                return null;
+            }).filter(s -> s != null).distinct().toList();
+        }
+        List<Category> categoryList = categoryRepository.findByRegex(">>" + category + ">>");
+        return categoryList.stream().map(categoryModel -> {
+            String[] strCategoryList = categoryModel.getCategoryPath().split(">>");
+            int i = 0;
+            for (i = 0; i < strCategoryList.length; i++) {
+                if (strCategoryList[i].equals(category))
+                    break;
+            }
+            if (i + 1 < strCategoryList.length)
+                return strCategoryList[i + 1];
+            return null;
+
+        }).filter(s -> s != null).distinct().toList();
     }
 
 }

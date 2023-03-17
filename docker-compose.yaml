@@ -40,6 +40,8 @@ services:
     image: mongo:5.0.15
     ports:
       - 27017:27017
+    volumes:
+      - ./docker-services/mongodb/data/db:/data/db:rw
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER:-root}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-example}
