@@ -27,4 +27,6 @@ public interface CategoryService {
 
     public List<String> getSubCategories(String category);
 
+    public List<Category> getCategoryByName(String category);
+
 }

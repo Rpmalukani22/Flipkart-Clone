@@ -1,0 +1,21 @@
+.product-ratings {
+    background: green;
+    color: white;
+    display: flex;
+    max-width: 35px;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 0.85rem;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1% 2% 1% 0;
+}
+
+.price-box {
+
+    display: flex;
+    justify-content: flex-start;
+    gap: 1;
+    align-items: center;
+
+}

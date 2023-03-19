@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -41,7 +42,8 @@ public class ProductServiceImpl implements ProductService {
     // Mappers
     private Product productRequestToProductMapper(ProductRequest productRequest) {
         log.info(productRequest.toString());
-        String productSlug = Slugify.builder().build().slugify(UUID.randomUUID().toString()+"-"+productRequest.getName());
+        String productSlug = Slugify.builder().build()
+                .slugify(UUID.randomUUID().toString() + "-" + productRequest.getName());
         Product product;
         URI frontendURI = URI.create(frontendWebOrigin);
         String productUrl = frontendURI.resolve(frontendURI.getPath() + '/' + productSlug).toString();
@@ -74,9 +76,13 @@ public class ProductServiceImpl implements ProductService {
                 .brand(product.getBrand())
                 .productSpecifications(product.getProductSpecifications())
                 .build();
-        productResponse.add(WebMvcLinkBuilder.linkTo(ProductController.class)
-                .slash(productResponse.getId())
-                .withSelfRel());
+        try {
+            productResponse.add(WebMvcLinkBuilder
+                    .linkTo(WebMvcLinkBuilder.methodOn(ProductController.class).getProductById(productResponse.getId()))
+                    .withSelfRel());
+        } catch (ProductNotFoundException e) {
+            e.printStackTrace();
+        }
         return productResponse;
     }
 
@@ -93,12 +99,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductResponse> getAllProducts(int pageSize, int pageNumber, String sortBy, Direction order) throws ProductNotFoundException {
-        try{
-        Pageable pagable = PageRequest.of(pageNumber, pageSize, order, sortBy);
-        Page<Product> productsPage = productRepository.findAll(pagable);
-        return productsPage.map(this::productToProductResponseMapper);
-        }catch(Exception e){
+    public Page<ProductResponse> getAllProducts(int pageSize, int pageNumber, String sortBy, Direction order,
+            String category) throws ProductNotFoundException {
+        try {
+            Pageable pagable = PageRequest.of(pageNumber, pageSize, order, sortBy);
+            Page<Product> productsPage;
+            if (category.trim().equals(""))
+                productsPage = productRepository.findAll(pagable);
+            else {
+                List<ObjectId> categoryIdList = categoryService.getCategoryByName(category).stream()
+                        .distinct()
+                        .map(
+                                categoryObj -> {
+                                    return new ObjectId(categoryObj.getId());
+                                })
+                        .toList();
+                log.info("Category List " + categoryIdList.toString());
+                productsPage = productRepository.getProductsByCategoryIds(categoryIdList, pagable);
+            }
+            return productsPage.map(this::productToProductResponseMapper);
+        } catch (Exception e) {
             throw new ProductNotFoundException(e.getMessage());
         }
     }
@@ -111,7 +131,7 @@ public class ProductServiceImpl implements ProductService {
             Product product = productCheck.get();
             productResponse = productToProductResponseMapper(product);
         } else {
-            throw new ProductNotFoundException("Requested Product with Product Id "+productId+" Not Found");
+            throw new ProductNotFoundException("Requested Product with Product Id " + productId + " Not Found");
         }
         log.info("ProductService: Returned Product successfully!");
         return productResponse;
@@ -136,5 +156,19 @@ public class ProductServiceImpl implements ProductService {
     public void bulkRemoveProducts(List<String> productIdList) {
         productRepository.deleteAllById(productIdList);
         log.info("Products Deleted Successfully!");
+    }
+
+    @Override
+    public ProductResponse getProductBySlug(String productSlug) throws ProductNotFoundException {
+        Optional<Product> productCheck = productRepository.findBySlug(productSlug);
+        ProductResponse productResponse;
+        if (productCheck.isPresent()) {
+            Product product = productCheck.get();
+            productResponse = productToProductResponseMapper(product);
+        } else {
+            throw new ProductNotFoundException("Requested Product with Product slug " + productSlug + " Not Found");
+        }
+        log.info("ProductService: Returned Product successfully!");
+        return productResponse;
     }
 }

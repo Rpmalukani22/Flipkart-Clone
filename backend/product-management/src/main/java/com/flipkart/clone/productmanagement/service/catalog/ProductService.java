@@ -10,9 +10,12 @@ import com.flipkart.clone.productmanagement.dto.catalog.ProductRequest;
 import com.flipkart.clone.productmanagement.dto.catalog.ProductResponse;
 
 public interface ProductService {
-    public Page<ProductResponse> getAllProducts(int pageSize, int pageNumber, String sortBy, Direction order) throws ProductNotFoundException;
+    public Page<ProductResponse> getAllProducts(int pageSize, int pageNumber, String sortBy, Direction order,
+            String category) throws ProductNotFoundException;
 
     public ProductResponse getProductById(String productId) throws ProductNotFoundException;
+
+    public ProductResponse getProductBySlug(String productSlug) throws ProductNotFoundException;
 
     public void createProduct(ProductRequest productRequest);
 

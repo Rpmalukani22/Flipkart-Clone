@@ -1,0 +1,11 @@
+.heading {
+    padding: 10%;
+    padding-bottom: 5%;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.line-break{
+    border: 1px solid #f0f0f0;
+}

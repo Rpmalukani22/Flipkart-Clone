@@ -33,7 +33,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping(path = {"/{id}"},produces = MediaTypes.HAL_JSON_VALUE)
+    @GetMapping(path = {"/id/{id}"},produces = MediaTypes.HAL_JSON_VALUE)
     public CategoryResponse getCategoryById(@PathVariable("id") String categoryId) {
         return categoryService.getCategoryById(categoryId);
     }

@@ -52,8 +52,8 @@ public class CategoryServiceImpl implements CategoryService {
                 .slug(category.getSlug())
                 .categoryPath(category.getCategoryPath())
                 .build();
-        categoryResponse.add(WebMvcLinkBuilder.linkTo(CategoryController.class)
-                .slash(categoryResponse.getId())
+        categoryResponse.add(WebMvcLinkBuilder
+                .linkTo(WebMvcLinkBuilder.methodOn(CategoryController.class).getCategoryById(categoryResponse.getId()))
                 .withSelfRel());
         return categoryResponse;
 
@@ -165,6 +165,11 @@ public class CategoryServiceImpl implements CategoryService {
             return null;
 
         }).filter(s -> s != null).distinct().toList();
+    }
+
+    @Override
+    public List<Category> getCategoryByName(String category) {
+        return categoryRepository.findByRegex(">>" + category.trim() + ">>");
     }
 
 }

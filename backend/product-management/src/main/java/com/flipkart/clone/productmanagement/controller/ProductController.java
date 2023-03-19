@@ -33,12 +33,17 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ProductResponse getProductById(@PathVariable String id) throws ProductNotFoundException {
         return productService.getProductById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/slug/{productSlug}")
+    public ProductResponse getProductBySlug(@PathVariable String productSlug) throws ProductNotFoundException {
+        return productService.getProductBySlug(productSlug);
+    }
+
+    @DeleteMapping("/id/{id}")
     public void removeProductById(@PathVariable String id) {
         productService.removeProductById(id);
     }
@@ -49,8 +54,11 @@ public class ProductController {
             @Min(0) @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
             @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
             @RequestParam(value = "order", defaultValue = "ASC", required = false) Direction order,
-            @Parameter(hidden = true) PagedResourcesAssembler<ProductResponse> pagedResourcesAssembler) throws ProductNotFoundException {
-        return pagedResourcesAssembler.toModel(productService.getAllProducts(pageSize, pageNumber, sortBy, order));
+            @RequestParam(value = "category", defaultValue = "", required = false) String category,
+            @Parameter(hidden = true) PagedResourcesAssembler<ProductResponse> pagedResourcesAssembler)
+            throws ProductNotFoundException {
+        return pagedResourcesAssembler
+                .toModel(productService.getAllProducts(pageSize, pageNumber, sortBy, order, category));
     }
 
     @PostMapping

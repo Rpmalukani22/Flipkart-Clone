@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import BecomeSeller from "./components/Body/BecomeSeller/BecomeSeller";
 import CategoryProducts from "./components/Body/CategoryProducts/CategoryProducts";
+import ProductDetails from "./components/Body/ProductDetails/ProductDetails";
 
 function App() {
   return (
@@ -16,10 +17,11 @@ function App() {
           <Header />
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
-            <Route exact path="/all-category" element={<CategoryProducts />}></Route>
+            <Route exact path="/categories" element={<CategoryProducts />}></Route>
             <Route exact path="/become-a-seller" element={<BecomeSeller />}></Route>
             <Route exact path="/about"></Route>
             <Route exact path="/contact"></Route>
+            <Route exact path="/:productSlug" element={<ProductDetails />}></Route>
           </Routes>
           <Footer />
         </StyledEngineProvider>
