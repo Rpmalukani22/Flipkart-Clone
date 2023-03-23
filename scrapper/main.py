@@ -2,6 +2,7 @@
 Simple Python Script to scrap data from Flipkart front page.
 """
 # imports
+import json
 import os.path
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -12,6 +13,7 @@ from modules.best_of_deals_items import get_best_of_deals_items
 from modules.get_product_details import (
     get_product_details,
     sample_products_from_categories,
+    scrape_product_details
 )
 
 
@@ -50,6 +52,12 @@ if __name__ == "__main__":
     browser.maximize_window()
     # get_best_of_deals_items(browser, scroll)
     # get_category_tree(browser, scroll)
-    # print(get_product_details(browser,scroll,"https://www.flipkart.com/redmi-10-caribbean-green-64-gb/p/itmbfb8dfcdd6e10?pid=MOBGC9GYQGGKWEU3&lid=LSTMOBGC9GYQGGKWEU3SLBNSD&marketplace=FLIPKART&q=mobiles&store=tyy%2F4io&srno=s_1_1&otracker=AS_QueryStore_OrganicAutoSuggest_1_3_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_1_3_na_na_na&fm=organic&iid=79bf2853-2512-40f7-9df6-5e73400d4bfd.MOBGC9GYQGGKWEU3.SEARCH&ppt=pp&ppn=pp&ssid=erbdhx6qkg0000001678262182634&qH=eb4af0bf07c16429"))
-    sample_products_from_categories(browser, scroll)
+    print(json.dumps(get_product_details(browser,scroll,"https://www.flipkart.com/callmate-20000-mah-power-bank-15-w-fast-charging/p/itm58740ebb7f7dc?pid=PWBGFGC4JZKHAGNH&lid=LSTPWBGFGC4JZKHAGNH17PSSL&marketplace=FLIPKART&store=tyy%2F4mr%2Ffu6&srno=b_1_7&otracker=hp_omu_Best%2Bof%2BElectronics_1_3.dealCard.OMU_UDG9W07DN4PD_3&otracker1=hp_omu_PINNED_neo%2Fmerchandising_Best%2Bof%2BElectronics_NA_dealCard_cc_1_NA_view-all_3&fm=neo%2Fmerchandising&iid=2e499b0b-1c80-4aa5-9d2f-8f80ee5d6d49.PWBGFGC4JZKHAGNH.SEARCH&ppt=hp&ppn=homepage&ssid=p5hxye3qv40000001679332592039")))
+    
+    # sample_products_from_categories(browser, scroll)
+    
+    
+    # product_url="""https://www.flipkart.com/hp-athlon-dual-core-3050u-8-gb-256-gb-ssd-windows-11-home-14s-fq0568au-thin-light-laptop/p/itm69710a61fcfdf?pid=COMGG63HHFBZ2BZP&marketplace=FLIPKART"""
+    # browser.get(product_url)
+    # print(json.dumps(scrape_product_details(browser)))
     browser.close()

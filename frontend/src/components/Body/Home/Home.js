@@ -5,9 +5,13 @@ import styles from "./Home.module.css";
 import { Box } from "@mui/material";
 import useGetData from "../../../hooks/useGetData";
 import CarouselWrapper from "./CarouselWrapper/CarouselWrapper";
+import BestOfDeal from "./BestOfDeal/BestOfDeal";
 
 export default function Home() {
   const banners = useGetData("http://localhost:8080/site-content/banners");
+  const bestOfDeals = useGetData(
+    "http://127.0.0.1:5500/best_of_items_decoded.json"
+  );
 
   const categoryNavigationImages = [
     { path: "./category-navigation-images/1.grocery.png", text: "Grocery" },
@@ -52,17 +56,28 @@ export default function Home() {
         id={styles["carousel-container"]}
         className={styles["home-container"]}
       >
-        <CarouselWrapper>
+        <CarouselWrapper arrowVisiblitySettings={{enabled:false}}> 
           {banners?.map((banner) => {
             return (
               <img
                 key={banner.id}
+                id={banner.id}
                 endpoint={banner.targetHref}
                 src={banner.imgUrl}
               ></img>
             );
           })}
         </CarouselWrapper>
+      </Box>
+      <Box
+        className={`${styles["home-container"]} ${styles["best-of-container"]}`}
+      >
+        {bestOfDeals &&
+          bestOfDeals.map((deal) => {
+            return (
+              <BestOfDeal key={deal.leftBgImgUrl} deal={deal}></BestOfDeal>
+            );
+          })}
       </Box>
     </Box>
   );

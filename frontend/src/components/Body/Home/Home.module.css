@@ -57,8 +57,14 @@
 #carousel-container img {
     width: 100%;
     height: 280px;
+    padding: 0;
 }
 
 #carousel-container:hover {
     cursor: pointer;
+}
+
+.best-of-container {
+    margin: 0 5px;
+    margin-top: 10px;
 }

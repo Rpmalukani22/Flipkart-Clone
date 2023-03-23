@@ -86,7 +86,7 @@ def product_to_request(product):
         return
     category_path = ">>".join(path_items[1:-2])
     brand = path_items[-2]
-    product["categoryPaths"] = category_path
+    product["categoryPaths"] = [category_path]
     try:
         product["discountedPrice"] = product.pop("current_price")
     except Exception as e:
@@ -116,7 +116,7 @@ def product_to_request(product):
         print(e)
         product["description"] = ""
     product["brand"] = brand
-    product["product_specification"] = dict()
+    product["productSpecifications"] = dict()
     # print(product)
     for key in set(product.keys()) - set(
         [

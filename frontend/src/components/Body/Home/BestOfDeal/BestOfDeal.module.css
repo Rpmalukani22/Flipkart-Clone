@@ -1,0 +1,46 @@
+:global(.swiper-button-disabled) {
+    display: none;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 340px;
+    min-width: 230px;
+}
+
+.heading-box {
+    display: flex;
+    width: 15.3%;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    text-align: center;
+    align-items: flex-start;
+}
+
+.heading-content {
+    background-color: white;
+    line-height: 1.3;
+    padding-top: 20%;
+}
+
+.heading-content h1 {
+    font-family: Roboto, sans-serif, Arial;
+    font-weight: 400;
+}
+
+.heading-content button {
+    font-family: Roboto, sans-serif, Arial;
+    background-color: #2874F0;
+    border-radius: 0;
+    font-weight: 500;
+}
+
+.deals-container {
+    display: flex;
+    width: 85%;
+   
+    height: 100%;
+}
+
