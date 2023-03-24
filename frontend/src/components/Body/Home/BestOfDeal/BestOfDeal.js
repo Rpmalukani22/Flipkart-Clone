@@ -21,7 +21,7 @@ export default function BestOfDeal({ deal }) {
         <CarouselWrapper
           carouselSettings={{
             spaceBetween: 1,
-            slidesPerView: 5,
+            slidesPerView: Math.min(5.5,deal.categories.length),
             loop: false,
             autoPlay: {},
             modules: []
@@ -36,6 +36,8 @@ export default function BestOfDeal({ deal }) {
                 linkSettings={{
                   style:{
                     textDecoration:'none',
+                    margin:"5%",
+                    width:"100%"
                   },
                 }}
               ></DealCard>

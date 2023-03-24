@@ -10,7 +10,7 @@ import BestOfDeal from "./BestOfDeal/BestOfDeal";
 export default function Home() {
   const banners = useGetData("http://localhost:8080/site-content/banners");
   const bestOfDeals = useGetData(
-    "http://127.0.0.1:5500/best_of_items_decoded.json"
+    "http://localhost:5500/data/best_of_items_decoded.json"
   );
 
   const categoryNavigationImages = [
@@ -56,7 +56,7 @@ export default function Home() {
         id={styles["carousel-container"]}
         className={styles["home-container"]}
       >
-        <CarouselWrapper arrowVisiblitySettings={{enabled:false}}> 
+        <CarouselWrapper arrowVisiblitySettings={{ enabled: false }}>
           {banners?.map((banner) => {
             return (
               <img
@@ -69,16 +69,18 @@ export default function Home() {
           })}
         </CarouselWrapper>
       </Box>
-      <Box
-        className={`${styles["home-container"]} ${styles["best-of-container"]}`}
-      >
-        {bestOfDeals &&
-          bestOfDeals.map((deal) => {
-            return (
-              <BestOfDeal key={deal.leftBgImgUrl} deal={deal}></BestOfDeal>
-            );
-          })}
-      </Box>
+
+      {bestOfDeals &&
+        bestOfDeals.map((deal) => {
+          return (
+            <Box
+              key={String(Date.now()) + String(Math.random())}
+              className={`${styles["home-container"]} ${styles["best-of-container"]}`}
+            >
+              <BestOfDeal deal={deal}></BestOfDeal>
+            </Box>
+          );
+        })}
     </Box>
   );
 }

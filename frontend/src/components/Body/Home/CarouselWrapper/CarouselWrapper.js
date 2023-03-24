@@ -1,6 +1,6 @@
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import React, { Children, useRef, useState } from "react";
+import React, { Children, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Autoplay } from "swiper";
 import "swiper/css";
@@ -16,8 +16,16 @@ export default function CarouselWrapper(props) {
       showRight: true,
     }
   );
+  useEffect(() => {
+    setArrowVisiblitySettings((prev) => {
+      return {
+        enabled: prev.enabled,
+        showLeft: swiperRef.current?.isBeginning === false,
+        showRight: swiperRef.current?.isEnd === false,
+      };
+    });
+  }, [swiperRef.current?.isEnd]);
   const defaultSettings = {
-    spaceBetween: 50,
     slidesPerView: 1,
     loop: true,
     autoplay: {
@@ -77,7 +85,9 @@ export default function CarouselWrapper(props) {
           Children.map(props.children, (child, index) => {
             return (
               <SwiperSlide key={child.props.id}>
-                <Link {...child.props?.linkSettings} to={child.props.endpoint}>{child}</Link>
+                <Link {...child.props?.linkSettings} to={child.props.endpoint}>
+                  {child}
+                </Link>
               </SwiperSlide>
             );
           })}

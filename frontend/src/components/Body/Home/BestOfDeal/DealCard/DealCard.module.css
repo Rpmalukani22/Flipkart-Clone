@@ -1,7 +1,5 @@
 .container {
     display: flex;
-    margin: 0 20px 0 2px;
-    padding: 5px 30px;
     width: 100%;
     text-decoration: none;
 }
@@ -16,9 +14,17 @@
     height: 100%;
 }
 
-.container:hover .img-content{
+.container:hover .img-content {
     transform: scale(1.05);
 }
+
+.img-content {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.img-content img {}
 
 .text-content {
     display: flex;

@@ -1,12 +1,9 @@
-:global(.swiper-button-disabled) {
-    display: none;
-}
-
 .container {
     display: flex;
     width: 100%;
     min-height: 340px;
     min-width: 230px;
+    margin: 2% 0;
 }
 
 .heading-box {
@@ -23,6 +20,7 @@
     background-color: white;
     line-height: 1.3;
     padding-top: 20%;
+    width: 100%;
 }
 
 .heading-content h1 {
@@ -39,8 +37,8 @@
 
 .deals-container {
     display: flex;
-    width: 85%;
-   
+    width: 84.7%;
     height: 100%;
+    padding-left:10px;
 }
 
