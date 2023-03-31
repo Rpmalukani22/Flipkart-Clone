@@ -6,7 +6,7 @@ export function DealCard({ dealCategory }) {
     <Box className={styles["container"]}>
       <Box className={styles["content"]}>
       <div className={styles["img-content"]}>
-      <img src={dealCategory.imgUrl}></img>
+      <img src={dealCategory.imgUrl} className={styles["dealcard-img"]}></img>
       </div>
       <div className={styles["text-content"]}>
       <p id={styles["title"]}>{dealCategory.title}</p>

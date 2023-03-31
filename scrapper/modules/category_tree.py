@@ -41,7 +41,7 @@ def get_category_tree(browser, scroll):
         except Exception as e:
             pass
     with open(
-        os.path.join(pathlib.Path(__file__).parent.parent, "categories.json"), "w"
+        os.path.join(pathlib.Path(__file__).parent.parent,"scrapped_data", "categories.json"), "w"
     ) as f:
         json.dump(categories, f)
 

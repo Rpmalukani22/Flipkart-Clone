@@ -1,35 +1,105 @@
-import os
-import re
 import json
+import os
 import pathlib
-import requests
+import re
+from urllib.parse import urlencode, urlparse
+
 import pandas as pd
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse, urlencode
 from selenium.webdriver.common.by import By
 
 
 def sample_products_from_categories(browser, scroll):
     with open(
-        os.path.join(pathlib.Path(__file__).parent.parent, "categories.json"), "r"
+        os.path.join(
+            pathlib.Path(__file__).parent.parent, "scrapped_data", "categories.json"
+        ),
+        "r",
     ) as f:
         categories = json.load(f)
     product_details = []
-    for idx in range(len(categories)):
-        print("Getting Sample Products from Category Index...", idx)
-        category = categories[idx]
-        inner_most_sub_categories = get_inner_most_category(category)
-        for sub_category in inner_most_sub_categories:
-            # print(sub_category["url"])
-            product_url_lst = get_products_urls_sample(browser, sub_category["url"])
-            for product_url in product_url_lst:
-                details = get_product_details(browser, scroll, product_url)
-                if details:
-                    product_details.append(details)
+    product_urls = []
+    if not os.path.exists(
+        os.path.join(
+            pathlib.Path(__file__).parent.parent, "scrapped_data", "product_urls.json"
+        )
+    ):
+        for idx in range(len(categories)):
+            category = categories[idx]
+            print("Getting Product urls from...", category, idx)
+            inner_most_sub_categories = get_inner_most_category(category)
+            for sub_category in inner_most_sub_categories:
+                product_url_lst = get_products_urls_sample(browser, sub_category["url"])
+                product_urls.extend(product_url_lst)
         with open(
-            os.path.join(pathlib.Path(__file__).parent.parent, "products.json"), "w"
+            os.path.join(
+                pathlib.Path(__file__).parent.parent,
+                "scrapped_data",
+                "product_urls.json",
+            ),
+            "w",
         ) as f:
-            json.dump(product_details, f)
+            json.dump(product_urls, f)
+
+    else:
+        with open(
+            os.path.join(
+                pathlib.Path(__file__).parent.parent,
+                "scrapped_data",
+                "product_urls.json",
+            ),
+            "r",
+        ) as f:
+            product_urls = json.load(f)
+
+    print("len of product urls ", len(product_urls))
+
+    if not os.path.exists(
+        os.path.join(
+            pathlib.Path(__file__).parent.parent, "scrapped_data", "products.json"
+        )
+    ):
+        with open(
+            os.path.exists(
+                os.path.join(
+                    pathlib.Path(__file__).parent.parent,
+                    "scrapped_data",
+                    "products.json",
+                )
+            ),
+            "w",
+        ) as f:
+            json.dump([], f)
+
+    product_details = []
+    for idx in range(0, len(product_urls)):
+        product_url = product_urls[idx]
+        details = get_product_details(browser, scroll, product_url)
+        if details:
+            product_details.append(details)
+        if idx % 10 == 0 or idx == len(product_urls) - 1:
+            print("Saving at index.....", idx)
+            existing_products = []
+            with open(
+                os.path.join(
+                    pathlib.Path(__file__).parent.parent,
+                    "scrapped_data",
+                    "products.json",
+                ),
+                "r",
+            ) as f:
+                existing_products = json.load(f)
+            existing_products.extend(product_details)
+            with open(
+                os.path.join(
+                    pathlib.Path(__file__).parent.parent,
+                    "scrapped_data",
+                    "products.json",
+                ),
+                "w",
+            ) as f:
+                json.dump(existing_products, f)
+            product_details = []
 
 
 def get_inner_most_category(category):
@@ -44,17 +114,8 @@ def get_inner_most_category(category):
 def get_product_details(browser, scroll, product_url):
     try:
         browser.get(product_url)
-        # browser.implicitly_wait(20)
         scroll(8)
-        # Scrap category path
-        # category_path = get_product_category_path(browser)
-        # Scrap media urls
-        # product_media_urls = get_product_media_urls(browser)
-        # Scrap product's other details
         product_dict = scrape_product_details(browser)
-        # product_dict["category_path"] = category_path
-        # if product_media_urls:
-        #     product_dict["thumbnails"] = product_media_urls
         return product_dict
     except Exception as e:
         print("Error for Product URL " + product_url)
@@ -99,7 +160,9 @@ def scrape_product_details(browser):
             product["retailPrice"] = browser.find_element(
                 By.CLASS_NAME, "_2p6lqe"
             ).get_attribute("innerHTML")
-            product["retailPrice"] = float(re.sub(r"[^\d.]", "", product["retailPrice"]))
+            product["retailPrice"] = float(
+                re.sub(r"[^\d.]", "", product["retailPrice"])
+            )
         except Exception as notFound:
             print("retail price", notFound)
             product["retailPrice"] = 0
@@ -109,7 +172,9 @@ def scrape_product_details(browser):
             product["discountedPrice"] = browser.find_element(
                 By.CLASS_NAME, "_16Jk6d"
             ).text
-            product["discountedPrice"] = float(re.sub(r"[^\d.]", "", product["discountedPrice"]))
+            product["discountedPrice"] = float(
+                re.sub(r"[^\d.]", "", product["discountedPrice"])
+            )
         except Exception as notFound:
             print("discounted price", notFound)
             product["discountedPrice"] = 0
@@ -126,12 +191,15 @@ def scrape_product_details(browser):
                 product["imageUrlList"].append(media.get_attribute("src"))
         except Exception as notFound:
             print("image URLs ", notFound)
-        
-        if product["imageUrlList"]==[]:
-          try:
-              product["imageUrlList"].append(browser.find_element(By.CLASS_NAME,"_3kidJX").find_element(By.TAG_NAME,"img").get_attribute("src"))
-          except Exception as notFound:
-              print("image URLs ", notFound)
+        if product["imageUrlList"] == []:
+            try:
+                product["imageUrlList"].append(
+                    browser.find_element(By.CLASS_NAME, "_3kidJX")
+                    .find_element(By.TAG_NAME, "img")
+                    .get_attribute("src")
+                )
+            except Exception as notFound:
+                print("image URLs ", notFound)
 
         # description
         try:
@@ -215,6 +283,7 @@ def scrape_product_details(browser):
             print(notFound)
 
         # specifications
+        product["productSpecifications"]["specs"] = {}
         try:
             soup = BeautifulSoup(
                 browser.find_element(By.CLASS_NAME, "_1UhVsV").get_attribute(
@@ -225,9 +294,9 @@ def scrape_product_details(browser):
             data = {}
             for table_wrapper in soup.select("._3k-BhJ"):
                 table_title = table_wrapper.select_one(".flxcaE").get_text(strip=True)
-                print(table_title)
+                # print(table_title)
                 table = table_wrapper.select_one("._14cfVK")
-                print(table)
+                # print(table)
                 df_lst = pd.read_html(str(table))
                 df = df_lst[0]
                 data[table_title] = df.to_dict("split")
@@ -236,7 +305,6 @@ def scrape_product_details(browser):
 
         except Exception as notFound:
             print(notFound)
-            raise notFound
 
         product["productSpecifications"]["discounted"] = False
         product["productSpecifications"]["discountPercentage"] = 0
@@ -280,15 +348,20 @@ def scrape_product_details(browser):
         # Available Offers
         product["productSpecifications"]["availableOffers"] = []
         try:
-            show_more_button = browser.find_element(By.CLASS_NAME, "IMZJg1")
-            browser.execute_script("arguments[0].click();", show_more_button)
-            product["productSpecifications"]["availableOffers"] = [
+            try:
+                show_more_button = browser.find_element(By.CLASS_NAME, "IMZJg1")
+                browser.execute_script("arguments[0].click();", show_more_button)
+            except:
+                pass
+            product["productSpecifications"]["availableOffers"].extend(
                 [
-                    offer.text
-                    for offer in offer_wrapper.find_elements(By.TAG_NAME, "span")
+                    [
+                        offer.text
+                        for offer in offer_wrapper.find_elements(By.TAG_NAME, "span")
+                    ]
+                    for offer_wrapper in browser.find_elements(By.CLASS_NAME, "_16eBzU")
                 ]
-                for offer_wrapper in browser.find_elements(By.CLASS_NAME, "_16eBzU")
-            ]
+            )
         except Exception as notFound:
             print("Available offers ", notFound)
 
@@ -326,20 +399,6 @@ def get_product_media_urls(browser):
     except Exception as e:
         pass
     return urls
-
-
-def get_product_details_util(product_url):
-    """_summary_
-         Utility function to get flipkart product details from product url using following repository : https://github.com/dvishal485/flipkart-scraper-api
-    Args:
-        url (str): Flipkart Product Url
-
-    Returns:
-        dict: Fetched Product Details
-    """
-    return requests.get(
-        f"https://flipkart.dvishal485.workers.dev/product/{urlparse(product_url).path}"
-    ).json()
 
 
 def get_products_urls_sample(browser, category_url, pages=2):

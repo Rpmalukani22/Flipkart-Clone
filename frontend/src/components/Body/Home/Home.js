@@ -10,7 +10,7 @@ import BestOfDeal from "./BestOfDeal/BestOfDeal";
 export default function Home() {
   const banners = useGetData("http://localhost:8080/site-content/banners");
   const bestOfDeals = useGetData(
-    "http://localhost:5500/data/best_of_items_decoded.json"
+    "http://localhost:8080/site-content/best-of-deals"
   );
 
   const categoryNavigationImages = [

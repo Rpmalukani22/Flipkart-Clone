@@ -1,7 +1,11 @@
 import os
+import html
 import pathlib
 import pandas as pd
 from selenium.webdriver.common.by import By
+import json
+import os
+from .product_request_mapper import post_images_to_s3, convert_urls
 
 
 def get_best_of_deals_items(browser, scroll):
@@ -31,7 +35,7 @@ def get_best_of_deals_items(browser, scroll):
                 row = []
                 row.append(category)
                 row.append(
-                    item_box.find_element(By.TAG_NAME, "img").get_attribute("src")
+                    [item_box.find_element(By.TAG_NAME, "img").get_attribute("src")]
                 )
                 row.extend(
                     list(
@@ -46,7 +50,39 @@ def get_best_of_deals_items(browser, scroll):
         except Exception as e:
             print(e)
 
-    pd.DataFrame(data).to_csv(
-        os.path.join(pathlib.Path(__file__).parent.parent, "best_of_deals_items.csv"),
-        index=False,
+    df = pd.DataFrame(
+        data, columns=["title", "imgUrl", "category_title", "subTitle1", "subTitle2"]
     )
+    for col in ["title", "category_title", "subTitle1", "subTitle2"]:
+        df[col] = df[col].apply(
+            lambda item: html.unescape(item.strip()) if item and item.strip() else ""
+        )
+    df["imgUrl"] = df["imgUrl"].apply(post_images_to_s3)
+    best_of_dt = []
+    left_bg_img_url = post_images_to_s3(
+        [
+            "https://rukminim1.flixcart.com/fk-p-flap/278/278/image/7593e7b6640822c1.jpg?q=90"
+        ]
+    )[0]
+    for gname, gdf in df.groupby("title"):
+        print(gname)
+        gdf.rename(columns={"category_title": "title"}, inplace=True)
+        print(gdf)
+        best_of_dt.append(
+            {
+                "title": gname,
+                "leftBgImgUrl": left_bg_img_url,
+                "offerings": gdf.to_dict(orient="records"),
+            }
+        )
+
+    with open(
+        os.path.join(
+            pathlib.Path(__file__).parent.parent,
+            "scrapped_data",
+            "best_of_deals_items_request.json",
+        ),
+        "w",
+    ) as f:
+        json.dump(best_of_dt, f)
+

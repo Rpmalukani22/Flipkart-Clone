@@ -16,15 +16,24 @@ import com.flipkart.clone.productmanagement.controller.S3Controller;
 import com.flipkart.clone.productmanagement.controller.SiteContentController;
 import com.flipkart.clone.productmanagement.dto.sitecontent.BannerRequest;
 import com.flipkart.clone.productmanagement.dto.sitecontent.BannerResponse;
+import com.flipkart.clone.productmanagement.dto.sitecontent.BestOfDealRequest;
+import com.flipkart.clone.productmanagement.dto.sitecontent.BestOfDealResponse;
 import com.flipkart.clone.productmanagement.model.sitecontent.Banner;
+import com.flipkart.clone.productmanagement.model.sitecontent.BestOfDeal;
 import com.flipkart.clone.productmanagement.repository.sitecontent.BannerRepository;
+import com.flipkart.clone.productmanagement.repository.sitecontent.BestOfDealRepository;
 import com.flipkart.clone.productmanagement.service.storage.S3Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class SiteContentServiceImpl implements SiteContentService {
     // TODO: Exception Handling
     @Autowired
     BannerRepository bannerRepository;
+    @Autowired
+    BestOfDealRepository bestOfDealRepository;
     @Autowired
     S3Service s3Service;
     @Value("${s3.flipkart.media.bucket.name}")
@@ -83,6 +92,29 @@ public class SiteContentServiceImpl implements SiteContentService {
 
     }
 
+    private BestOfDeal bestOfDealRequestToBestOfDealMapper(BestOfDealRequest bestOfDealsRequest) {
+        return BestOfDeal.builder()
+                .title(bestOfDealsRequest.getTitle())
+                .leftBgImgUrl(bestOfDealsRequest.getLeftBgImgUrl())
+                .offerings(bestOfDealsRequest.getOfferings())
+                .build();
+    }
+
+    private BestOfDealResponse bestOfDealToBestOfDealResponseMapper(BestOfDeal bestOfDeal) {
+        BestOfDealResponse bestOfDealResponse = BestOfDealResponse.builder()
+                .id(bestOfDeal.getId())
+                .title(bestOfDeal.getTitle())
+                .leftBgImgUrl(bestOfDeal.getLeftBgImgUrl())
+                .offerings(bestOfDeal.getOfferings())
+                .build();
+        bestOfDealResponse.add(WebMvcLinkBuilder
+                .linkTo(WebMvcLinkBuilder.methodOn(SiteContentController.class)
+                        .getBestOfDealById(bestOfDealResponse.getId()))
+                .withSelfRel());
+        return bestOfDealResponse;
+
+    }
+
     @Override
     public List<BannerResponse> getBanners() {
         return bannerRepository.findAll().stream().map(this::bannerToBannerResponse).toList();
@@ -117,6 +149,47 @@ public class SiteContentServiceImpl implements SiteContentService {
             return bannerToBannerResponse(bannerCheck.get());
         else
             throw new IllegalStateException("404 not found."); // TODO: replace with specific class
+    }
+
+    @Override
+    public List<BestOfDealResponse> getAllBestOfDeals() {
+        return bestOfDealRepository.findAll().stream().map(this::bestOfDealToBestOfDealResponseMapper).toList();
+    }
+
+    @Override
+    public BestOfDealResponse getBestOfDealById(String bestOfDealId) {
+        Optional<BestOfDeal> bestOfDealCheck = bestOfDealRepository.findById(bestOfDealId);
+        BestOfDealResponse bestOfDealResponse;
+        if (bestOfDealCheck.isPresent()) {
+            BestOfDeal bestOfDeal = bestOfDealCheck.get();
+            bestOfDealResponse = bestOfDealToBestOfDealResponseMapper(bestOfDeal);
+        } else {
+            // TODO: raise 404
+            return null;
+        }
+        log.info("SiteContent Service: Returned Best of Deals successfully!");
+        return bestOfDealResponse;
+    }
+
+    @Override
+    public void createBestOfDeal(BestOfDealRequest bestOfDealRequest) {
+
+        BestOfDeal bestOfDeal = bestOfDealRequestToBestOfDealMapper(bestOfDealRequest);
+        bestOfDealRepository.save(bestOfDeal);
+        log.info("Best Of Deal is saved successfully!");
+
+    }
+
+    @Override
+    public void bulkCreateBestOfDeals(List<BestOfDealRequest> bestOfDealRequestList) {
+        List<BestOfDeal> bestOfDealList = bestOfDealRequestList.stream().map(this::bestOfDealRequestToBestOfDealMapper).toList();
+        bestOfDealRepository.saveAll(bestOfDealList);
+        log.info("Added All Best of Deals Successfully!");
+    }
+
+    @Override
+    public void removeBestOfDealById(String bestOfDealId) {
+        bestOfDealRepository.deleteById(bestOfDealId);
     }
 
 }

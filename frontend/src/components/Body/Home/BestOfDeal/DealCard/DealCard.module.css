@@ -55,3 +55,8 @@
 
     color: #212121
 }
+
+.dealcard-img{
+    max-height: 200px;
+    max-width: 200px;
+}

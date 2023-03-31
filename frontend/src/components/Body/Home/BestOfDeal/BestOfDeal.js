@@ -21,14 +21,14 @@ export default function BestOfDeal({ deal }) {
         <CarouselWrapper
           carouselSettings={{
             spaceBetween: 1,
-            slidesPerView: Math.min(5.5,deal.categories.length),
+            slidesPerView: Math.min(5.5,deal.offerings.length),
             loop: false,
             autoPlay: {},
             modules: []
           }}
           
         >
-          {deal.categories.map((dealCategory, index) => {
+          {deal.offerings.map((dealCategory, index) => {
             return (
               <DealCard
                 key={dealCategory + index}

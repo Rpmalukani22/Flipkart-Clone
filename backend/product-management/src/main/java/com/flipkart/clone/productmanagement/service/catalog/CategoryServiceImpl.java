@@ -1,10 +1,10 @@
 package com.flipkart.clone.productmanagement.service.catalog;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -85,7 +85,7 @@ public class CategoryServiceImpl implements CategoryService {
             // TODO: raise 404
             return null;
         }
-        log.info("ProductService: Returned Product successfully!");
+        log.info("Category Service: Returned Category successfully!");
         return categoryResponse;
     }
 

@@ -8,6 +8,7 @@ import {
   CardMedia,
   IconButton,
   Link as MuiLink,
+  Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import React from "react";
@@ -41,12 +42,13 @@ export function ProductCard(props) {
         className={styles["img-container"]}
       />
       <CardContent>
+        <Typography variant="subtitle2">{product?.brand}</Typography>
         <MuiLink
           gutterBottom
           component={Link}
           to={product?.["productUrl"] || ""}
           className={styles["product-title"]}
-        >
+          >
           {product?.["name"]}
         </MuiLink>
         <Box className={styles["product-ratings-assured"]}>
@@ -56,7 +58,7 @@ export function ProductCard(props) {
             </span>
             <StarIcon />
           </div>
-          {product?.["productSpecifications"]?.["fAssured"] ? (
+          {product?.["productSpecifications"]?.["f_assured"] ? (
             <Box
               component="img"
               className={styles["assured"]}
@@ -82,8 +84,8 @@ export function ProductCard(props) {
               </span>{" "}
               &nbsp;
               <span>
-                {product?.["productSpecifications"]?.["discountPercent"]
-                  ? product?.["productSpecifications"]?.["discountPercent"] +
+                {product?.["productSpecifications"]?.["discountPercentage"]
+                  ? product?.["productSpecifications"]?.["discountPercentage"] +
                     "% off"
                   : ""}
               </span>

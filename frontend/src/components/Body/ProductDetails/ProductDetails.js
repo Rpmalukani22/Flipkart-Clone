@@ -96,8 +96,8 @@ export default function ProductDetails() {
                 </span>{" "}
                 &nbsp;
                 <span>
-                  {product?.["productSpecifications"]?.["discountPercent"]
-                    ? product?.["productSpecifications"]?.["discountPercent"] +
+                  {product?.["productSpecifications"]?.["discountPercentage"]
+                    ? product?.["productSpecifications"]?.["discountPercentage"] +
                       "% off"
                     : ""}
                 </span>

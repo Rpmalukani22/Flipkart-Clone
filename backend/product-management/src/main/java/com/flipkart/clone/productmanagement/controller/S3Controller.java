@@ -76,7 +76,7 @@ public class S3Controller {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @PostMapping(path = "/buckets/{bucketName}/files/_bulk/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/buckets/{bucketName}/files/_bulk", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> saveAllFiles(@PathVariable String bucketName,
             @RequestParam(value = "parentPath", required = false) String parentPath,
             @RequestPart("file") MultipartFile[] multipartFiles) {
