@@ -7,6 +7,7 @@ import Home from "./components/Body/Home/Home";
 import ProductDetails from "./components/Body/ProductDetails/ProductDetails";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
+import Admin from "./components/Body/Admin/Admin";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route exact path="/become-a-seller" element={<BecomeSeller />}></Route>
             <Route exact path="/about"></Route>
             <Route exact path="/contact"></Route>
+            <Route exact path="/admin" element={<Admin/>}></Route>
             <Route exact path="/:productSlug" element={<ProductDetails />}></Route>
           </Routes>
           <Footer />

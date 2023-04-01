@@ -1,0 +1,32 @@
+rapi-doc::part(section-navbar) {
+  background: #2874F0;
+  color: white;
+}
+
+rapi-doc::part(section-navbar-item) {
+  background: #2874F0;
+  color: white;
+  font-weight: 450;
+  font-size: 0.9rem;
+
+}
+
+rapi-doc::part(section-navbar-item):hover {
+  background: #4928f0;
+}
+
+rapi-doc::part(section-navbar-tag) {
+  font-size: 1rem;
+  padding: auto;
+}
+
+rapi-doc {
+  margin-top: 0.5%;
+  font-family: Roboto, sans-serif, Arial;
+
+}
+
+rapi-doc::part(textbox-nav-filter) {
+  background-color: white;
+}
+
