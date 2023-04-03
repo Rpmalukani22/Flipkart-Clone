@@ -3,12 +3,18 @@
     color: white;
     display: flex;
     max-width: 35px;
-    border-radius: 4px;
-    padding: 2px 4px;
+    padding: 5px 8px;
     font-size: 0.85rem;
     align-items: center;
-    justify-content: space-between;
-    margin: 1% 2% 1% 0;
+    justify-content: center;
+    margin: 1% 1% 1% 0;
+    border-radius: 0.9rem;
+
+}
+
+.product-ratings svg {
+    height: 1rem;
+    margin-left: -3px;
 }
 
 .price-box {
@@ -19,3 +25,85 @@
     align-items: center;
 
 }
+
+.price-box #price {
+    font-size: 1.75rem;
+    font-weight: 500;
+}
+
+.price-box #del-price {
+    font-size: 1rem;
+    color: #878787;
+}
+
+.price-box #discount-percent {
+    color: #26a541
+}
+
+.product-name {
+    font-style: Roboto, sans-serif, Arial;
+    font-weight: 400;
+}
+
+.details {
+    border: 1px solid blue;
+    width: 60%;
+    background: white;
+    padding: 1% 2%;
+}
+
+.product-ratings-assured-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.product-ratings-assured-box .assured {
+    max-height: 21px;
+    max-width: 77px;
+    margin-left: 1%;
+}
+
+.seller-ratings {
+    background: #2874F0;
+    color: white;
+    display: flex;
+    max-width: 35px;
+    border-radius: 14px;
+    padding: 2px 4px 2px 5px;
+    font-size: 0.85rem;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 2%;
+}
+
+.seller-ratings svg {
+    height: 0.85rem;
+    margin-left: -3px;
+}
+
+.flipkart-text-450 {
+    color: #2874f0;
+    font-family: Roboto, sans-serif, Arial;
+    font-weight: 450;
+    text-decoration: none;
+
+}
+
+.flipkart-text-450:hover {
+    cursor: pointer;
+}
+
+.color-img {
+    border: 2px solid #2879F0
+}
+
+/* .display-img:hover::before{
+    position: absolute;
+    z-index: 25;
+    background-color: white;
+    border: 1px solid #2874F0;
+    width: 100%;
+    min-height:100%;
+    left:100%;
+} */
