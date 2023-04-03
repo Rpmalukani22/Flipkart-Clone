@@ -171,7 +171,7 @@ export default function ProductDetails() {
                 {product?.["retailPrice"] && (
                   <span id={styles["price"]}>
                     {" "}
-                    getINR(product["retailPrice"])
+                    {getINR(product["retailPrice"])}
                   </span>
                 )}
               </span>
@@ -443,7 +443,7 @@ export default function ProductDetails() {
             >
               <Table
                 className={styles["highlight-box"]}
-                style={{ maxWidth: "100%", margin: "1% 0" }}
+                style={{ maxWidth: "60%", margin: "1% 0" }}
               >
                 <tbody>
                   <tr>
@@ -465,7 +465,7 @@ export default function ProductDetails() {
                           (highlightText) => (
                             <ListItem
                               key={product?.id + highlightText}
-                              sx={{ p: 0, ml: 2, mb: 1 }}
+                              sx={{ p: 0,ml:2, mb: 1 }}
                             >
                               <Box
                                 sx={{
@@ -479,7 +479,7 @@ export default function ProductDetails() {
                                     fontSize: "0.9rem",
                                   }}
                                 >
-                                  {highlightText}
+                                  {highlightText.trim()}
                                 </Typography>
                               </Box>
                             </ListItem>
