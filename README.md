@@ -25,6 +25,8 @@ git clone https://github.com/Rpmalukani22/Flipkart-Clone.git
 cd Flipkart-Clone
 docker-compose up -d
 ```
+## Preview
+![Alt Text](preview/Flipkart-Clone-1.mp4)
 
 ## Features
 
