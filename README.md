@@ -27,7 +27,7 @@ docker-compose up -d
 ```
 ## Preview
 <video src="https://github.com/Rpmalukani22/Flipkart-Clone/blob/main/preview/Flipkart%20Clone-1.mp4?raw=true">
-
+</video>
 ## Features
 
 - [ ] Browse and search for products
