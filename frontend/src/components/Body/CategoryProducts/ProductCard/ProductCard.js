@@ -1,3 +1,10 @@
+/*
+ * Author: Ruchitesh Malukani
+ * Modified By: Ruchitesh Malukani
+ * Last Modified: Wednesday, 5th April 2023
+ * -----
+ * Copyright (c) 2023 Ruchitesh Malukani
+ */
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
 import styles from "./ProductCard.module.css";

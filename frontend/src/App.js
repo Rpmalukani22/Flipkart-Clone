@@ -1,3 +1,10 @@
+/*
+ * Author: Ruchitesh Malukani
+ * Modified By: Ruchitesh Malukani
+ * Last Modified: Wednesday, 5th April 2023
+ * -----
+ * Copyright (c) 2023 Ruchitesh Malukani
+ */
 import { StyledEngineProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";

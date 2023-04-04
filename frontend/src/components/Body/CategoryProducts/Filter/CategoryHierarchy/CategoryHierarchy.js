@@ -1,3 +1,10 @@
+/*
+ * Author: Ruchitesh Malukani
+ * Modified By: Ruchitesh Malukani
+ * Last Modified: Wednesday, 5th April 2023
+ * -----
+ * Copyright (c) 2023 Ruchitesh Malukani
+ */
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useEffect, useState } from "react";

@@ -1,3 +1,10 @@
+/*
+ * Author: Ruchitesh Malukani
+ * Modified By: Ruchitesh Malukani
+ * Last Modified: Wednesday, 5th April 2023
+ * -----
+ * Copyright (c) 2023 Ruchitesh Malukani
+ */
 import { Box, Button } from "@mui/material";
 import CarouselWrapper from "../CarouselWrapper/CarouselWrapper";
 import styles from "./BestOfDeal.module.css";

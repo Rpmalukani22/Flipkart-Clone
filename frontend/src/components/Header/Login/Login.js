@@ -1,3 +1,10 @@
+/*
+ * Author: Ruchitesh Malukani
+ * Modified By: Ruchitesh Malukani
+ * Last Modified: Wednesday, 5th April 2023
+ * -----
+ * Copyright (c) 2023 Ruchitesh Malukani
+ */
 import React from "react";
 import styles from "./Login.module.css";
 import {Link} from "react-router-dom";
