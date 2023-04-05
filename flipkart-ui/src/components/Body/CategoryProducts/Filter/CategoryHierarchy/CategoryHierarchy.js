@@ -20,13 +20,11 @@ export function CategoryHierarchy(props) {
     searchParams.get("category") || ""
   );
   useEffect(() => {
-    if(currentCategory)
-    setSearchParams({ category: currentCategory });
+    if (currentCategory) setSearchParams({ category: currentCategory });
   }, [currentCategory]);
 
   useEffect(() => {
-    if(currentCategory)
-    setCurrentCategory(searchParams.get("category") || "" );
+    if (currentCategory) setCurrentCategory(searchParams.get("category") || "");
   }, [searchParams]);
 
   const [clickPath, setClickPath] = useState([]);
@@ -39,12 +37,11 @@ export function CategoryHierarchy(props) {
           return prevPath.slice(0, findIdx + 1);
         }
       });
-    else setClickPath([])
+    else setClickPath([]);
   }, [currentCategory]);
-  const response = useGetData(
-    urlService.getSubcategories(currentCategory),
-    [currentCategory]
-  );
+  const response = useGetData(urlService.getSubcategories(currentCategory), [
+    currentCategory,
+  ]);
   const getCategoryButtons = (category, disabled = false) => {
     return (
       <Button

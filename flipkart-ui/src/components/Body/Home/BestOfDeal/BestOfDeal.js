@@ -28,12 +28,11 @@ export default function BestOfDeal({ deal }) {
         <CarouselWrapper
           carouselSettings={{
             spaceBetween: 1,
-            slidesPerView: Math.min(5.5,deal.offerings.length),
+            slidesPerView: Math.min(5.5, deal.offerings.length),
             loop: false,
             autoPlay: {},
-            modules: []
+            modules: [],
           }}
-          
         >
           {deal.offerings.map((dealCategory, index) => {
             return (
@@ -41,10 +40,10 @@ export default function BestOfDeal({ deal }) {
                 key={dealCategory + index}
                 dealCategory={dealCategory}
                 linkSettings={{
-                  style:{
-                    textDecoration:'none',
-                    margin:"5%",
-                    width:"100%"
+                  style: {
+                    textDecoration: "none",
+                    margin: "5%",
+                    width: "100%",
                   },
                 }}
               ></DealCard>

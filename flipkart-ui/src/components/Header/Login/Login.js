@@ -7,7 +7,7 @@
  */
 import React from "react";
 import styles from "./Login.module.css";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import PopOverLink from "../../UtilityComponents/PopOverLink/PopOverLink";
 import {
   Box,
@@ -52,10 +52,7 @@ export default function Login() {
                 }}
               >
                 <b>New Customer?</b>{" "}
-                <Link
-                  to="/signup"
-                  style={{ textDecoration: "none" }}
-                >
+                <Link to="/signup" style={{ textDecoration: "none" }}>
                   <b>SignUp</b>
                 </Link>
               </Typography>

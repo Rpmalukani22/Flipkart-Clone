@@ -18,7 +18,7 @@ export function Filters() {
       <Typography className={styles["heading"]} variant="h2">
         Filters
       </Typography>
-      <hr className={styles['line-break']}></hr>
+      <hr className={styles["line-break"]}></hr>
       <CategoryHierarchy></CategoryHierarchy>
     </Box>
   );

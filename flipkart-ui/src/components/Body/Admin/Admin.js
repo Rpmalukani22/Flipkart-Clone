@@ -6,7 +6,7 @@
  * Copyright (c) 2023 Ruchitesh Malukani
  */
 import React from "react";
-import './Admin.css'
+import "./Admin.css";
 import "rapidoc";
 import { urlService } from "../../../services/urls";
 
@@ -17,8 +17,8 @@ export default function Admin() {
       render-style="focused"
       show-header="false"
       show-info="false"
-      regular-font = "Roboto"
-      primary-color = "#2874F0"
+      regular-font="Roboto"
+      primary-color="#2874F0"
     />
   );
 }

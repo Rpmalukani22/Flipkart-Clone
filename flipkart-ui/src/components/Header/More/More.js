@@ -6,7 +6,7 @@
  * Copyright (c) 2023 Ruchitesh Malukani
  */
 import React from "react";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PopOverLink from "../../UtilityComponents/PopOverLink/PopOverLink";
 import {
   Box,
@@ -37,7 +37,11 @@ export default function More(props) {
       id="morePopOver"
       clickable={{
         clickableClassName: props.className,
-        clickableText:<>More <ExpandMoreIcon sx={{fontSize:"0.95rem"}}/></>,
+        clickableText: (
+          <>
+            More <ExpandMoreIcon sx={{ fontSize: "0.95rem" }} />
+          </>
+        ),
       }}
       rectangleBaseStyle={{ minWidth: 250, padding: 0 }}
       contentWrapperStyle={{ width: "100%" }}

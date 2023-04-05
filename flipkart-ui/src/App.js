@@ -24,12 +24,24 @@ function App() {
           <Header />
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
-            <Route exact path="/categories" element={<CategoryProducts />}></Route>
-            <Route exact path="/become-a-seller" element={<BecomeSeller />}></Route>
+            <Route
+              exact
+              path="/categories"
+              element={<CategoryProducts />}
+            ></Route>
+            <Route
+              exact
+              path="/become-a-seller"
+              element={<BecomeSeller />}
+            ></Route>
             <Route exact path="/about"></Route>
             <Route exact path="/contact"></Route>
-            <Route exact path="/admin" element={<Admin/>}></Route>
-            <Route exact path="/:productSlug" element={<ProductDetails />}></Route>
+            <Route exact path="/admin" element={<Admin />}></Route>
+            <Route
+              exact
+              path="/:productSlug"
+              element={<ProductDetails />}
+            ></Route>
           </Routes>
           <Footer />
         </StyledEngineProvider>

@@ -37,7 +37,7 @@ export default function CategoryProducts() {
     });
   };
   const products = useGetData(
-   urlService.getProducts(page,searchParams.get("category") || ""),
+    urlService.getProducts(page, searchParams.get("category") || ""),
     [page, searchParams]
   );
 
