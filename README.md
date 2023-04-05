@@ -26,7 +26,7 @@ cd Flipkart-Clone
 docker-compose up -d
 ```
 ## Preview
-[Flipkart Home](preview/Flipkart%20Clone-1.mp4)
+[Flipkart Home](preview/Flipkart%20Clone-1.gif)
 </video>
 ## Features
 
