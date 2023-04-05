@@ -16,6 +16,7 @@ import styles from "./CategoryProducts.module.css";
 import { Filters } from "./Filter/Filter";
 import { ProductCard } from "./ProductCard/ProductCard";
 import { useSearchParams } from "react-router-dom";
+import { urlService } from "../../../services/urls";
 
 export default function CategoryProducts() {
   const [searchParams] = useSearchParams();
@@ -36,9 +37,7 @@ export default function CategoryProducts() {
     });
   };
   const products = useGetData(
-    `http://localhost:8080/products?pageSize=${page.size}&pageNumber=${
-      page.number - 1
-    }&sortBy=id&order=ASC&category=${searchParams.get("category") || ""}`,
+   urlService.getProducts(page,searchParams.get("category") || ""),
     [page, searchParams]
   );
 

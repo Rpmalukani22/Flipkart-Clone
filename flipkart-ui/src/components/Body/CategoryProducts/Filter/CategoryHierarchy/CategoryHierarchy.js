@@ -12,6 +12,7 @@ import styles from "./CategoryHierarchy.module.css";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import useGetData from "../../../../../hooks/useGetData";
 import { useSearchParams } from "react-router-dom";
+import { urlService } from "../../../../../services/urls";
 
 export function CategoryHierarchy(props) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,9 +42,7 @@ export function CategoryHierarchy(props) {
     else setClickPath([])
   }, [currentCategory]);
   const response = useGetData(
-    `http://localhost:8080/categories/sub-categories${
-      currentCategory ? "?category=" + currentCategory : ""
-    }`,
+    urlService.getSubcategories(currentCategory),
     [currentCategory]
   );
   const getCategoryButtons = (category, disabled = false) => {

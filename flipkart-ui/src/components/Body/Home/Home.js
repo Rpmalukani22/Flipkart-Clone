@@ -13,40 +13,13 @@ import { Box } from "@mui/material";
 import useGetData from "../../../hooks/useGetData";
 import CarouselWrapper from "./CarouselWrapper/CarouselWrapper";
 import BestOfDeal from "./BestOfDeal/BestOfDeal";
+import { urlService } from "../../../services/urls";
+import { categoryNavigationImages } from "../../../services/constants";
 
 export default function Home() {
-  const banners = useGetData("http://localhost:8080/site-content/banners");
-  const bestOfDeals = useGetData(
-    "http://localhost:8080/site-content/best-of-deals"
-  );
+  const banners = useGetData(urlService.getBanners());
+  const bestOfDeals = useGetData(urlService.getBestOfDeals());
 
-  const categoryNavigationImages = [
-    { path: "./category-navigation-images/1.grocery.png", text: "Grocery" },
-    { path: "./category-navigation-images/2.mobiles.png", text: "Mobiles" },
-    { path: "./category-navigation-images/3.fashion.png", text: "Fashion" },
-    {
-      path: "./category-navigation-images/4.electronics.png",
-      text: "Electronics",
-    },
-    { path: "./category-navigation-images/5.home.jpeg", text: "Home" },
-    {
-      path: "./category-navigation-images/6.appliances.png",
-      text: "Appliances",
-    },
-    { path: "./category-navigation-images/7.travel.png", text: "Travel" },
-    {
-      path: "./category-navigation-images/8.top-offers.png",
-      text: "Top Offers",
-    },
-    {
-      path: "./category-navigation-images/9.beauty-toys-&-More.png",
-      text: "Beauty Toys & More",
-    },
-    {
-      path: "./category-navigation-images/10.two-wheelers.png",
-      text: "Two Wheelers",
-    },
-  ];
   return (
     <Box className={styles["home-wrapper"]}>
       <Box className={`${styles["home-container"]} ${styles["category-nav"]} `}>

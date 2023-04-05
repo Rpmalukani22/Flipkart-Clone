@@ -1,5 +1,5 @@
 .env
 __pycache__
-docker-services/cloudserver/data
-docker-services/cloudserver/metadata
-docker-services/mongodb/data
+cloudserver/data
+cloudserver/metadata
+mongodb/data

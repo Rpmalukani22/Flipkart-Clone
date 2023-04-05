@@ -7,9 +7,10 @@
  */
 import React from "react";
 import useGetData from "../../../hooks/useGetData";
+import { urlService } from "../../../services/urls";
 
 export default function BecomeSeller() {
-  let banners = useGetData("http://localhost:8080/site-content/banners");
+  let banners = useGetData(urlService.getBanners());
   return (
     <div>
       {banners?.map((banner) => {

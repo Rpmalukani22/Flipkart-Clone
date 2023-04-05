@@ -34,6 +34,7 @@ import styles from "./ProductDetails.module.css";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import StarIcon from "@mui/icons-material/Star";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import { urlService } from "../../../services/urls";
 
 export default function ProductDetails() {
   let { productSlug } = useParams();
@@ -46,9 +47,7 @@ export default function ProductDetails() {
       currency: "INR",
     });
   };
-  const product = useGetData(
-    `http://localhost:8080/products/slug/${productSlug}`
-  );
+  const product = useGetData(urlService.getProductBySlug(productSlug));
   let categories = product?.categoryList.map((categoryPathObj) => {
     return categoryPathObj?.categoryPath
       ?.replace(/^(>>)+|(>>)+$/g, "")
@@ -472,7 +471,7 @@ export default function ProductDetails() {
                           (highlightText) => (
                             <ListItem
                               key={product?.id + highlightText}
-                              sx={{ p: 0,ml:2, mb: 1 }}
+                              sx={{ p: 0, ml: 2, mb: 1 }}
                             >
                               <Box
                                 sx={{
@@ -506,8 +505,7 @@ export default function ProductDetails() {
             }}
           >
             {product?.productSpecifications?.details && (
-              <Accordion style={{ boxShadow: "none" }}
-              >
+              <Accordion style={{ boxShadow: "none" }}>
                 <AccordionSummary
                   expandIcon={"V"}
                   aria-controls="panel1a-content"
@@ -516,13 +514,15 @@ export default function ProductDetails() {
                   <Typography>Product Details</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Table style={{border: "1px solid #878787"}}>
+                  <Table style={{ border: "1px solid #878787" }}>
                     <tbody>
                       {Object.keys(product?.productSpecifications?.details).map(
                         (key) => {
                           return (
                             <tr key={product?.id + key}>
-                              <td><b>{key}</b></td>
+                              <td>
+                                <b>{key}</b>
+                              </td>
                               <td>
                                 {product?.productSpecifications?.details[key]}
                               </td>
@@ -559,10 +559,21 @@ export default function ProductDetails() {
                             ].data.map((dataItem) => {
                               return (
                                 <tr key={product?.id + dataItem}>
-                                  {dataItem.map((colItem,index) => {
+                                  {dataItem.map((colItem, index) => {
                                     return (
                                       <td key={product?.id + colItem}>
-                                        {(index===0 && dataItem.length>1)?<span style={{fontFamily:"Roboto",fontWeight:450}}>{colItem}</span>:colItem}
+                                        {index === 0 && dataItem.length > 1 ? (
+                                          <span
+                                            style={{
+                                              fontFamily: "Roboto",
+                                              fontWeight: 450,
+                                            }}
+                                          >
+                                            {colItem}
+                                          </span>
+                                        ) : (
+                                          colItem
+                                        )}
                                       </td>
                                     );
                                   })}

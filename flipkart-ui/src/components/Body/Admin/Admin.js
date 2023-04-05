@@ -8,11 +8,12 @@
 import React from "react";
 import './Admin.css'
 import "rapidoc";
+import { urlService } from "../../../services/urls";
 
 export default function Admin() {
   return (
     <rapi-doc
-      spec-url="http://localhost:8080/v3/api-docs"
+      spec-url={urlService.getApiSpecs()}
       render-style="focused"
       show-header="false"
       show-info="false"
