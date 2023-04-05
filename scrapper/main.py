@@ -9,19 +9,6 @@ Copyright (c) 2023 Ruchitesh Malukani
 Simple Python Script to scrap data from Flipkart front page.
 """
 # imports
-import json
-import os.path
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-
-from modules.category_tree import get_category_tree
-from modules.best_of_deals_items import get_best_of_deals_items
-from modules.get_product_details import (
-    get_product_details,
-    sample_products_from_categories,
-    scrape_product_details
-)
 
 
 # Utility Functions
@@ -41,7 +28,8 @@ def scroll(speed=2):
         browser.execute_script(
             "window.scrollTo(0, {});".format(current_scroll_position)
         )
-        new_height = browser.execute_script("return document.body.scrollHeight")
+        new_height = browser.execute_script(
+            "return document.body.scrollHeight")
 
 
 if __name__ == "__main__":
@@ -51,14 +39,14 @@ if __name__ == "__main__":
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--incognito")
 
-
     # driver setup
     homedir = os.path.expanduser("~")
     webdriver_service = Service(f"{homedir}/chromedriver/stable/chromedriver")
-    browser = webdriver.Chrome(service=webdriver_service, options=chrome_options)
+    browser = webdriver.Chrome(
+        service=webdriver_service, options=chrome_options)
     browser.maximize_window()
 
-    #Start Scrapping
+    # Start Scrapping
     get_best_of_deals_items(browser, scroll)
     # get_category_tree(browser, scroll)
     # sample_products_from_categories(browser,scroll)

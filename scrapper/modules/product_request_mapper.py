@@ -49,7 +49,8 @@ def get_best_resolution(url):
                     response.raw.decode_content = True
                     print("Status code : " + str(response.status_code))
                     if response.status_code == 200:
-                        fname = pyrfc6266.requests_response_to_filename(response)
+                        fname = pyrfc6266.requests_response_to_filename(
+                            response)
                         return res_url, [
                             fname,
                             response.content,
@@ -108,7 +109,7 @@ def set_category_path(product):
 
 def chunks(lst, n):
     for i in range(0, len(lst), n):
-        yield lst[i : i + n]
+        yield lst[i: i + n]
 
 
 def convert_urls(flipkart_urls):
@@ -147,7 +148,8 @@ if __name__ == "__main__":
     # Save Product Requests
     with open(
         os.path.join(
-            pathlib.Path(__file__).parent.parent, "scrapped_data", "products.json"
+            pathlib.Path(
+                __file__).parent.parent, "scrapped_data", "products.json"
         ),
         "w",
     ) as f:

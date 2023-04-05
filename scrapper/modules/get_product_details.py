@@ -19,7 +19,8 @@ from selenium.webdriver.common.by import By
 def sample_products_from_categories(browser, scroll):
     with open(
         os.path.join(
-            pathlib.Path(__file__).parent.parent, "scrapped_data", "categories.json"
+            pathlib.Path(
+                __file__).parent.parent, "scrapped_data", "categories.json"
         ),
         "r",
     ) as f:
@@ -28,7 +29,8 @@ def sample_products_from_categories(browser, scroll):
     product_urls = []
     if not os.path.exists(
         os.path.join(
-            pathlib.Path(__file__).parent.parent, "scrapped_data", "product_urls.json"
+            pathlib.Path(
+                __file__).parent.parent, "scrapped_data", "product_urls.json"
         )
     ):
         for idx in range(len(categories)):
@@ -36,7 +38,8 @@ def sample_products_from_categories(browser, scroll):
             print("Getting Product urls from...", category, idx)
             inner_most_sub_categories = get_inner_most_category(category)
             for sub_category in inner_most_sub_categories:
-                product_url_lst = get_products_urls_sample(browser, sub_category["url"])
+                product_url_lst = get_products_urls_sample(
+                    browser, sub_category["url"])
                 product_urls.extend(product_url_lst)
         with open(
             os.path.join(
@@ -63,7 +66,8 @@ def sample_products_from_categories(browser, scroll):
 
     if not os.path.exists(
         os.path.join(
-            pathlib.Path(__file__).parent.parent, "scrapped_data", "products.json"
+            pathlib.Path(
+                __file__).parent.parent, "scrapped_data", "products.json"
         )
     ):
         with open(
@@ -134,7 +138,8 @@ def get_product_category_path(browser, return_brand=False):
     category_path_list = []
     for path_anchor in category_path_box.find_elements(By.CSS_SELECTOR, "*"):
         inner_html = path_anchor.get_attribute("innerHTML")
-        text_elements = BeautifulSoup(inner_html, "html.parser").findAll(text=True)
+        text_elements = BeautifulSoup(
+            inner_html, "html.parser").findAll(text=True)
         text = "".join(
             list(
                 filter(
@@ -210,7 +215,8 @@ def scrape_product_details(browser):
 
         # description
         try:
-            product["description"] = browser.find_element(By.CLASS_NAME, "_1mXcCf").text
+            product["description"] = browser.find_element(
+                By.CLASS_NAME, "_1mXcCf").text
         except Exception as notFound:
             print("description1 ", notFound)
             product["description"] = ""
@@ -232,7 +238,8 @@ def scrape_product_details(browser):
             product["productSpecifications"]["inStock"] = False
         try:
             if (
-                browser.find_element(By.CLASS_NAME, "_2Dfasx").text.strip().lower()
+                browser.find_element(
+                    By.CLASS_NAME, "_2Dfasx").text.strip().lower()
                 == "notify me"
             ):
                 product["productSpecifications"]["inStock"] = False
@@ -263,7 +270,8 @@ def scrape_product_details(browser):
             product["productSpecifications"]["seller"]["sellerName"] = (
                 browser.find_element(By.ID, "sellerName")
                 .text.replace(
-                    str(product["productSpecifications"]["seller"]["sellerRating"]), ""
+                    str(product["productSpecifications"]
+                        ["seller"]["sellerRating"]), ""
                 )
                 .strip()
             )
@@ -300,7 +308,8 @@ def scrape_product_details(browser):
             )
             data = {}
             for table_wrapper in soup.select("._3k-BhJ"):
-                table_title = table_wrapper.select_one(".flxcaE").get_text(strip=True)
+                table_title = table_wrapper.select_one(
+                    ".flxcaE").get_text(strip=True)
                 # print(table_title)
                 table = table_wrapper.select_one("._14cfVK")
                 # print(table)
@@ -317,7 +326,8 @@ def scrape_product_details(browser):
         product["productSpecifications"]["discountPercentage"] = 0
         # _31Dcoz
         try:
-            discount_text = browser.find_element(By.CLASS_NAME, "_31Dcoz").text.strip()
+            discount_text = browser.find_element(
+                By.CLASS_NAME, "_31Dcoz").text.strip()
             product["productSpecifications"]["discountPercentage"] = float(
                 re.sub(r"[^\d.]", "", discount_text)
             )
@@ -331,7 +341,8 @@ def scrape_product_details(browser):
         # _3_L3jD
         try:
             ratings_wrapper = browser.find_element(By.CLASS_NAME, "_3_L3jD")
-            ratings = ratings_wrapper.find_element(By.CLASS_NAME, "_3LWZlK").text
+            ratings = ratings_wrapper.find_element(
+                By.CLASS_NAME, "_3LWZlK").text
             product["productSpecifications"]["rating"] = float(
                 re.sub(r"[^.\d]", "", ratings)
             )
@@ -356,8 +367,10 @@ def scrape_product_details(browser):
         product["productSpecifications"]["availableOffers"] = []
         try:
             try:
-                show_more_button = browser.find_element(By.CLASS_NAME, "IMZJg1")
-                browser.execute_script("arguments[0].click();", show_more_button)
+                show_more_button = browser.find_element(
+                    By.CLASS_NAME, "IMZJg1")
+                browser.execute_script(
+                    "arguments[0].click();", show_more_button)
             except:
                 pass
             product["productSpecifications"]["availableOffers"].extend(
@@ -418,7 +431,8 @@ def get_products_urls_sample(browser, category_url, pages=2):
             )
             print(page_url)
             browser.get(page_url)
-            product_items_rows = browser.find_elements(By.CLASS_NAME, "_13oc-S")
+            product_items_rows = browser.find_elements(
+                By.CLASS_NAME, "_13oc-S")
             for row in product_items_rows:
                 for anchor in row.find_elements(By.TAG_NAME, "a"):
                     product_url = anchor.get_attribute("href")

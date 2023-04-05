@@ -42,7 +42,8 @@ def get_best_of_deals_items(browser, scroll):
                 row = []
                 row.append(category)
                 row.append(
-                    [item_box.find_element(By.TAG_NAME, "img").get_attribute("src")]
+                    [item_box.find_element(
+                        By.TAG_NAME, "img").get_attribute("src")]
                 )
                 row.extend(
                     list(
@@ -58,11 +59,13 @@ def get_best_of_deals_items(browser, scroll):
             print(e)
 
     df = pd.DataFrame(
-        data, columns=["title", "imgUrl", "category_title", "subTitle1", "subTitle2"]
+        data, columns=["title", "imgUrl",
+                       "category_title", "subTitle1", "subTitle2"]
     )
     for col in ["title", "category_title", "subTitle1", "subTitle2"]:
         df[col] = df[col].apply(
-            lambda item: html.unescape(item.strip()) if item and item.strip() else ""
+            lambda item: html.unescape(
+                item.strip()) if item and item.strip() else ""
         )
     df["imgUrl"] = df["imgUrl"].apply(post_images_to_s3)
     best_of_dt = []
@@ -92,4 +95,3 @@ def get_best_of_deals_items(browser, scroll):
         "w",
     ) as f:
         json.dump(best_of_dt, f)
-

@@ -21,7 +21,8 @@ def get_category_tree(browser, scroll):
     Returns:
         void: saves categories in json file.
     """
-    browser.get("https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com")
+    browser.get(
+        "https://www.flipkart.com/all-categories/pr?sid=search.flipkart.com")
     browser.implicitly_wait(20)
     browser.refresh()
     scroll()
@@ -48,7 +49,8 @@ def get_category_tree(browser, scroll):
         except Exception as e:
             pass
     with open(
-        os.path.join(pathlib.Path(__file__).parent.parent,"scrapped_data", "categories.json"), "w"
+        os.path.join(pathlib.Path(__file__).parent.parent,
+                     "scrapped_data", "categories.json"), "w"
     ) as f:
         json.dump(categories, f)
 
@@ -86,7 +88,8 @@ def extract_sub_categories(browser, category, depth=0, max_depth=-1, max_span=-1
         if sub_category_anchor_tag.tag_name != "a":
             continue
         sub_category = {}
-        sub_category["name"] = sub_category_anchor_tag.get_attribute("innerHTML")
+        sub_category["name"] = sub_category_anchor_tag.get_attribute(
+            "innerHTML")
         sub_category["url"] = sub_category_anchor_tag.get_attribute("href")
         print(sub_category)
         sub_category["sub-categories"] = extract_sub_categories(
