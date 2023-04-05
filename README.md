@@ -2,9 +2,12 @@
 
 This project is a clone of the popular e-commerce website Flipkart, built using React and Spring Boot.
 
+> **Note:** This project is currently in development.
+
 ## Preview
 
 ![Flipkart Home](preview/Flipkart%20Clone-1.gif)
+
 
 ## Tech Stack
 
@@ -21,6 +24,7 @@ This project was built using the following technologies:
 - Docker
 
 ## Getting Started
+
 
 To get started with this project, you'll need to do the following:
 
