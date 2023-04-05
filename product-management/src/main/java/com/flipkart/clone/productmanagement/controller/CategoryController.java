@@ -40,7 +40,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping(path = {"/id/{id}"},produces = MediaTypes.HAL_JSON_VALUE)
+    @GetMapping(path = { "/id/{id}" }, produces = MediaTypes.HAL_JSON_VALUE)
     public CategoryResponse getCategoryById(@PathVariable("id") String categoryId) {
         return categoryService.getCategoryById(categoryId);
     }
@@ -59,7 +59,8 @@ public class CategoryController {
             @RequestParam(value = "order", defaultValue = "ASC", required = false) Direction order,
             @RequestParam(value = "rootCategory", defaultValue = "", required = false) String rootCategory,
             @Parameter(hidden = true) PagedResourcesAssembler<CategoryResponse> pagedResourcesAssembler) {
-        return pagedResourcesAssembler.toModel(categoryService.getAllCategories(pageSize, pageNumber, sortBy, order, rootCategory));
+        return pagedResourcesAssembler
+                .toModel(categoryService.getAllCategories(pageSize, pageNumber, sortBy, order, rootCategory));
     }
 
     @PostMapping("/_bulk")
@@ -69,8 +70,9 @@ public class CategoryController {
     }
 
     @GetMapping("/sub-categories")
-    public List<String> getFirstOrderSubCategories(@RequestParam(value = "category", defaultValue = "", required = false) String category){
-            return categoryService.getSubCategories(category);
+    public List<String> getFirstOrderSubCategories(
+            @RequestParam(value = "category", defaultValue = "", required = false) String category) {
+        return categoryService.getSubCategories(category);
     }
 
 }

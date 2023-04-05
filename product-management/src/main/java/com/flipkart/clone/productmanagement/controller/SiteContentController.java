@@ -82,7 +82,7 @@ public class SiteContentController {
       log.info("BestOfDeal Created successfully!");
    }
 
-   @GetMapping(path = "/best-of-deals",produces = MediaTypes.HAL_JSON_VALUE)
+   @GetMapping(path = "/best-of-deals", produces = MediaTypes.HAL_JSON_VALUE)
    public List<BestOfDealResponse> getBestOfDeals() {
       return siteContentService.getAllBestOfDeals();
    }

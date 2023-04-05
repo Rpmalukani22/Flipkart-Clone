@@ -32,6 +32,6 @@ public interface S3Service {
     @Async
     public CompletableFuture<String> saveAllObjects(String bucketName, String parentPath, final List<File> files);
 
-    public void deleteObjectByKey(String bucketName,String key);
+    public void deleteObjectByKey(String bucketName, String key);
 
 }

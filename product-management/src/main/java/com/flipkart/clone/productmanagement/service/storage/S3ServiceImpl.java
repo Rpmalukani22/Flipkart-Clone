@@ -79,7 +79,7 @@ public class S3ServiceImpl implements S3Service {
 
     @Override
     @Async
-    public CompletableFuture<String>  saveAllObjects(String bucketName, String parentPath, List<File> files) {
+    public CompletableFuture<String> saveAllObjects(String bucketName, String parentPath, List<File> files) {
         log.info("inside saveAllObject");
         TransferManager transfer = TransferManagerBuilder.standard().withS3Client(amazonS3).build();
 
@@ -91,7 +91,8 @@ public class S3ServiceImpl implements S3Service {
         };
 
         try {
-            MultipleFileUpload upload = transfer.uploadFileList(bucketName, parentPath, new File(System.getProperty("user.dir")),
+            MultipleFileUpload upload = transfer.uploadFileList(bucketName, parentPath,
+                    new File(System.getProperty("user.dir")),
                     files);
             upload.addProgressListener(progressListener);
             upload.waitForCompletion();

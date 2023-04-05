@@ -34,7 +34,7 @@ public class S3ClientConfig {
 
     @Bean
     public AwsClientBuilder.EndpointConfiguration endpointConfiguration() {
-        return new AwsClientBuilder.EndpointConfiguration(endpoint,s3RegionName);
+        return new AwsClientBuilder.EndpointConfiguration(endpoint, s3RegionName);
     }
 
     @Bean

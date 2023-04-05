@@ -20,7 +20,7 @@ public interface CategoryRepository extends MongoRepository<Category, String> {
     List<Category> findBySlugIn(List<String> slugList);
 
     @Query("{'categoryPath': { $regex: ?0, $options:'i' }}")
-    Page<Category> findByRegexPaged(final String regexString,Pageable pageable);
+    Page<Category> findByRegexPaged(final String regexString, Pageable pageable);
 
     @Query("{'categoryPath': { $regex: ?0, $options:'i' }}")
     List<Category> findByRegex(final String regexString);

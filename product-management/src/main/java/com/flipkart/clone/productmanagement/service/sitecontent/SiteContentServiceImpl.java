@@ -189,7 +189,8 @@ public class SiteContentServiceImpl implements SiteContentService {
 
     @Override
     public void bulkCreateBestOfDeals(List<BestOfDealRequest> bestOfDealRequestList) {
-        List<BestOfDeal> bestOfDealList = bestOfDealRequestList.stream().map(this::bestOfDealRequestToBestOfDealMapper).toList();
+        List<BestOfDeal> bestOfDealList = bestOfDealRequestList.stream().map(this::bestOfDealRequestToBestOfDealMapper)
+                .toList();
         bestOfDealRepository.saveAll(bestOfDealList);
         log.info("Added All Best of Deals Successfully!");
     }

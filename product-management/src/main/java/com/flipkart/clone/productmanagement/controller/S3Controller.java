@@ -64,8 +64,8 @@ public class S3Controller {
 
     @GetMapping("/buckets/{bucketName}/files")
     public ResponseEntity<Object> getObjectByName(@PathVariable String bucketName, @RequestParam String key) {
-        key=URLDecoder.decode(key,StandardCharsets.UTF_8);
-        log.info("url decode "+ key);
+        key = URLDecoder.decode(key, StandardCharsets.UTF_8);
+        log.info("url decode " + key);
         return ResponseEntity
                 .ok()
                 .cacheControl(CacheControl.noCache())
