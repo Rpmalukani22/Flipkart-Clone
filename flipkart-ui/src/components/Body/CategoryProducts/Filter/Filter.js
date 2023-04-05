@@ -5,12 +5,11 @@
  * -----
  * Copyright (c) 2023 Ruchitesh Malukani
  */
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import React from "react";
-import { Typography } from "@mui/material";
-import styles from "./Filter.module.css";
 import { CategoryHierarchy } from "./CategoryHierarchy/CategoryHierarchy";
-import { useSearchParams } from "react-router-dom";
+import styles from "./Filter.module.css";
 
 export function Filters() {
   return (

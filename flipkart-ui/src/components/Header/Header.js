@@ -5,14 +5,14 @@
  * -----
  * Copyright (c) 2023 Ruchitesh Malukani
  */
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
+import styles from "./Header.module.css";
+import Login from "./Login/Login";
 import More from "./More/More";
 import Search from "./Search/Search";
-import Login from "./Login/Login";
-import styles from "./Header.module.css";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Link } from "react-router-dom";
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 
 export default function Header() {
   return (

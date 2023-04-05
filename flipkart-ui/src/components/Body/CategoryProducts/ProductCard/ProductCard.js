@@ -7,7 +7,6 @@
  */
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
-import styles from "./ProductCard.module.css";
 import {
   Card,
   CardContent,
@@ -21,6 +20,7 @@ import Box from "@mui/material/Box";
 import React from "react";
 import { Link } from "react-router-dom";
 import useGetData from "../../../../hooks/useGetData";
+import styles from "./ProductCard.module.css";
 
 export function ProductCard(props) {
   const getINR = (number) => {

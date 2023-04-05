@@ -11,10 +11,10 @@ import styles from "./Home.module.css";
 
 import { Box } from "@mui/material";
 import useGetData from "../../../hooks/useGetData";
-import CarouselWrapper from "./CarouselWrapper/CarouselWrapper";
-import BestOfDeal from "./BestOfDeal/BestOfDeal";
-import { urlService } from "../../../services/urls";
 import { categoryNavigationImages } from "../../../services/constants";
+import { urlService } from "../../../services/urls";
+import BestOfDeal from "./BestOfDeal/BestOfDeal";
+import CarouselWrapper from "./CarouselWrapper/CarouselWrapper";
 
 export default function Home() {
   const banners = useGetData(urlService.getBanners());

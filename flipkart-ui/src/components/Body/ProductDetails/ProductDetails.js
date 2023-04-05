@@ -5,36 +5,32 @@
  * -----
  * Copyright (c) 2023 Ruchitesh Malukani
  */
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import StarIcon from "@mui/icons-material/Star";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Badge,
   Breadcrumbs,
   Button,
   Grid,
-  Hidden,
   ImageList,
   ImageListItem,
   Link,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
   Table,
-  Typography,
-  createStyles,
+  Typography
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetData from "../../../hooks/useGetData";
+import { urlService } from "../../../services/urls";
 import CarouselWrapper from "../Home/CarouselWrapper/CarouselWrapper";
 import styles from "./ProductDetails.module.css";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import StarIcon from "@mui/icons-material/Star";
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
-import { urlService } from "../../../services/urls";
 
 export default function ProductDetails() {
   let { productSlug } = useParams();

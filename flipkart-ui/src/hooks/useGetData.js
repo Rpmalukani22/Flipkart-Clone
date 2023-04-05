@@ -5,8 +5,8 @@
  * -----
  * Copyright (c) 2023 Ruchitesh Malukani
  */
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function useGetData(url, dependencies = []) {
   const [response, setResponse] = useState();
