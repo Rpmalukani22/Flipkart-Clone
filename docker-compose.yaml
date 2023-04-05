@@ -13,22 +13,31 @@ version: "3"
 ############################################################################
 
 services:
+  reverse-proxy:
+    build: ./reverse-proxy
+    depends_on:
+      - flipkart-ui
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+
   flipkart-ui:
     build: ./flipkart-ui
     depends_on:
       - product-management
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
 
   product-management:
     build: ./product-management
     depends_on:
       - mongodb
       - s3server
-    ports:
-      - 8080:8080
+    # ports:
+    #   - 8080:8080
     environment:
-      - FRONT_END_WEB_ORIGIN=http://localhost:3000
+      - FRONT_END_WEB_ORIGIN=https://localhost
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
     volumes:
@@ -45,8 +54,8 @@ services:
 
   mongodb:
     image: mongo:5.0.15
-    ports:
-      - 27017:27017
+    # ports:
+    #   - 27017:27017
     volumes:
       - ./mongodb/data/db:/data/db:rw
     environment:
@@ -75,8 +84,8 @@ services:
       REMOTE_MANAGEMENT_DISABLE: 1
       SCALITY_ACCESS_KEY_ID: ${S3_SERVER_ACCESS_KEY_ID:-accessKey1}
       SCALITY_SECRET_ACCESS_KEY: ${S3_SERVER_SECRET_ACCESS_KEY:-verySecretKey1}
-    ports:
-      - "8000:8000"
+    # ports:
+    #   - "8000:8000"
 
   s3manager:
     container_name: s3manger

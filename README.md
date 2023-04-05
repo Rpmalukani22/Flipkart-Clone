@@ -25,8 +25,27 @@ This project was built using the following technologies:
 
 ## Getting Started
 
+### Generating SSL/TLS Certificate and Private Key for reverse proxy server using OpenSSL
 
-To get started with this project, you'll need to do the following:
+Generate a private key:
+```
+openssl genrsa -out key.pem 2048
+```
+
+Generate a certificate signing request (CSR):
+```
+openssl req -new -key key.pem -out csr.pem
+```
+
+Generate a self-signed certificate:
+```
+openssl x509 -req -days 365 -in csr.pem -signkey key.pem -out cert.pem
+```
+
+After these steps, you should have two files: cert.pem and key.pem. The cert.pem file contains the SSL/TLS certificate, and the key.pem file contains the private key. You can then use these files in your Nginx configuration as shown in the previous examples.
+
+
+To execute this project, you'll need to do the following:
 
 ```
 git clone https://github.com/Rpmalukani22/Flipkart-Clone.git
