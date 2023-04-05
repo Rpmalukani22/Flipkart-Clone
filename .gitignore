@@ -3,3 +3,4 @@ __pycache__
 cloudserver/data
 cloudserver/metadata
 mongodb/data
+reverse-proxy/*.pem
