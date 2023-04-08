@@ -81,7 +81,7 @@ def post_images_to_s3(url_lst):
 
     payload = {}
     response = session.post(
-        "http://localhost:8080/s3/buckets/flipkart-media/files/_bulk?parentPath=products",
+        "https://localhost/api/product-management/s3/buckets/flipkart-media/files/_bulk?parentPath=products",
         data=payload,
         files=files,
     )
@@ -90,7 +90,7 @@ def post_images_to_s3(url_lst):
     if response.status_code == 202:
         for file_details in files:
             s3_urls.append(
-                f"http://localhost:8080/s3/buckets/flipkart-media/files?key=products%2F{urllib.parse.quote_plus(file_details[1][0])}"
+                f"https://localhost/api/product-management/s3/buckets/flipkart-media/files?key=products%2F{urllib.parse.quote_plus(file_details[1][0])}"
             )
     else:
         print("Error ", url_lst)
@@ -117,7 +117,7 @@ def convert_urls(flipkart_urls):
     bucket_name = "flipkart-media"
     for url in flipkart_urls:
         local_urls.append(
-            f"http://localhost:8080/s3/buckets/{bucket_name}/files?key=products%2F{urllib.parse.quote_plus(os.path.basename(urlparse(url).path))}"
+            f"https://localhost/api/product-management/s3/buckets/{bucket_name}/files?key=products%2F{urllib.parse.quote_plus(os.path.basename(urlparse(url).path))}"
         )
     return local_urls
 
@@ -125,14 +125,14 @@ def convert_urls(flipkart_urls):
 if __name__ == "__main__":
     # Parallelly Download Images from Flipkart and Post Images to s3
 
-    img_urls = set()
-    for item in products:
-        img_urls.update(item["imageUrlList"])
-        img_urls.update(item["productSpecifications"]["colorImgUrls"])
+    # img_urls = set()
+    # for item in products:
+    #     img_urls.update(item["imageUrlList"])
+    #     img_urls.update(item["productSpecifications"]["colorImgUrls"])
 
-    cores = multiprocessing.cpu_count()
-    with multiprocessing.Pool(4 * cores) as p:
-        p.map(post_images_to_s3, list(chunks(list(img_urls), 1500)))
+    # cores = multiprocessing.cpu_count()
+    # with multiprocessing.Pool(4 * cores) as p:
+    #     p.map(post_images_to_s3, list(chunks(list(img_urls), 1500)))
 
     # Convert Flipkart Urls to Local S3 Urls
 
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     with open(
         os.path.join(
             pathlib.Path(
-                __file__).parent.parent, "scrapped_data", "products.json"
+                __file__).parent.parent, "scrapped_data", "product_bulk_request.json"
         ),
         "w",
     ) as f:

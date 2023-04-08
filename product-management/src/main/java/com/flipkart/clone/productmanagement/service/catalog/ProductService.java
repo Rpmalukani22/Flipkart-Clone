@@ -26,6 +26,8 @@ public interface ProductService {
 
     public void createProduct(ProductRequest productRequest);
 
+    public void updateProduct(String productId, ProductRequest productRequest) throws ProductNotFoundException;
+
     public void bulkCreateProducts(List<ProductRequest> productRequestList);
 
     public void removeProductById(String productId);

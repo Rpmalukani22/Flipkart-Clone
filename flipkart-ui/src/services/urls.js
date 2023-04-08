@@ -5,20 +5,20 @@
  * -----
  * Copyright (c) 2023 Ruchitesh Malukani
  */
-const product_management_host = "localhost:8080";
+const product_management_endpoint = "localhost/api/product-management";
 export const urlService = {
-  getApiSpecs: () => `http://${product_management_host}/v3/api-docs`,
-  getBanners: () => `http://${product_management_host}/site-content/banners`,
+  getApiSpecs: () => `https://${product_management_endpoint}/v3/api-docs`,
+  getBanners: () => `https://${product_management_endpoint}/site-content/banners`,
   getProducts: (page, category) =>
-    `http://${product_management_host}/products?pageSize=${
+    `https://${product_management_endpoint}/products?pageSize=${
       page.size
     }&pageNumber=${page.number - 1}&sortBy=id&order=ASC&category=${category}`,
   getSubcategories: (category) =>
-    `http://${product_management_host}/categories/sub-categories${
+    `https://${product_management_endpoint}/categories/sub-categories${
       category ? "?category=" + category : ""
     }`,
   getBestOfDeals: () =>
-    `http://${product_management_host}/site-content/best-of-deals`,
+    `https://${product_management_endpoint}/site-content/best-of-deals`,
   getProductBySlug: (slug) =>
-    `http://${product_management_host}/products/slug/${slug}`,
+    `https://${product_management_endpoint}/products/slug/${slug}`,
 };

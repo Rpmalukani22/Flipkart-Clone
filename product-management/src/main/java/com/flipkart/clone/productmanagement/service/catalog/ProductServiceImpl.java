@@ -101,6 +101,18 @@ public class ProductServiceImpl implements ProductService {
         log.info("ProductService: product has been saved successfully!");
     }
 
+    @Override
+    public void updateProduct(String productId,ProductRequest productRequest) throws ProductNotFoundException {
+        if(productRepository.findById(productId).isPresent()){
+        Product product = productRequestToProductMapper(productRequest);
+        product.setId(productId);
+        productRepository.save(product);
+        log.info("ProductService: product has been updated successfully!");}
+        else{
+            throw new ProductNotFoundException("Requested Product with Product Id " + productId + " Not Found");
+        }
+    }
+
     private List<Category> mapCategoryPathsToCategory(List<CategoryRequest> categoryRequestList) {
         return categoryService.getValidatedCategories(categoryRequestList);
     }

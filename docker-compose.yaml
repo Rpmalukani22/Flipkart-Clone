@@ -20,7 +20,6 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 8080:8080
 
   flipkart-ui:
     build: ./flipkart-ui
@@ -38,6 +37,7 @@ services:
     #   - 8080:8080
     environment:
       - FRONT_END_WEB_ORIGIN=https://localhost
+      - ALLOWED_ORIGIN=*
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
     volumes:
@@ -116,6 +116,26 @@ services:
       - sonarqube_extensions:/opt/sonarqube/extensions
     ports:
       - "9000:9000"
+
+  weave-scope:
+    image: weaveworks/scope:latest
+    network_mode: "host"
+    pid: "host"
+    privileged: true
+    labels:
+      - "works.weave.role=system"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:rw"
+    command:
+      - "--probe.docker=true"
+
+  traffic-control:
+    image: weaveworks/scope-traffic-control:latest
+    network_mode: "host"
+    pid: "host"
+    privileged: true
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
 volumes:
   sonarqube_data:

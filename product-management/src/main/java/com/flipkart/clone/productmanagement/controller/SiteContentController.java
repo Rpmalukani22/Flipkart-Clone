@@ -15,20 +15,24 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.flipkart.clone.productmanagement.dto.sitecontent.BannerRequest;
 import com.flipkart.clone.productmanagement.dto.sitecontent.BannerResponse;
-import com.flipkart.clone.productmanagement.dto.sitecontent.BestOfDealResponse;
 import com.flipkart.clone.productmanagement.dto.sitecontent.BestOfDealRequest;
+import com.flipkart.clone.productmanagement.dto.sitecontent.BestOfDealResponse;
 import com.flipkart.clone.productmanagement.service.sitecontent.SiteContentService;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -54,13 +58,14 @@ public class SiteContentController {
    }
 
    @PostMapping(path = "/banners", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-   public BannerResponse addBanner(@RequestBody BannerRequest bannerRequest) {
+   public BannerResponse addBanner(@ModelAttribute BannerRequest bannerRequest) {
       return siteContentService.createBanner(bannerRequest);
    }
 
    @PostMapping(path = "/banners/_bulk", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-   public List<BannerResponse> addAllBanners(@RequestPart MultipartFile[] files,
-         @RequestBody String[] targetUrlList) {
+   public List<BannerResponse> addAllBanners(
+         @Parameter(description = "Files to be uploaded", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)) @RequestPart (value = "files", required = true) MultipartFile[] files,
+         @RequestParam String[] targetUrlList) {
       if (files.length != targetUrlList.length)
          throw new IllegalStateException("Please Make sure there is one to one mapping between files and target urls");
       // TODO: Create specific exception
