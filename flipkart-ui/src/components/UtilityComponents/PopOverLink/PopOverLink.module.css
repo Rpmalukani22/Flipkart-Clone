@@ -18,7 +18,6 @@
 .rectangle-base {
   position: relative;
   margin-top: 10px;
-  border-top: 20px solid inherit;
 }
 
 .rectangle-base::before {
