@@ -37,7 +37,7 @@ services:
     #   - 8080:8080
     environment:
       - FRONT_END_WEB_ORIGIN=https://localhost
-      - ALLOWED_ORIGIN=*
+      - ALLOWED_ORIGIN=https://localhost
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
     volumes:
@@ -46,11 +46,21 @@ services:
   postgresdb:
     image: postgres:15.2-alpine3.17
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-sonar}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sonar}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      KC_DB_NAME: ${KC_DB_NAME:-keycloak} 
+      KC_DB_USER: ${KC_DB_USER:-keycloak}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD:-keycloak}
     volumes:
-      - postgresql:/var/lib/postgresql
-      - postgresql_data:/var/lib/postgresql/data
+      - ./postgresdb/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./postgresdb/data:/var/lib/postgresql/data
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8090:8080
 
   mongodb:
     image: mongo:5.0.15
@@ -117,29 +127,30 @@ services:
     ports:
       - "9000:9000"
 
-  weave-scope:
-    image: weaveworks/scope:latest
-    network_mode: "host"
-    pid: "host"
-    privileged: true
-    labels:
-      - "works.weave.role=system"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:rw"
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    depends_on:
+      - postgresdb
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-keycloak}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-keycloak}
+      KC_DB: postgres
+      KC_DB_URL: ${KC_DB_URL:-jdbc:postgresql://postgresdb:5432/keycloak}
+      # KC_DB_URL_HOST:  ${KC_DB_URL_HOST:-postgresdb}
+      # KC_DB_URL_PORT:  ${KC_DB_URL_HOST:-5432}
+      KC_DB_USERNAME: ${KC_DB_USER:-keycloak}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD:-keycloak}
+      KC_HEALTH_ENABLED: "true"
+      KC_LOG_LEVEL: info
     command:
-      - "--probe.docker=true"
-
-  traffic-control:
-    image: weaveworks/scope-traffic-control:latest
-    network_mode: "host"
-    pid: "host"
-    privileged: true
+      - start-dev
+      - --import-realm
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - /home/keycloak/realm.json:/opt/keycloak/data/import/realm.json
 
 volumes:
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_logs:
-  postgresql:
-  postgresql_data:
