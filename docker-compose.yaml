@@ -33,8 +33,9 @@ services:
     depends_on:
       - mongodb
       - s3server
-    # ports:
-    #   - 8080:8080
+      - keycloak
+    ports:
+      - 8088:8080
     environment:
       - FRONT_END_WEB_ORIGIN=https://localhost
       - ALLOWED_ORIGIN=https://localhost
@@ -138,12 +139,10 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-keycloak}
       KC_DB: postgres
       KC_DB_URL: ${KC_DB_URL:-jdbc:postgresql://postgresdb:5432/keycloak}
-      # KC_DB_URL_HOST:  ${KC_DB_URL_HOST:-postgresdb}
-      # KC_DB_URL_PORT:  ${KC_DB_URL_HOST:-5432}
       KC_DB_USERNAME: ${KC_DB_USER:-keycloak}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD:-keycloak}
       KC_HEALTH_ENABLED: "true"
-      KC_LOG_LEVEL: info
+      KC_LOG_LEVEL: DEBUG
     command:
       - start-dev
       - --import-realm
