@@ -33,13 +33,15 @@ services:
     depends_on:
       - mongodb
       - s3server
-    # ports:
-    #   - 8080:8080
+    ports:
+      # - 8080:8080
+      - 5005:5005
     environment:
       - FRONT_END_WEB_ORIGIN=https://localhost
       - ALLOWED_ORIGIN=https://localhost
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
     volumes:
       - "${HOME}/.m2:/root/.m2"
 
