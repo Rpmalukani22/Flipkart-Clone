@@ -82,41 +82,40 @@ import org.springframework.stereotype.Component;
 // }
 
 @EnableMethodSecurity
-@EnableWebSecurity
 @Component
 public class WebSecurityConfig  {
 
 
-    @Bean
-    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-        return new NullAuthenticatedSessionStrategy();
-    }
+    // @Bean
+    // protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+    //     return new NullAuthenticatedSessionStrategy();
+    // }
 
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
-        grantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
-        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
-        return jwtAuthenticationConverter;
-    }
+    // @Bean
+    // public JwtAuthenticationConverter jwtAuthenticationConverter() {
+    //     JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+    //     grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+    //     grantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+    //     JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+    //     jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+    //     return jwtAuthenticationConverter;
+    // }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.
-                csrf().disable().
-                authorizeHttpRequests()
-                .requestMatchers("/api/product-management/**").authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .oauth2ResourceServer()
-                .jwt();
-        return http.build();
-    }
+    //     http.
+    //             csrf().disable().
+    //             authorizeHttpRequests()
+    //             .requestMatchers("/**").authenticated()
+    //             .and()
+    //             .sessionManagement()
+    //             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+    //             .and()
+    //             .oauth2ResourceServer()
+    //             .jwt();
+    //     return http.build();
+    // }
 
 
 }

@@ -4,33 +4,29 @@ permit-all: /public/**
 keycloak-port: 8080
 keycloak-issuer: http://localhost:8080/realms/flipkart-clone
 
-
-
 spring:
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${keycloak-issuer}
           jwk-set-uri: http://keycloak:8080/realms/flipkart-clone/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8080/realms/flipkart-clone
 
-
-
-# com:
-#   c4-soft:
-#     springaddons:
-#       security:
-#         cors:
-#         - path: /**
-#           allowed-origins: ${origins}
-#         issuers:
-#         - location: ${keycloak-issuer}
-#           username-claim: preferred_username
-#           authorities:
-#           - path: $.realm_access.roles
-#           - path: $.resource_access.*.roles
-#         permit-all:
-#         - "/v3/api-docs/**"
+com:
+  c4-soft:
+    springaddons:
+      security:
+        cors:
+          - path: /**
+            allowed-origins: ${origins}
+        issuers:
+          - location: ${keycloak-issuer}
+            username-claim: preferred_username
+            authorities:
+              - path: $.realm_access.roles
+              - path: $.resource_access.*.roles
+        permit-all:
+          - "/v3/api-docs/**"
 
 # token-endpoints:
 #   realms:
@@ -40,6 +36,4 @@ spring:
 
 logging:
   level:
-    org:
-      springframework:
-        security: trace
+    org.springframework.security: trace
