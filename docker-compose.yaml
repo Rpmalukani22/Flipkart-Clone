@@ -36,11 +36,13 @@ services:
       - keycloak
     ports:
       - 8088:8080
+      - 5005:5005
     environment:
       - FRONT_END_WEB_ORIGIN=https://localhost
       - ALLOWED_ORIGIN=https://localhost
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
+      # - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
     volumes:
       - "${HOME}/.m2:/root/.m2"
 
@@ -146,6 +148,7 @@ services:
     command:
       - start-dev
       - --import-realm
+      - --proxy edge
     volumes:
       - /home/keycloak/realm.json:/opt/keycloak/data/import/realm.json
 

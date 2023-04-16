@@ -11,6 +11,22 @@ spring:
         jwt:
           jwk-set-uri: http://keycloak:8080/realms/flipkart-clone/protocol/openid-connect/certs
           issuer-uri: http://localhost:8080/realms/flipkart-clone
+      client:
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: product-management
+            client-secret: KX7FKFPU5r4ao9zemeQLTsJkF8lBw0Wy
+            authorization-grant-type: password
+            scope: openid
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:8080/realms/flipkart-clone/protocol/openid-connect/auth
+            token-uri: http://localhost:8080/realms/flipkart-clone/protocol/openid-connect/token
+            user-info-uri: http://localhost:8080/realms/flipkart-clone/protocol/openid-connect/userinfo
+            issuer-uri: http://keycloak:8080/realms/flipkart-clone
+            user-name-attribute: preferred_username
+
 
 com:
   c4-soft:
@@ -20,7 +36,7 @@ com:
           - path: /**
             allowed-origins: ${origins}
         issuers:
-          - location: ${keycloak-issuer}
+          - location: http://keycloak:8080/realms/flipkart-clone
             username-claim: preferred_username
             authorities:
               - path: $.realm_access.roles
