@@ -15,38 +15,55 @@ import ProductDetails from "./components/Body/ProductDetails/ProductDetails";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Admin from "./components/Body/Admin/Admin";
+import { createContext, useEffect } from "react";
+import oidcConfig from "./services/oidcConfig";
+import { AuthProvider } from "react-oidc-context";
+
+
+export const KeycloakContext = createContext(null);
 
 function App() {
+  // useEffect(() => {
+  //   keycloak.init({ onLoad: "login-required" ,checkLoginIframe: false}).then(function(authenticated) {
+  //     alert(authenticated ? 'authenticated' : 'not authenticated');
+  //     alert(authenticated ? 'authenticated' : 'not authenticated');
+
+  // }).catch(function(e) {
+  //     console.log('failed to initialize',e);
+  // });
+  // }, []);
   return (
-    <div className="App">
-      <Router>
-        <StyledEngineProvider injectFirst>
-          <Header />
-          <Routes>
-            <Route exact path="/" element={<Home />}></Route>
-            <Route
-              exact
-              path="/categories"
-              element={<CategoryProducts />}
-            ></Route>
-            <Route
-              exact
-              path="/become-a-seller"
-              element={<BecomeSeller />}
-            ></Route>
-            <Route exact path="/about"></Route>
-            <Route exact path="/contact"></Route>
-            <Route exact path="/admin" element={<Admin />}></Route>
-            <Route
-              exact
-              path="/:productSlug"
-              element={<ProductDetails />}
-            ></Route>
-          </Routes>
-          <Footer />
-        </StyledEngineProvider>
-      </Router>
-    </div>
+    <AuthProvider {...oidcConfig}>
+      <div className="App">
+        <Router>
+          <StyledEngineProvider injectFirst>
+            <Header />
+            <Routes>
+              <Route exact path="/" element={<Home />}></Route>
+              <Route
+                exact
+                path="/categories"
+                element={<CategoryProducts />}
+              ></Route>
+              <Route
+                exact
+                path="/become-a-seller"
+                element={<BecomeSeller />}
+              ></Route>
+              <Route exact path="/about"></Route>
+              <Route exact path="/contact"></Route>
+              <Route exact path="/admin" element={<Admin />}></Route>
+              <Route
+                exact
+                path="/:productSlug"
+                element={<ProductDetails />}
+              ></Route>
+            </Routes>
+            <Footer />
+          </StyledEngineProvider>
+        </Router>
+      </div>
+    </AuthProvider>
   );
 }
 

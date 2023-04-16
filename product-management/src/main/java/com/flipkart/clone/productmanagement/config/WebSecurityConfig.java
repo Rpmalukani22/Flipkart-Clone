@@ -4,13 +4,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+// import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtIssuerAuthenticationManagerResolver;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.stereotype.Component;
+
+// import com.c4_soft.springaddons.security.oauth2.config.synchronised.ResourceServerExpressionInterceptUrlRegistryPostProcessor;
 
 // import java.util.Collection;
 // import java.util.Map;
@@ -81,41 +85,81 @@ import org.springframework.stereotype.Component;
 
 // }
 
-@EnableMethodSecurity
+// @EnableMethodSecurity
 @Component
-public class WebSecurityConfig  {
-
+@EnableWebSecurity
+@EnableMethodSecurity
+public class WebSecurityConfig {
 
     // @Bean
     // protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-    //     return new NullAuthenticatedSessionStrategy();
+    // return new NullAuthenticatedSessionStrategy();
     // }
 
     // @Bean
     // public JwtAuthenticationConverter jwtAuthenticationConverter() {
-    //     JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-    //     grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
-    //     grantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
-    //     JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-    //     jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
-    //     return jwtAuthenticationConverter;
+    // JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new
+    // JwtGrantedAuthoritiesConverter();
+    // grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+    // grantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+    // JwtAuthenticationConverter jwtAuthenticationConverter = new
+    // JwtAuthenticationConverter();
+    // jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+    // return jwtAuthenticationConverter;
     // }
 
     // @Bean
-    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
+    // Exception {
 
-    //     http.
-    //             csrf().disable().
-    //             authorizeHttpRequests()
-    //             .requestMatchers("/**").authenticated()
-    //             .and()
-    //             .sessionManagement()
-    //             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-    //             .and()
-    //             .oauth2ResourceServer()
-    //             .jwt();
-    //     return http.build();
+    // http.
+    // csrf().disable().
+    // authorizeHttpRequests()
+    // .requestMatchers("/**").authenticated()
+    // .and()
+    // .sessionManagement()
+    // .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+    // .and()
+    // .oauth2ResourceServer()
+    // .jwt();
+    // return http.build();
     // }
 
+    @Bean
+    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+        return new NullAuthenticatedSessionStrategy();
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return jwtAuthenticationConverter;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // JwtIssuerAuthenticationManagerResolver authenticationManagerResolver = new JwtIssuerAuthenticationManagerResolver(
+        //         // "http://localhost:8080/auth/realms/flipkart-clone",
+        //         "http://keycloak/auth/realms/flipkart-clone",
+        //         // "https://localhost/auth/realms/flipkart-clone");
+
+        http.
+        // csrf().disable().
+                authorizeHttpRequests()
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .oauth2ResourceServer(
+                    // oauth2 -> oauth2.authenticationManagerResolver(authenticationManagerResolver)
+                    )
+                .jwt();
+        return http.build();
+    }
 
 }

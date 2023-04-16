@@ -145,10 +145,15 @@ services:
       KC_DB_PASSWORD: ${KC_DB_PASSWORD:-keycloak}
       KC_HEALTH_ENABLED: "true"
       KC_LOG_LEVEL: DEBUG
+      KC_HTTP_RELATIVE_PATH: /auth
+      HOSTNAME: https://localhost/auth
+      KC_PROXY: edge
+      KC_HOSTNAME_STRICT: false
+      KC_HTTP_ENABLED: true
+      KC_TRANSACTION_XA_ENABLED: false
     command:
       - start-dev
       - --import-realm
-      - --proxy edge
     volumes:
       - /home/keycloak/realm.json:/opt/keycloak/data/import/realm.json
 
