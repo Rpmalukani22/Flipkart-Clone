@@ -17,8 +17,8 @@ const keycloak = new Keycloak({
 
 const oidcConfig = {
   authority: "https://localhost/auth/realms/flipkart-clone",
-  client_id: "flipkart-clone",
-  redirect_uri: "https://localhost",
+  client_id: "flipkart-clone-ui",
+  redirect_uri: "https://localhost/",
   onSigninCallback: () => {
     window.history.replaceState({}, document.title, window.location.pathname);
   }

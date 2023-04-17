@@ -5,16 +5,22 @@
  * -----
  * Copyright (c) 2023 Ruchitesh Malukani
  */
-import React from "react";
+import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
+import { AuthProvider } from "react-oidc-context";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import oidcConfig from "./services/oidcConfig";
+
+export const KeycloakContext = createContext(null);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider {...oidcConfig}>
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );
 

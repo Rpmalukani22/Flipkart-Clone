@@ -1,6 +1,7 @@
 package com.flipkart.clone.productmanagement.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -150,6 +151,7 @@ public class WebSecurityConfig {
         http.
         // csrf().disable().
                 authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, "/s3/buckets/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

@@ -13,12 +13,8 @@ import { useAuth, hasAuthParams } from "react-oidc-context";
 export default function useGetData(url, dependencies = []) {
   const auth = useAuth();
   const [response, setResponse] = useState();
-  useEffect(() => {
-    if (!hasAuthParams() && !auth.isAuthenticated) {
-        auth.signinRedirect();
-    }
-  }, [auth]);
-
+  console.log("auth ", auth);
+  console.log("token ", auth?.user?.access_token);
   useEffect(() => {
     if (auth.isAuthenticated) {
       axios
@@ -34,6 +30,6 @@ export default function useGetData(url, dependencies = []) {
           console.log(`Failed to Get response from ${url} error ${err}`);
         });
     }
-  }, dependencies);
+  }, [...dependencies, auth]);
   return response;
 }
