@@ -152,6 +152,7 @@ public class WebSecurityConfig {
         // csrf().disable().
                 authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/s3/buckets/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/site-content/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

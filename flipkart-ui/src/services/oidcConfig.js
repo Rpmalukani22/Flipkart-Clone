@@ -7,13 +7,7 @@
  */
 
 import Keycloak from "keycloak-js";
-
-const keycloak = new Keycloak({
-  url: "https://localhost/auth",
-  realm: "flipkart-clone",
-  clientId: "flipkart-clone-ui",
-});
-
+import { WebStorageStateStore } from "oidc-client-ts";
 
 const oidcConfig = {
   authority: "https://localhost/auth/realms/flipkart-clone",
@@ -21,7 +15,8 @@ const oidcConfig = {
   redirect_uri: window.location.href,
   onSigninCallback: () => {
     window.history.replaceState({}, document.title, window.location.pathname);
-  }
+  },
+  userStore: new WebStorageStateStore({ store: window.localStorage }),
 };
 
 export default oidcConfig;

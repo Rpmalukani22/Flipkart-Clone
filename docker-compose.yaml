@@ -27,7 +27,7 @@ services:
       - product-management
     volumes:
       - ./flipkart-ui:/app
-    command: "npm install && npm start -- --port 80"
+    command: "tail -F anything"
     # ports:
     #   - 3000:3000
 
@@ -149,11 +149,12 @@ services:
       KC_HEALTH_ENABLED: "true"
       KC_LOG_LEVEL: DEBUG
       KC_HTTP_RELATIVE_PATH: /auth
-      HOSTNAME: https://localhost/auth
-      KC_PROXY: edge
-      KC_HOSTNAME_STRICT: false
-      KC_HTTP_ENABLED: true
-      KC_TRANSACTION_XA_ENABLED: false
+      # HOSTNAME: https://localhost/auth
+      # KC_PROXY: edge
+      # KC_HOSTNAME_STRICT: false
+      # KC_HTTP_ENABLED: true
+      # KC_TRANSACTION_XA_ENABLED: false
+      
     command:
       - start-dev
       - --import-realm
