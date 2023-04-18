@@ -6,19 +6,37 @@
  * Copyright (c) 2023 Ruchitesh Malukani
  */
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { KeycloakContext } from "../App";
+import { useAuth, hasAuthParams } from "react-oidc-context";
 
 export default function useGetData(url, dependencies = []) {
+  const auth = useAuth();
   const [response, setResponse] = useState();
   useEffect(() => {
-    axios
-      .get(url)
-      .then((res) => {
-        setResponse(res.data);
-      })
-      .catch((err) => {
-        console.log(`Failed to Get response from ${url} error ${err}`);
-      });
-  }, dependencies);
+    if (auth.isAuthenticated) {
+      axios
+        .get(url, {
+          headers: {
+            Authorization: `Bearer ${auth.user.access_token}`,
+          },
+        })
+        .then((res) => {
+          setResponse(res.data);
+        })
+        .catch((err) => {
+          console.log(`Failed to Get response from ${url} error ${err}`);
+        });
+    } else {
+      axios
+        .get(url)
+        .then((res) => {
+          setResponse(res.data);
+        })
+        .catch((err) => {
+          console.log(`Failed to Get response from ${url} error ${err}`);
+        });
+    }
+  }, [...dependencies, auth]);
   return response;
 }

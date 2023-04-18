@@ -15,6 +15,7 @@ import { categoryNavigationImages } from "../../../services/constants";
 import { urlService } from "../../../services/urls";
 import BestOfDeal from "./BestOfDeal/BestOfDeal";
 import CarouselWrapper from "./CarouselWrapper/CarouselWrapper";
+import About from "./About/About";
 
 export default function Home() {
   const banners = useGetData(urlService.getBanners());
@@ -61,6 +62,9 @@ export default function Home() {
             </Box>
           );
         })}
+      <Box className={`${styles["home-container"]}`} style={{marginTop:"2.5%"}}>
+        <About></About>
+      </Box>
     </Box>
   );
 }

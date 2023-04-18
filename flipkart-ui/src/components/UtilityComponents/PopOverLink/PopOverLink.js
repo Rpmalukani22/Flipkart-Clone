@@ -25,10 +25,9 @@ const PopOverLink = (props) => {
   let clickable = {
     clickableStyle: {},
     clickableClassName: "",
-    clickableText: "Hover To Open PopOver",
+    clickableText: "Hover To Open PopOver"
   };
   if (props.clickable) clickable = { ...clickable, ...props.clickable };
-
   return (
     <div>
       <Button
@@ -36,6 +35,7 @@ const PopOverLink = (props) => {
         className={clickable.clickableClassName}
         variant="contained"
         {...bindHover(popupState)}
+        onClick={clickable.onClick}
       >
         {clickable.clickableText}
       </Button>

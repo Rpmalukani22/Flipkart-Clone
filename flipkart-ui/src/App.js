@@ -15,8 +15,32 @@ import ProductDetails from "./components/Body/ProductDetails/ProductDetails";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Admin from "./components/Body/Admin/Admin";
+import { hasAuthParams, useAuth } from "react-oidc-context";
+import { useEffect } from "react";
+import { Box, CircularProgress } from "@mui/material";
 
 function App() {
+  const auth = useAuth();
+  useEffect(() => {
+    // if (!hasAuthParams() && !auth.isAuthenticated) {
+    //   auth.signinRedirect();
+    // }
+  }, [auth]);
+  if (auth.isLoading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "90vh",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <div className="App">
       <Router>
@@ -34,7 +58,8 @@ function App() {
               path="/become-a-seller"
               element={<BecomeSeller />}
             ></Route>
-            <Route exact path="/about"></Route>
+            {/* <Route exact path="/signup" element={SignupForm}></Rout
+            e> */}
             <Route exact path="/contact"></Route>
             <Route exact path="/admin" element={<Admin />}></Route>
             <Route
