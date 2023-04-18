@@ -25,6 +25,9 @@ services:
     build: ./flipkart-ui
     depends_on:
       - product-management
+    volumes:
+      - ./flipkart-ui:/app
+    command: "npm install && npm start -- --port 80"
     # ports:
     #   - 3000:3000
 
