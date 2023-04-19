@@ -14,6 +14,7 @@ This project is a clone of the popular e-commerce website Flipkart, built using 
 This project was built using the following technologies:
 
 - React
+- Redux Toolkit
 - Material-UI
 - Spring Boot
 - Python
