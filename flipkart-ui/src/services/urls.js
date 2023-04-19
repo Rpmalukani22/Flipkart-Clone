@@ -1,3 +1,5 @@
+import oidcConfig from "./oidcConfig";
+
 /*
  * Author: Ruchitesh Malukani
  * Modified By: Ruchitesh Malukani
@@ -21,4 +23,5 @@ export const urlService = {
     `https://${product_management_endpoint}/site-content/best-of-deals`,
   getProductBySlug: (slug) =>
     `https://${product_management_endpoint}/products/slug/${slug}`,
+  getSignUpLink:()=>`${oidcConfig.authority}/protocol/openid-connect/registrations?client_id=flipkart-clone-ui&response_type=code&scope=openid%20email&redirect_uri=${encodeURI(oidcConfig.redirect_uri)}`
 };

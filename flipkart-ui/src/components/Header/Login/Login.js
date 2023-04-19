@@ -22,6 +22,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useAuth } from "react-oidc-context";
+import { urlService } from "../../../services/urls";
 export default function Login() {
   const auth = useAuth();
   const loginListItems = [
@@ -80,7 +81,7 @@ export default function Login() {
                   }}
                 >
                   <b>New Customer?</b>{" "}
-                  <Link to="/signup" style={{ textDecoration: "none" }}>
+                  <Link onClick={()=>{window.location = urlService.getSignUpLink()}} style={{ textDecoration: "none" }}>
                     <b>SignUp</b>
                   </Link>
                 </Typography>
