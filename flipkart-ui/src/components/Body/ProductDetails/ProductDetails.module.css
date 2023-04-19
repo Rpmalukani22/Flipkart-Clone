@@ -105,6 +105,37 @@
     border: 2px solid #2879F0
 }
 
+.add-to-cart {
+    background-color: #FF9F00;
+    color: white;
+    border-radius: 0;
+    width: 180px;
+    height: 56px;
+    margin: 2%;
+}
+
+.buy-now {
+    background-color: #FB641B;
+    color: white;
+    border-radius: 0;
+    width: 180px;
+    height: 56px;
+    margin: 2%;
+}
+
+.add-to-cart:hover {
+    background-color: #FF9F00;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transform: scale(1.05);
+
+}
+
+.buy-now:hover {
+    background-color: #FB641B;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transform: scale(1.05);
+}
+
 /* .display-img:hover::before{
     position: absolute;
     z-index: 25;

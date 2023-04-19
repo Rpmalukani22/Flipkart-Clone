@@ -18,6 +18,7 @@ import Admin from "./components/Body/Admin/Admin";
 import { hasAuthParams, useAuth } from "react-oidc-context";
 import { useEffect } from "react";
 import { Box, CircularProgress } from "@mui/material";
+import Cart from "./components/Body/Cart/Cart";
 
 function App() {
   const auth = useAuth();
@@ -58,6 +59,7 @@ function App() {
               path="/become-a-seller"
               element={<BecomeSeller />}
             ></Route>
+            <Route exact path="/cart" element={<Cart/>}></Route>
             {/* <Route exact path="/signup" element={SignupForm}></Rout
             e> */}
             <Route exact path="/contact"></Route>

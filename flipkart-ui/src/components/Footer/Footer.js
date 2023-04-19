@@ -61,7 +61,7 @@ const Footer = () => {
       <Grid container>
         {Object.keys(footerLinks).map((linkHeading) => {
           return (
-            <Grid item xs={12} sm={6} md={1.75} sx={{ textAlign: "center" }}>
+            <Grid item xs={12} sm={6} md={1.75} sx={{ textAlign: "center" }} key={linkHeading}>
               <List>
                 <ListItem>
                   <Link
@@ -76,7 +76,7 @@ const Footer = () => {
                   </Link>
                 </ListItem>
                 {footerLinks[linkHeading].map((linkItem) => (
-                  <ListItem sx={{ m: 0, py: 0 }}>
+                  <ListItem sx={{ m: 0, py: 0 }} key={linkItem}>
                     <Link
                       variant="caption"
                       sx={{ color: "white", textDecoration: "none" }}

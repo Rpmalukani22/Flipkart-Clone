@@ -8,12 +8,14 @@
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import StarIcon from "@mui/icons-material/Star";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Breadcrumbs,
   Button,
+  Container,
   Grid,
   ImageList,
   ImageListItem,
@@ -22,7 +24,7 @@ import {
   ListItem,
   ListItemIcon,
   Table,
-  Typography
+  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
@@ -31,8 +33,11 @@ import useGetData from "../../../hooks/useGetData";
 import { urlService } from "../../../services/urls";
 import CarouselWrapper from "../Home/CarouselWrapper/CarouselWrapper";
 import styles from "./ProductDetails.module.css";
+import { addItem } from "../../../features/cart/cartSlice";
 
 export default function ProductDetails() {
+  const dispatch = useDispatch();
+
   let { productSlug } = useParams();
   let { currentImgIndex, setCurrentImgIndex } = useState(0);
 
@@ -81,30 +86,43 @@ export default function ProductDetails() {
         className={`${styles["display-img"]}`}
       >
         <Box style={{ position: "sticky", top: 56, left: 0, width: "100%" }}>
-          <CarouselWrapper
-            carouselSettings={{
-              autoPlay: {},
-              modules: [],
-              // onActiveIndexChange:(swiper)=>{
-              //   alert(swiper.activeIndex)
-              //   setCurrentImgIndex(swiper.activeIndex)
-              // }
-            }}
-          >
-            {product?.imageUrlList.map((url) => {
-              return (
-                <img
-                  style={{
-                    objectFit: "contain",
-                    height: "100%",
-                    width: "100%",
-                  }}
-                  key={url}
-                  src={url}
-                />
-              );
-            })}
-          </CarouselWrapper>
+          <Container sx={{ mt: 2 }}>
+            <CarouselWrapper
+              carouselSettings={{
+                autoPlay: {},
+                modules: [],
+                // onActiveIndexChange:(swiper)=>{
+                //   alert(swiper.activeIndex)
+                //   setCurrentImgIndex(swiper.activeIndex)
+                // }
+              }}
+            >
+              {product?.imageUrlList.map((url) => {
+                return (
+                  <img
+                    style={{
+                      objectFit: "contain",
+                      height: "100%",
+                      width: "100%",
+                    }}
+                    key={url}
+                    src={url}
+                  />
+                );
+              })}
+            </CarouselWrapper>
+          </Container>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              className={styles["add-to-cart"]}
+              onClick={() => {
+                dispatch(addItem(product));
+              }}
+            >
+              ADD TO CART
+            </Button>
+            <Button className={styles["buy-now"]}>BUY NOW</Button>
+          </Box>
         </Box>
       </Grid>
       <Grid className={styles["details"]}>

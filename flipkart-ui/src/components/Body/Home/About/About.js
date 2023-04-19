@@ -69,6 +69,7 @@ export default function About() {
               content[heading].map((contentItem) => (
                 <Typography
                   variant="body1"
+                  key={contentItem}
                   sx={{ fontSize: "0.65rem", color: "#878787", my: 1 }}
                 >
                   {contentItem}
