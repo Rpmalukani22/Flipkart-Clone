@@ -25,6 +25,9 @@ services:
     build: ./flipkart-ui
     depends_on:
       - product-management
+    volumes:
+      - ./flipkart-ui:/app
+    command: "tail -F anything"
     # ports:
     #   - 3000:3000
 
@@ -33,15 +36,16 @@ services:
     depends_on:
       - mongodb
       - s3server
+      - keycloak
     ports:
-      # - 8080:8080
+      - 8088:8080
       - 5005:5005
     environment:
       - FRONT_END_WEB_ORIGIN=https://localhost
       - ALLOWED_ORIGIN=https://localhost
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
-      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
+      # - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
     volumes:
       - "${HOME}/.m2:/root/.m2"
 
@@ -140,12 +144,17 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-keycloak}
       KC_DB: postgres
       KC_DB_URL: ${KC_DB_URL:-jdbc:postgresql://postgresdb:5432/keycloak}
-      # KC_DB_URL_HOST:  ${KC_DB_URL_HOST:-postgresdb}
-      # KC_DB_URL_PORT:  ${KC_DB_URL_HOST:-5432}
       KC_DB_USERNAME: ${KC_DB_USER:-keycloak}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD:-keycloak}
       KC_HEALTH_ENABLED: "true"
-      KC_LOG_LEVEL: info
+      KC_LOG_LEVEL: DEBUG
+      KC_HTTP_RELATIVE_PATH: /auth
+      # HOSTNAME: https://localhost/auth
+      # KC_PROXY: edge
+      # KC_HOSTNAME_STRICT: false
+      # KC_HTTP_ENABLED: true
+      # KC_TRANSACTION_XA_ENABLED: false
+      
     command:
       - start-dev
       - --import-realm

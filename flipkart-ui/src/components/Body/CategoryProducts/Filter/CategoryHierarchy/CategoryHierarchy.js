@@ -41,7 +41,7 @@ export function CategoryHierarchy(props) {
   }, [currentCategory]);
   const response = useGetData(urlService.getSubcategories(currentCategory), [
     currentCategory,
-  ]);
+  ],true);
   const getCategoryButtons = (category, disabled = false) => {
     return (
       <Button

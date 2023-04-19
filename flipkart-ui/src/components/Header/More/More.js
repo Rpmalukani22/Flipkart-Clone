@@ -39,7 +39,7 @@ export default function More(props) {
         clickableClassName: props.className,
         clickableText: (
           <>
-            More <ExpandMoreIcon sx={{ fontSize: "0.95rem" }} />
+            More <ExpandMoreIcon sx={{ mt:0.3 }} />
           </>
         ),
       }}

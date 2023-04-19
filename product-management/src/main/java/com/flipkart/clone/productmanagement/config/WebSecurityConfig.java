@@ -1,7 +1,7 @@
 package com.flipkart.clone.productmanagement.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,16 +11,18 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.stereotype.Component;
 
-@EnableMethodSecurity
+@Component
 @EnableWebSecurity
-@Configuration
-public class WebSecurityConfig  {
-    
+@EnableMethodSecurity
+public class WebSecurityConfig {
+
     @Bean
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new NullAuthenticatedSessionStrategy();
     }
+
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
@@ -34,13 +36,10 @@ public class WebSecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.
-                csrf().disable().
-                authorizeHttpRequests()
-                // .requestMatchers("/**/swagger.json").permitAll()
-                .requestMatchers("/categories").hasRole( "USER")
-                .requestMatchers("/**").authenticated()
-                .anyRequest().permitAll()
+        http.authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, "/s3/buckets/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/site-content/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -49,4 +48,5 @@ public class WebSecurityConfig  {
                 .jwt();
         return http.build();
     }
+
 }
