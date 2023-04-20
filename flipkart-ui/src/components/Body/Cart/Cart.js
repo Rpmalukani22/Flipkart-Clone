@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./Cart.module.css";
 import CartItems from "./CartItems/CartItems";
 import { useAuth } from "react-oidc-context";
+import TotalView from "./TotalView";
 
 export default function Cart() {
   const auth = useAuth();
@@ -15,7 +16,7 @@ export default function Cart() {
           lg={8}
           sx={{ justifyContent: "flex-start" }}
         >
-          <Grid
+          <Grid item
             lg={12}
             className={`${styles["cart-items-container"]} ${styles["delivery-addr"]}`}
           >
@@ -23,12 +24,12 @@ export default function Cart() {
               Deliver to: {auth?.user?.profile?.name} {auth?.user?.profile?.address?.postal_code}
             </Typography>
           </Grid>
-          <Grid lg={12} className={`${styles["cart-items-container"]} `}>
+          <Grid item lg={12} className={`${styles["cart-items-container"]} `}>
             <CartItems />
           </Grid>
         </Grid>
         <Grid className={`${styles["cart-items-container"]} `} item lg={3}>
-          Total
+          <TotalView></TotalView>
         </Grid>
       </Grid>
     </Container>

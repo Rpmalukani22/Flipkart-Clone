@@ -35,19 +35,21 @@ import CarouselWrapper from "../Home/CarouselWrapper/CarouselWrapper";
 import styles from "./ProductDetails.module.css";
 import { addItem } from "../../../features/cart/cartSlice";
 
+const getINR = (number) => {
+  return number.toLocaleString("en-IN", {
+    maximumFractionDigits: 0,
+    style: "currency",
+    currency: "INR",
+  });
+};
+
 export default function ProductDetails() {
   const dispatch = useDispatch();
 
   let { productSlug } = useParams();
   let { currentImgIndex, setCurrentImgIndex } = useState(0);
 
-  const getINR = (number) => {
-    return number.toLocaleString("en-IN", {
-      maximumFractionDigits: 0,
-      style: "currency",
-      currency: "INR",
-    });
-  };
+  
   const product = useGetData(urlService.getProductBySlug(productSlug));
   let categories = product?.categoryList.map((categoryPathObj) => {
     return categoryPathObj?.categoryPath
@@ -616,3 +618,5 @@ export default function ProductDetails() {
     </Grid>
   );
 }
+
+export {getINR};

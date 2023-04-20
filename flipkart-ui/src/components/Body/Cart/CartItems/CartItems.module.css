@@ -1,0 +1,36 @@
+.assured {
+    max-height: 21px;
+    max-width: 77px;
+    margin-left: 1%;
+}
+
+.flipkart-text-450 {
+    color: #2874f0;
+    font-family: Roboto, sans-serif, Arial;
+    font-weight: 450;
+    text-decoration: none;
+
+}
+
+.price-box {
+
+    display: flex;
+    justify-content: flex-start;
+    gap: 1;
+    align-items: center;
+
+}
+
+.price-box #price {
+    font-size: 1.75rem;
+    font-weight: 500;
+}
+
+.price-box #del-price {
+    font-size: 1rem;
+    color: #878787;
+}
+
+.price-box #discount-percent {
+    color: #26a541
+}
