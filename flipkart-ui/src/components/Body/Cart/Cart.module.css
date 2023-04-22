@@ -3,6 +3,7 @@
     flex-direction: column;
     background: #F1F3F6;
     min-height: 90vh;
+    height:100%;
     width: 100%;    
 }
 
@@ -12,6 +13,9 @@
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .16);
     background: white;
     flex-wrap: wrap;
+    height: auto;
+    margin: 1%;
+    
 }
 
 .cart-item{
@@ -24,7 +28,12 @@
 }
 
 .delivery-addr{
-    background-color: yellow;
-    max-height: 10%;
+    background-color: white;
+    min-height: 50px;
     border-radius: 5px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 2.5%;
+    align-items: center;
+
 }

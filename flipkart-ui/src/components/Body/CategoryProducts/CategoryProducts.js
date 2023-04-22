@@ -7,7 +7,7 @@
  */
 import React, { useEffect } from "react";
 
-import { Pagination } from "@mui/material";
+import { CircularProgress, Pagination } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
@@ -36,11 +36,26 @@ export default function CategoryProducts() {
       return { ...prev, number: value };
     });
   };
-  const products = useGetData(
+  const [products, isLoading] = useGetData(
     urlService.getProducts(page, searchParams.get("category") || ""),
-    [page, searchParams]
+    [page, searchParams],
+    true
   );
-
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "90vh",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <Grid container className={styles["container"]}>
       <Grid

@@ -12,17 +12,20 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  CircularProgress,
   IconButton,
   Link as MuiLink,
+  Stack,
   Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useGetData from "../../../../hooks/useGetData";
 import styles from "./ProductCard.module.css";
 
 export function ProductCard(props) {
+  const [imgLoading, setImgLoading] = useState(true);
   const getINR = (number) => {
     return number.toLocaleString("en-IN", {
       maximumFractionDigits: 0,
@@ -32,6 +35,7 @@ export function ProductCard(props) {
   };
 
   const product = useGetData(props.productUrl);
+  // const imgLoader = ()=>
   return (
     <MuiLink
       sx={{ textDecoration: "none" }}
@@ -47,11 +51,28 @@ export function ProductCard(props) {
           }
         />
         <CardMedia
-          component="img"
-          image={product?.["imageUrlList"]?.[0] || ""}
-          alt="Product Image"
-          className={styles["img-container"]}
-        />
+        >
+          {imgLoading && (
+             <Box
+             sx={{
+               minHeight: "100%",
+               width: "100%",
+               display: "flex",
+               justifyContent: "center",
+               alignItems: "center",
+             }}
+           >
+             <CircularProgress />
+           </Box>
+          )}
+          {
+            <img
+              className={styles["img-container"]}
+              onLoad={() => setImgLoading(false)}
+              src={product?.["imageUrlList"]?.[0] || ""}
+            />
+          }
+        </CardMedia>
         <CardContent>
           <Typography variant="subtitle2">{product?.brand}</Typography>
           <MuiLink

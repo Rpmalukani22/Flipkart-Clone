@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import styles from "./Cart.module.css";
 import CartItems from "./CartItems/CartItems";
@@ -21,8 +21,9 @@ export default function Cart() {
             className={`${styles["cart-items-container"]} ${styles["delivery-addr"]}`}
           >
             <Typography variant="body1">
-              Deliver to: {auth?.user?.profile?.name} {auth?.user?.profile?.address?.postal_code}
+              Deliver to: {auth?.user?.profile?.name}, {auth?.user?.profile?.address?.postal_code || "2053 Denver Avenue, 92501"}
             </Typography>
+            <Button> Change </Button>
           </Grid>
           <Grid item lg={12} className={`${styles["cart-items-container"]} `}>
             <CartItems />

@@ -100,7 +100,7 @@ export default function CartItems({ items }) {
             sx={{
               p: 2,
               // border: "1px solid blue",
-              width: "60%",
+              width: "50%",
               height: "auto",
             }}
           >
@@ -160,13 +160,13 @@ export default function CartItems({ items }) {
             sx={{
               p: 2,
               // border: "1px solid blue",
-              width: "5%",
+              width: "20%",
               height: "auto",
             }}
           >
-            <Box sx={{display:"flex",justifyContent:"center", flexDirection:"column",height:"100%"}}>
-              <Typography sx={{ p: 1 }}>
-                <b>{getINR(item.price * item.quantity)}</b>
+            <Box sx={{display:"flex",justifyContent:"center",alignItems:"center", height:"100%",flexDirection:"column"}}>
+              <Typography sx={{ p: 1,border:"1px solid #c4c4c4" }}>
+                {item.price} X {item.quantity} = <b>{getINR(item.price * item.quantity)}</b>
               </Typography>
             </Box>
           </Grid>

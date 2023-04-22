@@ -30,8 +30,14 @@
 .img-container {
     padding: 2%;
     height: 250px;
+    /* border: 1px solid red; */
     object-fit: contain;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
 }
+
 
 .product-title {
     text-decoration: none;
