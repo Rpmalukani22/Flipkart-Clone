@@ -58,10 +58,10 @@ docker-compose up -d
 
 ## Features
 
-- [ ] Browse and search for products
-- [ ] Add products to your cart
+- [x] Browse and search for products
+- [x] Add,Remove products to your cart
 - [ ] Checkout and complete your purchase
-- [ ] View your order history
+- [x] Filter Products by various attributes
 
 ## License
 
