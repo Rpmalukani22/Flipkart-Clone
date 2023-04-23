@@ -45,7 +45,7 @@ services:
       - ALLOWED_ORIGIN=https://localhost
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
-      # - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
     volumes:
       - "${HOME}/.m2:/root/.m2"
 
@@ -149,6 +149,8 @@ services:
       KC_HEALTH_ENABLED: "true"
       KC_LOG_LEVEL: DEBUG
       KC_HTTP_RELATIVE_PATH: /auth
+      PROXY_ADDRESS_FORWARDING: "true"
+      KC_PROXY: edge
     command:
       - start-dev
       - --import-realm

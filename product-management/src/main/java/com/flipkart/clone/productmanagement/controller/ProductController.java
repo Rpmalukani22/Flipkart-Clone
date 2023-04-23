@@ -7,8 +7,11 @@
  */
 package com.flipkart.clone.productmanagement.controller;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.opensearch.action.search.SearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -31,6 +34,7 @@ import com.flipkart.clone.productmanagement.commons.exception.ProductNotFoundExc
 import com.flipkart.clone.productmanagement.dto.catalog.ProductRequest;
 import com.flipkart.clone.productmanagement.dto.catalog.ProductResponse;
 import com.flipkart.clone.productmanagement.service.catalog.ProductService;
+import com.flipkart.clone.productmanagement.service.search.SearchService;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.Min;
@@ -42,6 +46,9 @@ import jakarta.validation.constraints.Min;
 public class ProductController {
     @Autowired
     ProductService productService;
+
+    @Autowired
+    SearchService searchService;
 
     @GetMapping("/id/{id}")
     public ProductResponse getProductById(@PathVariable String id) throws ProductNotFoundException {
@@ -91,6 +98,14 @@ public class ProductController {
     public void removeProducts(@RequestParam List<String> productIdList) {
         productService.bulkRemoveProducts(productIdList);
     }
+
+    @PostMapping("/search/")
+    public SearchResponse getSearchResponse(@RequestParam String query, @RequestParam int from, @RequestParam int size,
+            @RequestBody Map<String, Object> filterMap,
+            @RequestParam String... indices) throws Exception {
+        return searchService.findAll(query, filterMap, from, size, indices);
+    }
+
 }
 
 // TODO: Exception Handling with Status Codes
