@@ -23,6 +23,8 @@ This project was built using the following technologies:
 - MongoDB
 - Cloud Storage (scality zenko cloudserver, AWS S3)
 - Docker
+- OpenSearch
+- Logstash
 
 ## Getting Started
 
