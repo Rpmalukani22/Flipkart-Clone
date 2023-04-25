@@ -97,7 +97,9 @@ def post_images_to_s3(url_lst):
     return s3_urls
 
 
-def set_category_path(product):
+def refactor_product(product):
+    if(product["discountedPrice"]==0):
+        product["discountedPrice"]=product["retailPrice"]
     try:
         path_items = product.pop("categoryPaths")[0].split(">>")
     except Exception as e:
@@ -143,7 +145,7 @@ if __name__ == "__main__":
         )
 
     # Setup category path i.e. Remove Home, Remove Product name from scrapped path
-    product_requests = list(map(set_category_path, products))
+    product_requests = list(map(refactor_product, products))
 
     # Save Product Requests
     with open(

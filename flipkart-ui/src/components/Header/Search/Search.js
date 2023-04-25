@@ -5,22 +5,49 @@
  * -----
  * Copyright (c) 2023 Ruchitesh Malukani
  */
-import React from "react";
-import styles from "./Search.module.css";
-import { Box } from "@mui/system";
-import { IconButton, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { Box, IconButton, InputBase, TextField } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import styles from "./Search.module.css";
 
-export default function Search() {
+const Search = () => {
+  const [options, setOptions] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    const fetchOptions = async () => {
+      const response = await axios.get(
+        `https://localhost/api/product-management/products/search/autocomplete?prefix=${inputValue}`
+      );
+      setOptions(response.data);
+    };
+
+    fetchOptions();
+  }, [inputValue]);
+
   return (
-    <InputBase
-      placeholder="Search for products, brands and more"
-      className={styles["search-bar"]}
-      endAdornment={
-        <IconButton className={styles["search-button"]}>
-          <SearchIcon className={styles["search-icon"]} />
-        </IconButton>
-      }
+    <Autocomplete
+      options={options}
+      // sx={{
+      //   ".autocomplete-root": { zIndex: 1000, position: "relative" },
+      //   ".autocomplete-paper": {
+      //     position: "absolute !important",
+      //     zIndex: "1001 !important",
+      //   },
+      // }}
+      getOptionLabel={(option) => option}
+      renderInput={(params) => (
+        <TextField
+        className={styles["search-bar"]}
+          {...params}
+          placeholder="Search for products, brands and more"
+          onChange={(event) => setInputValue(event.target.value)}
+        />
+      )}
     />
   );
-}
+};
+
+export default Search;

@@ -1,0 +1,17 @@
+.page-wrapper {
+    /* display: flex;
+    flex-direction: column; */
+    /* gap: 1; */
+    background: #F1F3F6;
+    min-height: 90vh;
+    padding: 1% 0.5%;
+}
+
+.page-container {
+    margin: 5px;
+    height:100%;
+    display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .16);
+    background: white;
+}

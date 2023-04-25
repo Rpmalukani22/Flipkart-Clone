@@ -61,6 +61,7 @@ docker-compose up -d
 
 - [x] Browse Product Catalog (Categories, Subcateories and Products)
 - [x] Search Products
+- [x] Search Auto Complete Suggestions 
 - [x] Filter Products by various attributes
 - [x] Authentication
 - [ ] Role Based Access

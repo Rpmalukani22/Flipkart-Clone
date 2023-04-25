@@ -45,7 +45,7 @@ services:
       - ALLOWED_ORIGIN=https://localhost
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
-      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
+      # - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
     volumes:
       - "${HOME}/.m2:/root/.m2"
 
@@ -193,6 +193,7 @@ services:
     build: ./logstash
     volumes:
       - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./logstash/indices/products.json:/indices/products.json
     
 volumes:
   sonarqube_data:

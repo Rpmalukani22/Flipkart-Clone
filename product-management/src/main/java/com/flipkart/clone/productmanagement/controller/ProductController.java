@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.opensearch.action.search.SearchResponse;
+import org.opensearch.search.suggest.Suggest;
+import org.opensearch.search.suggest.completion.CompletionSuggestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -99,11 +101,18 @@ public class ProductController {
         productService.bulkRemoveProducts(productIdList);
     }
 
-    @PostMapping("/search/")
-    public SearchResponse getSearchResponse(@RequestParam String query, @RequestParam int from, @RequestParam int size,
-            @RequestBody Map<String, Object> filterMap,
+    @PostMapping("/search")
+    public SearchResponse querySearchResponse(@RequestParam String query, @RequestParam int from, @RequestParam int size,
+            @RequestBody Map<String, Object> filterMap,  
+            @RequestParam(value = "sortField", required = false) String sortField, 
+            @RequestParam(value = "sortOrder", required = false) String sortOrder,
             @RequestParam String... indices) throws Exception {
-        return searchService.findAll(query, filterMap, from, size, indices);
+        return searchService.findAll(query, filterMap, from, size,sortField, sortOrder, indices);
+    }
+
+    @GetMapping("/search/autocomplete")
+    public List<String> autoCompleteSearch(@RequestParam String prefix){
+        return searchService.autoComplete(prefix);
     }
 
 }

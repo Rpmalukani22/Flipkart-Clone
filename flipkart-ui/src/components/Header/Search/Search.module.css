@@ -8,16 +8,38 @@
 .search-bar {
     align-self: center;
     margin: auto;
-    margin-left: 0.8%;
-    padding-left: 1%;
+    margin-left: 1.8%;
+    /* padding-left: 1%; */
     width: 570px;
     background-color: #FFFFFF;
     border-radius: 1px / 1px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     height: 36px;
+    
 
 }
+.search-bar *{
+    padding: 0;
+}
+.search-bar div{
+    border: 0;
+    height: 36px;
+    border-radius: 0;    
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
 
+}
+.search-bar input{
+    max-height: 36px;
+    outline: none;
+    border: 0;
+    padding: 0 !important;
+    margin: 0;
+    top:0;
+    
+}
 .search-bar input::placeholder {
     font-size: 0.875rem;
     font-family: Roboto, Arial, sans-serif;

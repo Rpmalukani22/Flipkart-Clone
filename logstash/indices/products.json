@@ -1,0 +1,62 @@
+{
+  "index_patterns": ["logstash-products*"],
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1,
+    "index": {
+      "knn": true
+    }
+  },
+  "mappings": {
+    "properties": {
+      "brand": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "description": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "discountedPrice": {
+        "type": "float"
+      },
+      "name": {
+        "type": "completion"
+      },
+      "price": {
+        "type": "float"
+      },
+      "productUrl": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "retailPrice": {
+        "type": "float"
+      },
+      "slug": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      }
+    }
+  }
+}

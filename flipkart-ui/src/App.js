@@ -19,6 +19,7 @@ import { hasAuthParams, useAuth } from "react-oidc-context";
 import { useEffect } from "react";
 import { Box, CircularProgress } from "@mui/material";
 import Cart from "./components/Body/Cart/Cart";
+import SearchResults from "./components/Body/SearchResults/SearchResults";
 
 function App() {
   const auth = useAuth();
@@ -62,6 +63,7 @@ function App() {
             <Route exact path="/cart" element={<Cart/>}></Route>
             {/* <Route exact path="/signup" element={SignupForm}></Rout
             e> */}
+            <Route exact path="/search" element={<SearchResults />}></Route>
             <Route exact path="/contact"></Route>
             <Route exact path="/admin" element={<Admin />}></Route>
             <Route
