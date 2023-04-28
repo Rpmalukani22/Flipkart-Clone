@@ -24,6 +24,8 @@ This project was built using following technologies:
 - Docker
 - OpenSearch
 - Logstash
+- Stripe
+- nginx
 
 ## Getting Started
 
