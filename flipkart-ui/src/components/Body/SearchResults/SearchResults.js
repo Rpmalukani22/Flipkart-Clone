@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "./SearchResults.module.css";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import axios from "axios";
+import SearchItem from "./SearchItem/SearchItem";
 
 export default function SearchResults() {
   const [results, setResults] = useState();
   useEffect(() => {
     axios
       .post(
-        "https://localhost/api/product-management/products/search/",
+        "https://localhost/api/product-management/products/search",
         {},
         {
           params: {
@@ -34,15 +35,16 @@ export default function SearchResults() {
 
   return (
     <Grid container className={styles["page-wrapper"]}>
-      <Grid item xs={3.6}>
-        <Box className={`${styles["page-container"]}`}>Hello</Box>
+      <Grid item xs={2.5}>
+        <Box className={`${styles["page-container"]}`}>
+          <Typography variant="h6" sx={{p:2}}>Filters</Typography>
+        </Box>
       </Grid>
-      <Grid item xs={8.4}>
+      <Grid item xs={9.5}>
         <Box className={`${styles["page-container"]}`} sx={{display:"flex","flexDirection":"column"}}>
           {results?.hits?.hits && results.hits.hits.map((item)=>{
             return <Box key={item.id} >
-              
-              {JSON.stringify(item)}
+              <SearchItem item={item}/>
             </Box>
           })}
           </Box>

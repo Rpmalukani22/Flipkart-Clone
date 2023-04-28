@@ -1,7 +1,7 @@
 import { Box, Fab, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
+import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';import {
   addItem,
   clearCart,
   removeItem,
@@ -10,7 +10,7 @@ import StarIcon from "@mui/icons-material/Star";
 import styles from "./CartItems.module.css";
 import { getINR } from "../../ProductDetails/ProductDetails";
 
-export default function CartItems({ items }) {
+export default function CartItems() {
   const cartItems = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -22,21 +22,19 @@ export default function CartItems({ items }) {
     dispatch(removeItem(item));
   };
 
-  const handleClearCart = () => {
-    dispatch(clearCart());
-  };
-
-  
   return cartItems.length === 0 ? (
-    <p>Your cart is empty.</p>
+    <Box sx={{display:"flex",p:5,color:"#777",alignItems:"center",justifyContent:"center",textAlign:"center",width:"100%",minHeight:"60vh"}}>
+      <h3> Your cart is empty Please add some items</h3>
+      <AddReactionOutlinedIcon sx={{mx:1,fontSize:"2rem"}}/>
+    </Box>
   ) : (
     <>
       {cartItems.map((item) => (
         <Grid
           sx={{
             p: 2,
-            gap:1,
-            m:1,
+            gap: 1,
+            m: 1,
             width: "100%",
             height: "fit-content",
             border: "1px #c4c4c4 solid",
@@ -164,9 +162,18 @@ export default function CartItems({ items }) {
               height: "auto",
             }}
           >
-            <Box sx={{display:"flex",justifyContent:"center",alignItems:"center", height:"100%",flexDirection:"column"}}>
-              <Typography sx={{ p: 1,border:"1px solid #c4c4c4" }}>
-                {item.price} X {item.quantity} = <b>{getINR(item.price * item.quantity)}</b>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                flexDirection: "column",
+              }}
+            >
+              <Typography sx={{ p: 1, border: "1px solid #c4c4c4" }}>
+                {item.price} X {item.quantity} ={" "}
+                <b>{getINR(item.price * item.quantity)}</b>
               </Typography>
             </Box>
           </Grid>

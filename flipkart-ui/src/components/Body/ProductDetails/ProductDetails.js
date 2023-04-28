@@ -8,6 +8,9 @@
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import StarIcon from "@mui/icons-material/Star";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import FlashOnIcon from '@mui/icons-material/FlashOn';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Accordion,
@@ -23,7 +26,12 @@ import {
   List,
   ListItem,
   ListItemIcon,
+  Paper,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -49,7 +57,6 @@ export default function ProductDetails() {
   let { productSlug } = useParams();
   let { currentImgIndex, setCurrentImgIndex } = useState(0);
 
-  
   const product = useGetData(urlService.getProductBySlug(productSlug));
   let categories = product?.categoryList.map((categoryPathObj) => {
     return categoryPathObj?.categoryPath
@@ -61,7 +68,6 @@ export default function ProductDetails() {
       container
       sx={{
         display: "flex",
-        border: "1px solid red",
         padding: "3% 5%",
         background: "#F1F3F6",
       }}
@@ -70,7 +76,6 @@ export default function ProductDetails() {
         sx={{
           minHeight: 1400,
           width: "40%",
-          border: "1px solid green",
           background: "white",
           position: "relative",
           // "&:hover:before": {
@@ -121,9 +126,9 @@ export default function ProductDetails() {
                 dispatch(addItem(product));
               }}
             >
-              ADD TO CART
+              <AddShoppingCartIcon/> ADD TO CART
             </Button>
-            <Button className={styles["buy-now"]}>BUY NOW</Button>
+            <Button className={styles["buy-now"]}><FlashOnIcon/> BUY NOW</Button>
           </Box>
         </Box>
       </Grid>
@@ -521,35 +526,30 @@ export default function ProductDetails() {
             }}
           >
             {product?.productSpecifications?.details && (
-              <Accordion style={{ boxShadow: "none" }}>
-                <AccordionSummary
-                  expandIcon={"V"}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>Product Details</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Table style={{ border: "1px solid #878787" }}>
-                    <tbody>
+              <>
+                {" "}
+                <Typography variant="h6">Product Details</Typography>
+                <TableContainer sx={{ boxShadow: "none" }} component={Paper}>
+                  <Table>
+                    <TableBody>
                       {Object.keys(product?.productSpecifications?.details).map(
                         (key) => {
                           return (
-                            <tr key={product?.id + key}>
-                              <td>
+                            <TableRow key={product?.id + key}>
+                              <TableCell>
                                 <b>{key}</b>
-                              </td>
-                              <td>
+                              </TableCell>
+                              <TableCell>
                                 {product?.productSpecifications?.details[key]}
-                              </td>
-                            </tr>
+                              </TableCell>
+                            </TableRow>
                           );
                         }
                       )}
-                    </tbody>
+                    </TableBody>
                   </Table>
-                </AccordionDetails>
-              </Accordion>
+                </TableContainer>
+              </>
             )}
 
             {product?.productSpecifications?.specs &&
@@ -561,7 +561,7 @@ export default function ProductDetails() {
                       key={product?.id + tableName}
                     >
                       <AccordionSummary
-                        expandIcon={"V"}
+                        expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                       >
@@ -619,4 +619,4 @@ export default function ProductDetails() {
   );
 }
 
-export {getINR};
+export { getINR };

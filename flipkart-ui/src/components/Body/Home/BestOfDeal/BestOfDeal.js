@@ -9,6 +9,7 @@ import { Box, Button } from "@mui/material";
 import CarouselWrapper from "../CarouselWrapper/CarouselWrapper";
 import styles from "./BestOfDeal.module.css";
 import { DealCard } from "./DealCard/DealCard";
+import { Link } from "react-router-dom";
 
 export default function BestOfDeal({ deal }) {
   return (
@@ -20,7 +21,12 @@ export default function BestOfDeal({ deal }) {
         <Box className={styles["heading-content"]}>
           <h1>{deal.title}</h1>
           <Button sx={{ borderRadius: 0 }} disableRipple variant="contained">
-            VIEW ALL
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/categories"
+            >
+              VIEW ALL
+            </Link>
           </Button>
         </Box>
       </Box>

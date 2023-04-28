@@ -10,7 +10,8 @@ import oidcConfig from "./oidcConfig";
 const product_management_endpoint = "localhost/api/product-management";
 export const urlService = {
   getApiSpecs: () => `https://${product_management_endpoint}/v3/api-docs`,
-  getBanners: () => `https://${product_management_endpoint}/site-content/banners`,
+  getBanners: () =>
+    `https://${product_management_endpoint}/site-content/banners`,
   getProducts: (page, category) =>
     `https://${product_management_endpoint}/products?pageSize=${
       page.size
@@ -21,7 +22,14 @@ export const urlService = {
     }`,
   getBestOfDeals: () =>
     `https://${product_management_endpoint}/site-content/best-of-deals`,
+  getProductById: (id) =>
+    `https://localhost/api/product-management/products/id/${id}`,
   getProductBySlug: (slug) =>
     `https://${product_management_endpoint}/products/slug/${slug}`,
-  getSignUpLink:()=>`${oidcConfig.authority}/protocol/openid-connect/registrations?client_id=flipkart-clone-ui&response_type=code&scope=openid%20email&redirect_uri=${encodeURI(oidcConfig.redirect_uri)}`
+  getSignUpLink: () =>
+    `${
+      oidcConfig.authority
+    }/protocol/openid-connect/registrations?client_id=flipkart-clone-ui&response_type=code&scope=openid%20email&redirect_uri=${encodeURI(
+      oidcConfig.redirect_uri
+    )}`,
 };

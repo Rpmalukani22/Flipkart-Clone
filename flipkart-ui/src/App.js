@@ -57,7 +57,7 @@ function App() {
             ></Route>
             <Route
               exact
-              path="/become-a-seller"
+              path="/order-confirmation"
               element={<BecomeSeller />}
             ></Route>
             <Route exact path="/cart" element={<Cart/>}></Route>
