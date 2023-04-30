@@ -12,6 +12,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styles from "./Search.module.css";
 
+function debounce(func, timeout = 300){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+
+
 const Search = () => {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -43,7 +52,7 @@ const Search = () => {
         className={styles["search-bar"]}
           {...params}
           placeholder="Search for products, brands and more"
-          onChange={(event) => setInputValue(event.target.value)}
+          onChange={(event) => debounce((event) => setInputValue(event.target.value))(event)}
         />
       )}
     />
