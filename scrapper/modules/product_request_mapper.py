@@ -127,14 +127,14 @@ def convert_urls(flipkart_urls):
 if __name__ == "__main__":
     # Parallelly Download Images from Flipkart and Post Images to s3
 
-    # img_urls = set()
-    # for item in products:
-    #     img_urls.update(item["imageUrlList"])
-    #     img_urls.update(item["productSpecifications"]["colorImgUrls"])
+    img_urls = set()
+    for item in products:
+        img_urls.update(item["imageUrlList"])
+        img_urls.update(item["productSpecifications"]["colorImgUrls"])
 
-    # cores = multiprocessing.cpu_count()
-    # with multiprocessing.Pool(4 * cores) as p:
-    #     p.map(post_images_to_s3, list(chunks(list(img_urls), 1500)))
+    cores = multiprocessing.cpu_count()
+    with multiprocessing.Pool(4 * cores) as p:
+        p.map(post_images_to_s3, list(chunks(list(img_urls), 1500)))
 
     # Convert Flipkart Urls to Local S3 Urls
 

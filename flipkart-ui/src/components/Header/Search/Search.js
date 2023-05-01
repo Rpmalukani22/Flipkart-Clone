@@ -11,24 +11,27 @@ import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styles from "./Search.module.css";
+import { useNavigate } from "react-router-dom";
 
-function debounce(func, timeout = 300){
+function debounce(func, timeout = 300) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
-    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
   };
 }
 
-
 const Search = () => {
+  const navigate = useNavigate();
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     const fetchOptions = async () => {
       const response = await axios.get(
-        `https://localhost/api/product-management/products/search/autocomplete?prefix=${inputValue}`
+        `https://localhost/api/product-management/products/search/autocomplete?prefix=${inputValue}&indices=monstache_products`
       );
       setOptions(response.data);
     };
@@ -36,23 +39,32 @@ const Search = () => {
     fetchOptions();
   }, [inputValue]);
 
+  const debouncedSearchNavigate = debounce((value) => {
+    setInputValue(value);
+    navigate("/search", { state: { searchText: value } });
+  });
+  const handleInputChange = (event, value) => {
+    debouncedSearchNavigate(value);
+  };
+
+  const handleSelectOption = (event, value) => {
+    setInputValue(value);
+    navigate("/search", { state: { searchText: value } });
+  };
+
   return (
     <Autocomplete
       options={options}
-      // sx={{
-      //   ".autocomplete-root": { zIndex: 1000, position: "relative" },
-      //   ".autocomplete-paper": {
-      //     position: "absolute !important",
-      //     zIndex: "1001 !important",
-      //   },
-      // }}
+      freeSolo={true}
+      autoSelect={true}
       getOptionLabel={(option) => option}
+      onChange={handleSelectOption}
+      onInputChange={handleInputChange}
       renderInput={(params) => (
         <TextField
-        className={styles["search-bar"]}
+          className={styles["search-bar"]}
           {...params}
           placeholder="Search for products, brands and more"
-          onChange={(event) => debounce((event) => setInputValue(event.target.value))(event)}
         />
       )}
     />

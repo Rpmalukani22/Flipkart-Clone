@@ -175,6 +175,12 @@ services:
       nofile:
         soft: 65536 
         hard: 65536
+    healthcheck:
+        test: ["CMD", "curl", "-k","-f", "https://admin:admin@localhost:9200"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+
     volumes:
       - opensearch-data1:/usr/share/opensearch/data 
     ports:
@@ -190,12 +196,35 @@ services:
     environment:
       OPENSEARCH_HOSTS: '["https://opensearch-node1:9200"]' 
 
-  logstash:
-    build: ./logstash
+  # logstash:
+  #   build: ./logstash
+  #   volumes:
+  #     - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+  #     - ./logstash/indices/products.json:/indices/products.json
+  #     - ./logstash/jar/mongodb-driver-sync-4.9.1.jar:/usr/share/logstash/logstash-core/lib/jars/mongodb-driver-sync-4.9.1.jar
+
+  init_opensearch:
+    image: curlimages/curl
     volumes:
-      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./logstash/indices/products.json:/indices/products.json
-    
+      - ./opensearch/init_opensearch.sh:/init_opensearch.sh
+    command: ["/bin/sh", "-c", "/init_opensearch.sh"]
+    depends_on:
+      opensearch-node1:
+        condition: service_healthy
+
+  monstache:
+    image: rwynn/monstache  
+    working_dir: /monstache
+    command: -f ./config.toml        
+    volumes:
+      - ./monstache:/monstache/
+    ports:
+      - "8123:8080" 
+    depends_on:
+      init_opensearch:
+        condition: service_completed_successfully
+    restart: always
+
 volumes:
   sonarqube_data:
   sonarqube_extensions:

@@ -23,7 +23,7 @@ This project was built using following technologies:
 - Cloud Storage (scality zenko cloudserver, AWS S3)
 - Docker
 - OpenSearch
-- Logstash
+- ~~Logstash~~ Monstache
 - Stripe
 - nginx
 

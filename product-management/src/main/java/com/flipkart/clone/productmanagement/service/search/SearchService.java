@@ -58,8 +58,8 @@ public class SearchService {
 
     }
 
-    public List<String> autoComplete(String prefix) {
-        SearchRequest searchRequest = new SearchRequest("logstash-products");
+    public List<String> autoComplete(String prefix,String... indices) {
+        SearchRequest searchRequest = new SearchRequest(indices);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         CompletionSuggestionBuilder suggestionBuilder = new CompletionSuggestionBuilder("name")

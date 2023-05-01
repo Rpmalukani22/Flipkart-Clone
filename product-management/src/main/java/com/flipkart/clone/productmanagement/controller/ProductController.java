@@ -111,8 +111,8 @@ public class ProductController {
     }
 
     @GetMapping("/search/autocomplete")
-    public List<String> autoCompleteSearch(@RequestParam String prefix){
-        return searchService.autoComplete(prefix);
+    public List<String> autoCompleteSearch(@RequestParam String prefix,@RequestParam String... indices){
+        return searchService.autoComplete(prefix,indices);
     }
 
 }

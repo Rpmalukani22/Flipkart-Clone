@@ -1,0 +1,17 @@
+mongo-url = "mongodb://root:example@mongodb:27017/products?authSource=admin" 
+elasticsearch-urls = ["https://opensearch-node1:9200"]
+elasticsearch-user = "admin"
+elasticsearch-password = "admin"
+elasticsearch-validate-pem-file = false
+direct-read-namespaces = ["products.product"]
+change-stream-namespaces = ["products.product"] 
+[logs]
+error = "./logs/error.log" 
+[[mapping]]
+namespace = "products.product" 
+index = "monstache_products"
+ 
+[[script]]
+namespace = "products.product"
+path = "./scripts/product.js"
+routing = true

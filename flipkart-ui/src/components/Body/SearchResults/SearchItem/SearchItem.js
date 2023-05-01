@@ -25,7 +25,7 @@ export default function SearchItem({ item }) {
           component="img"
           src={product?.imageUrlList[0]}
           alt={"search item image"}
-          sx={{ width: "95%", p: 1, m: 1 }}
+          sx={{ width: "95%", p: 1, m: 1, maxHeight:300}}
         />
       </Grid>
       <Grid item xs={7} sx={{ p: 2 }}>
