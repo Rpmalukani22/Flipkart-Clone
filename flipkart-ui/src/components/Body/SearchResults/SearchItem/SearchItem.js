@@ -5,6 +5,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import styles from "./SearchItem.module.css";
 import { getINR } from "../../ProductDetails/ProductDetails";
+import { Link } from "react-router-dom";
 
 export default function SearchItem({ item }) {
   const product = useGetData(urlService.getProductById(item?.id));
@@ -40,7 +41,7 @@ export default function SearchItem({ item }) {
             whiteSpace: "nowrap",
           }}
         >
-          {product.name}
+          <Link to={product?.["productUrl"] || ""} style={{textDecoration:"none"}}> {product.name}</Link>
         </Typography>
         <Box className={styles["product-ratings-assured-box"]}>
           {product?.["productSpecifications"]?.["rating"] > 0 && (
