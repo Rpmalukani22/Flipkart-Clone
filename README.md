@@ -2,7 +2,7 @@
 
 This project is a clone of the popular e-commerce website Flipkart, built using React and Spring Boot.
 
-> **Note:** This project is currently in development.
+<!-- > **Note:** This project is currently in development. -->
 
 ## Preview
 
@@ -66,11 +66,11 @@ docker-compose up -d
 - [x] Search Auto Complete Suggestions 
 - [x] Filter Products by various attributes
 - [x] Authentication
-- [ ] Role Based Access
+- [x] Role Based Access
 - [x] Admin API Control Screen
 - [x] Continuous sync between product catalog and search index using logstash
 - [x] Add,Remove products to your cart
-- [ ] Checkout and complete your purchase
+- [x] Checkout and complete your purchase
 
 ## License
 
