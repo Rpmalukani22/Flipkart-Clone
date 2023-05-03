@@ -21,13 +21,13 @@ export const KeycloakContext = createContext(null);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Router>
-      <Provider store={store}>
-        <AuthProvider {...oidcConfig}>
+    <Provider store={store}>
+      <AuthProvider {...oidcConfig}>
+        <Router>
           <App />
-        </AuthProvider>
-      </Provider>
-    </Router>
+        </Router>
+      </AuthProvider>
+    </Provider>
   </React.StrictMode>
 );
 

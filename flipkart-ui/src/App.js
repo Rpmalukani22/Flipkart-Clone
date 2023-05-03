@@ -27,14 +27,15 @@ import Cart from "./components/Body/Cart/Cart";
 import SearchResults from "./components/Body/SearchResults/SearchResults";
 
 function App() {
-  const navigate = useNavigate();
+  const auth = useAuth();
   useEffect(() => {
     if (window.location.search.includes("session_state")) {
-      auth.signinSilent();
+      if (!hasAuthParams() && !auth.isAuthenticated) {
+        auth.signinRedirect();
+      }
     }
-  }, [navigate]);
-  const auth = useAuth();
-  useEffect(() => {}, [auth]);
+  }, [auth]);
+
   if (auth.isLoading) {
     return (
       <Box
@@ -52,34 +53,34 @@ function App() {
   }
   return (
     <div className="App">
-        <StyledEngineProvider injectFirst>
-          <Header />
-          <Routes>
-            <Route exact path="/" element={<Home />}></Route>
-            <Route
-              exact
-              path="/categories"
-              element={<CategoryProducts />}
-            ></Route>
-            <Route
-              exact
-              path="/order-confirmation"
-              element={<BecomeSeller />}
-            ></Route>
-            <Route exact path="/cart" element={<Cart />}></Route>
-            {/* <Route exact path="/signup" element={SignupForm}></Rout
+      <StyledEngineProvider injectFirst>
+        <Header />
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route
+            exact
+            path="/categories"
+            element={<CategoryProducts />}
+          ></Route>
+          <Route
+            exact
+            path="/order-confirmation"
+            element={<BecomeSeller />}
+          ></Route>
+          <Route exact path="/cart" element={<Cart />}></Route>
+          {/* <Route exact path="/signup" element={SignupForm}></Rout
             e> */}
-            <Route exact path="/search" element={<SearchResults />}></Route>
-            <Route exact path="/contact"></Route>
-            <Route exact path="/admin" element={<Admin />}></Route>
-            <Route
-              exact
-              path="/:productSlug"
-              element={<ProductDetails />}
-            ></Route>
-          </Routes>
-          <Footer />
-        </StyledEngineProvider>
+          <Route exact path="/search" element={<SearchResults />}></Route>
+          <Route exact path="/contact"></Route>
+          <Route exact path="/admin" element={<Admin />}></Route>
+          <Route
+            exact
+            path="/:productSlug"
+            element={<ProductDetails />}
+          ></Route>
+        </Routes>
+        <Footer />
+      </StyledEngineProvider>
     </div>
   );
 }
