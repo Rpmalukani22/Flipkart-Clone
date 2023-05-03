@@ -6,7 +6,12 @@
  * Copyright (c) 2023 Ruchitesh Malukani
  */
 import { StyledEngineProvider } from "@mui/material/styles";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
 import BecomeSeller from "./components/Body/BecomeSeller/BecomeSeller";
 import CategoryProducts from "./components/Body/CategoryProducts/CategoryProducts";
@@ -22,12 +27,14 @@ import Cart from "./components/Body/Cart/Cart";
 import SearchResults from "./components/Body/SearchResults/SearchResults";
 
 function App() {
-  const auth = useAuth();
+  const navigate = useNavigate();
   useEffect(() => {
-    // if (!hasAuthParams() && !auth.isAuthenticated) {
-    //   auth.signinRedirect();
-    // }
-  }, [auth]);
+    if (window.location.search.includes("session_state")) {
+      auth.signinSilent();
+    }
+  }, [navigate]);
+  const auth = useAuth();
+  useEffect(() => {}, [auth]);
   if (auth.isLoading) {
     return (
       <Box
@@ -45,7 +52,6 @@ function App() {
   }
   return (
     <div className="App">
-      <Router>
         <StyledEngineProvider injectFirst>
           <Header />
           <Routes>
@@ -60,7 +66,7 @@ function App() {
               path="/order-confirmation"
               element={<BecomeSeller />}
             ></Route>
-            <Route exact path="/cart" element={<Cart/>}></Route>
+            <Route exact path="/cart" element={<Cart />}></Route>
             {/* <Route exact path="/signup" element={SignupForm}></Rout
             e> */}
             <Route exact path="/search" element={<SearchResults />}></Route>
@@ -74,7 +80,6 @@ function App() {
           </Routes>
           <Footer />
         </StyledEngineProvider>
-      </Router>
     </div>
   );
 }

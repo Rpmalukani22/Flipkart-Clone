@@ -8,23 +8,26 @@
 import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import { AuthProvider } from "react-oidc-context";
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 import App from "./App";
-import {store} from './store';
+import { store } from "./store";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import oidcConfig from "./services/oidcConfig";
+import { BrowserRouter as Router } from "react-router-dom";
 
 export const KeycloakContext = createContext(null);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-    <AuthProvider {...oidcConfig}>
-      <App />
-    </AuthProvider>
-    </Provider>
+    <Router>
+      <Provider store={store}>
+        <AuthProvider {...oidcConfig}>
+          <App />
+        </AuthProvider>
+      </Provider>
+    </Router>
   </React.StrictMode>
 );
 
