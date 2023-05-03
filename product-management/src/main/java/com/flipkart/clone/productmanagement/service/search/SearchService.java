@@ -47,7 +47,7 @@ public class SearchService {
         if (!filterMap.isEmpty()) {
             for (Map.Entry<String, String[]> entry : filterMap.entrySet()) {
                 log.info("entry ..." + entry.getKey() + " " + entry.getValue()[0]);
-                qb.must(QueryBuilders.matchQuery(entry.getKey(), String.join(" OR ", entry.getValue())))
+                qb.filter(QueryBuilders.termsQuery(entry.getKey(), entry.getValue()))
                         .minimumShouldMatch("100%");
             }
         }

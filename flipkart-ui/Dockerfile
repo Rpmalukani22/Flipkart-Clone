@@ -1,8 +1,8 @@
 FROM node:19.8.1-alpine3.17 AS builder
 ENV NODE_ENV production
 WORKDIR /app
-# COPY package.json .
-# RUN npm install
+COPY package.json .
+RUN npm install 
 # --production
 # COPY . .
 # RUN npm run build 

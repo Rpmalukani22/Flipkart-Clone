@@ -26,6 +26,11 @@ export const urlService = {
     `https://localhost/api/product-management/products/id/${id}`,
   getProductBySlug: (slug) =>
     `https://${product_management_endpoint}/products/slug/${slug}`,
+  getLoginLink:()=>`${
+    oidcConfig.authority
+  }/protocol/openid-connect/auth?client_id=flipkart-clone-ui&response_type=code&scope=openid%20email&redirect_uri=${encodeURI(
+    oidcConfig.redirect_uri
+  )}`,
   getSignUpLink: () =>
     `${
       oidcConfig.authority

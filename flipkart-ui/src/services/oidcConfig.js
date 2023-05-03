@@ -6,7 +6,6 @@
  * Copyright (c) 2023 Ruchitesh Malukani
  */
 
-import Keycloak from "keycloak-js";
 import { WebStorageStateStore } from "oidc-client-ts";
 
 const oidcConfig = {
