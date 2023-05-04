@@ -27,15 +27,15 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable().authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/**").permitAll()
-                .requestMatchers("/v3/api-docs/**").hasRole("ADMIN")
                 .requestMatchers("/search").permitAll()
                 .requestMatchers(HttpMethod.POST, "/create-payment-intent").authenticated()
                 .requestMatchers(HttpMethod.POST, "/webhook").authenticated()
+                .requestMatchers("/v3/api-docs/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
