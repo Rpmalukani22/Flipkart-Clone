@@ -68,7 +68,6 @@ public class SiteContentController {
          @RequestParam String[] targetUrlList) {
       if (files.length != targetUrlList.length)
          throw new IllegalStateException("Please Make sure there is one to one mapping between files and target urls");
-      // TODO: Create specific exception
       List<BannerRequest> bannerRequestList = new ArrayList<>();
       for (int i = 0; i < files.length; i++)
          bannerRequestList.add(BannerRequest.builder().targetHref(targetUrlList[i]).image(files[i]).build());

@@ -3,7 +3,7 @@ version: "3"
 ###########################################################################
 # Prerequisites
 
-#  SonarQube :-
+#  SonarQube and Opensearch
 #    sysctl -w vm.max_map_count=524288
 #    sysctl -w fs.file-max=131072
 #    ulimit -n 131072
@@ -39,14 +39,14 @@ services:
       - keycloak
     ports:
       - 8088:8080
-      - 5005:5005
+      # - 5005:5005
     environment:
       - FRONT_END_WEB_ORIGIN=https://localhost
       - ALLOWED_ORIGIN=https://localhost
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-your_stripe_secret_key_here}
-      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
+      # - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
     volumes:
       - "${HOME}/.m2:/root/.m2"
 
@@ -156,7 +156,7 @@ services:
       - start-dev
       - --import-realm
     volumes:
-      - /home/keycloak/realm.json:/opt/keycloak/data/import/realm.json
+      - ./keycloak/realm.json:/opt/keycloak/data/import/realm.json
   
   opensearch-node1:
     image: opensearchproject/opensearch:latest

@@ -36,7 +36,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class SiteContentServiceImpl implements SiteContentService {
-    // TODO: Exception Handling
     @Autowired
     BannerRepository bannerRepository;
     @Autowired
@@ -143,7 +142,7 @@ public class SiteContentServiceImpl implements SiteContentService {
     public void removeBannerById(String bannerId) {
         Optional<Banner> bannerCheck = bannerRepository.findById(bannerId);
         if (!bannerCheck.isPresent())
-            throw new IllegalStateException("404 not found."); // TODO: replace with specific class
+            throw new IllegalStateException("404 not found.");
         String key = FileUtil.cleanPath(String.join("/", bannersPath, bannerCheck.get().getImgFileName()), "/", false);
         s3Service.deleteObjectByKey(mediaBucket, key);
         bannerRepository.deleteById(bannerId);
@@ -155,7 +154,7 @@ public class SiteContentServiceImpl implements SiteContentService {
         if (bannerCheck.isPresent())
             return bannerToBannerResponse(bannerCheck.get());
         else
-            throw new IllegalStateException("404 not found."); // TODO: replace with specific class
+            throw new IllegalStateException("404 not found.");
     }
 
     @Override
@@ -171,7 +170,6 @@ public class SiteContentServiceImpl implements SiteContentService {
             BestOfDeal bestOfDeal = bestOfDealCheck.get();
             bestOfDealResponse = bestOfDealToBestOfDealResponseMapper(bestOfDeal);
         } else {
-            // TODO: raise 404
             return null;
         }
         log.info("SiteContent Service: Returned Best of Deals successfully!");

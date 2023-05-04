@@ -89,7 +89,6 @@ public class CategoryServiceImpl implements CategoryService {
             Category category = categoryCheck.get();
             categoryResponse = categoryToCategoryResponseMapper(category);
         } else {
-            // TODO: raise 404
             return null;
         }
         log.info("Category Service: Returned Category successfully!");
@@ -117,21 +116,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void removeCategoryById(String categoryId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeCategoryById'");
-    }
-
-    @Override
-    public void bulkRemoveCategories(List<String> categoryIdList) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'bulkRemoveCategories'");
+        categoryRepository.deleteById(categoryId);
     }
 
     @Override
     public List<Category> getValidatedCategories(List<CategoryRequest> categoryRequestList) {
-        // List<String> slugList =
-        // mapToCategoryList(categoryRequestList).stream().map(Category::getSlug).toList();
-        // List<Category> categoryList = categoryRepository.findBySlugIn(slugList);
         List<Category> categoryList = categoryRequestList.stream()
                 .map(categoryRequest -> categoryRepository
                         .findByRegex("^" + getCategoryPathFromCategoryRequest(categoryRequest)))
@@ -139,12 +128,9 @@ public class CategoryServiceImpl implements CategoryService {
         if (categoryList.size() != 0) {
             return categoryList;
         } else {
-            // TODO: Exception Handling with Status Codes.
             log.info(categoryRequestList.toString());
-            // log.info(slugList.toString());
             log.info(categoryList.toString());
             return Collections.emptyList();
-            // throw new IllegalStateException("There is atleast one invalid category!");
         }
 
     }

@@ -76,5 +76,3 @@ public class CategoryController {
     }
 
 }
-
-// TODO: Exception Handling with Status Codes

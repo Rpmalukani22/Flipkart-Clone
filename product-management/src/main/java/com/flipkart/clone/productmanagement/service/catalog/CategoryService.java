@@ -28,8 +28,6 @@ public interface CategoryService {
 
     public void removeCategoryById(String categoryId);
 
-    public void bulkRemoveCategories(List<String> categoryIdList);
-
     public List<Category> getValidatedCategories(List<CategoryRequest> categoryRequestList);
 
     public List<String> getSubCategories(String category);

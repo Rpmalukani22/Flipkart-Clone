@@ -5,26 +5,24 @@
  * -----
  * Copyright (c) 2023 Ruchitesh Malukani
  */
+import { Box, CircularProgress } from "@mui/material";
 import { StyledEngineProvider } from "@mui/material/styles";
+import { useEffect } from "react";
+import { hasAuthParams, useAuth } from "react-oidc-context";
 import {
-  BrowserRouter as Router,
   Route,
-  Routes,
-  useNavigate,
+  Routes
 } from "react-router-dom";
 import "./App.css";
+import Admin from "./components/Body/Admin/Admin";
 import BecomeSeller from "./components/Body/BecomeSeller/BecomeSeller";
+import Cart from "./components/Body/Cart/Cart";
 import CategoryProducts from "./components/Body/CategoryProducts/CategoryProducts";
 import Home from "./components/Body/Home/Home";
 import ProductDetails from "./components/Body/ProductDetails/ProductDetails";
+import SearchResults from "./components/Body/SearchResults/SearchResults";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import Admin from "./components/Body/Admin/Admin";
-import { hasAuthParams, useAuth } from "react-oidc-context";
-import { useEffect } from "react";
-import { Box, CircularProgress } from "@mui/material";
-import Cart from "./components/Body/Cart/Cart";
-import SearchResults from "./components/Body/SearchResults/SearchResults";
 
 function App() {
   const auth = useAuth();

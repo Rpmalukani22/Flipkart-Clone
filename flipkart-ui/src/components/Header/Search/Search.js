@@ -5,13 +5,12 @@
  * -----
  * Copyright (c) 2023 Ruchitesh Malukani
  */
-import SearchIcon from "@mui/icons-material/Search";
-import { Box, IconButton, InputBase, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import styles from "./Search.module.css";
 import { useNavigate } from "react-router-dom";
+import styles from "./Search.module.css";
 
 function debounce(func, timeout = 300) {
   let timer;

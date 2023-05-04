@@ -17,13 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flipkart.clone.productmanagement.service.payment.PaymentService;
 import com.stripe.exception.SignatureVerificationException;
-import com.stripe.exception.StripeException;
 import com.stripe.model.Event;
-import com.stripe.model.PaymentIntent;
 import com.stripe.net.Webhook;
-import com.stripe.param.PaymentIntentCreateParams;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -53,7 +49,6 @@ public class PaymentController {
         }
         switch (event.getType()) {
             case "payment_intent.succeeded":
-                // PaymentIntent paymentIntent = (PaymentIntent) event.getDataObjectDeserializer().getObject();
                 log.info("PaymentIntent was successful.");
                 break;
             default:

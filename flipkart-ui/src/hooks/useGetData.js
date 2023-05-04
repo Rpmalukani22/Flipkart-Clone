@@ -6,9 +6,8 @@
  * Copyright (c) 2023 Ruchitesh Malukani
  */
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
-import { KeycloakContext } from "../App";
-import { useAuth, hasAuthParams } from "react-oidc-context";
+import { useEffect, useState } from "react";
+import { useAuth } from "react-oidc-context";
 
 export default function useGetData(url, dependencies = [],returnIsLoading=false) {
   const auth = useAuth();
