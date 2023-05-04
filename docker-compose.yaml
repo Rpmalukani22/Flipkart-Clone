@@ -46,7 +46,7 @@ services:
       - AWS_SERVICE_ENDPOINT=http://s3server:8000
       - MONGODB_HOST=mongodb
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-your_stripe_secret_key_here}
-      # - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
     volumes:
       - "${HOME}/.m2:/root/.m2"
 

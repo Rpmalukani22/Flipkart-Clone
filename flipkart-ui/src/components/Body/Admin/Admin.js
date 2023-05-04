@@ -9,8 +9,10 @@ import React from "react";
 import "./Admin.css";
 import "rapidoc";
 import { urlService } from "../../../services/urls";
+import { useAuth } from "react-oidc-context";
 
 export default function Admin() {
+  const auth = useAuth();
   return (
     <rapi-doc
       spec-url={urlService.getApiSpecs()}
@@ -19,6 +21,9 @@ export default function Admin() {
       show-info="false"
       regular-font="Roboto"
       primary-color="#2874F0"
+      api-key-name="Authorization"
+      api-key-location="header"
+      api-key-value={`Bearer ${auth?.user?.access_token}`}
     />
   );
 }
