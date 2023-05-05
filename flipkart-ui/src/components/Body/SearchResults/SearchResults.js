@@ -26,7 +26,7 @@ export default function SearchResults() {
     size: 10,
     number: 1,
   });
-  const [filterAttr, setFilterAttr] = useState({ "brand.keyword": {}, });
+  const [filterAttr, setFilterAttr] = useState({ "brand.keyword": {} });
   const [filterState, setFilterState] = useState({});
   const [sortAttr, setSortAttr] = useState("Relevance");
   const handlePageChange = (event, value) => {
@@ -53,6 +53,8 @@ export default function SearchResults() {
       size: 10,
       number: 1,
     });
+    setFilterAttr({ "brand.keyword": {} });
+    setSortAttr("Relevance");
   }, [location.state.searchText]);
   useEffect(() => {
     for (let key of Object.keys(filterAttr)) {

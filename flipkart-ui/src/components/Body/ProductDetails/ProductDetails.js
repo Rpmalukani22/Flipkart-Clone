@@ -8,8 +8,8 @@
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import StarIcon from "@mui/icons-material/Star";
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import FlashOnIcon from '@mui/icons-material/FlashOn';
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import FlashOnIcon from "@mui/icons-material/FlashOn";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -102,14 +102,15 @@ export default function ProductDetails() {
                 //   alert(swiper.activeIndex)
                 //   setCurrentImgIndex(swiper.activeIndex)
                 // }
+                
               }}
             >
               {product?.imageUrlList.map((url) => {
                 return (
-                  <img
-                    style={{
+                  <Box
+                    component="img"
+                    sx={{
                       objectFit: "contain",
-                      height: "100%",
                       width: "100%",
                     }}
                     key={url}
@@ -126,9 +127,11 @@ export default function ProductDetails() {
                 dispatch(addItem(product));
               }}
             >
-              <AddShoppingCartIcon/> ADD TO CART
+              <AddShoppingCartIcon /> ADD TO CART
             </Button>
-            <Button className={styles["buy-now"]}><FlashOnIcon/> BUY NOW</Button>
+            <Button className={styles["buy-now"]}>
+              <FlashOnIcon /> BUY NOW
+            </Button>
           </Box>
         </Box>
       </Grid>

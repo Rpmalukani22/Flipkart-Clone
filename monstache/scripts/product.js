@@ -1,6 +1,7 @@
 module.exports = function (doc) {
   delete doc._id;
   doc.categories = [];
+  doc.title=doc.name;
   for (var idx = 0; idx < doc.categoryList.length; idx++) {
     var categories = findId(doc.categoryList[idx].$id, {
       database: "products",

@@ -41,7 +41,7 @@ public class SearchService {
         SearchRequest searchRequest = new SearchRequest(indices);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder qb = QueryBuilders.boolQuery()
-                .must(QueryBuilders.multiMatchQuery(query, "*")
+                .must(QueryBuilders.multiMatchQuery(query).field("title",2.0f).field("*")
                         .fuzziness(Fuzziness.AUTO).type(MultiMatchQueryBuilder.Type.MOST_FIELDS));
 
         if (!filterMap.isEmpty()) {

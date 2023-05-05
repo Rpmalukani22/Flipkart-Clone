@@ -27,7 +27,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable().authorizeHttpRequests()
-                .requestMatchers("/search").permitAll()
+                .requestMatchers("/products/search").permitAll()
                 .requestMatchers(HttpMethod.POST, "/create-payment-intent").authenticated()
                 .requestMatchers(HttpMethod.POST, "/webhook").authenticated()
                 .requestMatchers("/v3/api-docs/**").hasRole("ADMIN")
