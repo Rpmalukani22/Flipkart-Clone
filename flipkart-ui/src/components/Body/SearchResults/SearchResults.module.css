@@ -9,7 +9,9 @@
 
 .page-container {
     margin: 5px;
-    height:100%;
+    height:auto;
+    min-height: 90vh;
+    padding:1%;
     display: flex;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .16);
