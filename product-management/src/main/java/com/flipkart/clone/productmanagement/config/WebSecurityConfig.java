@@ -29,7 +29,7 @@ public class WebSecurityConfig {
         http.csrf().disable().authorizeHttpRequests()
                 .requestMatchers("/products/search").permitAll()
                 .requestMatchers(HttpMethod.POST, "/create-payment-intent").authenticated()
-                .requestMatchers(HttpMethod.POST, "/webhook").authenticated()
+                .requestMatchers(HttpMethod.POST, "/webhook/**").authenticated()
                 .requestMatchers("/v3/api-docs/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST).hasRole("ADMIN")

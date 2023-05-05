@@ -41,6 +41,10 @@ export default function CategoryProducts() {
     [page, searchParams],
     true
   );
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [products]);
+
   if (isLoading) {
     return (
       <Box
@@ -56,6 +60,7 @@ export default function CategoryProducts() {
       </Box>
     );
   }
+
   return (
     <Grid container className={styles["container"]}>
       <Grid
@@ -103,7 +108,7 @@ export default function CategoryProducts() {
             </p>
             <Pagination
               count={products?.["page"]?.["totalPages"]}
-              page={page.page}
+              page={page.number}
               onChange={handleChange}
               color="primary"
             />

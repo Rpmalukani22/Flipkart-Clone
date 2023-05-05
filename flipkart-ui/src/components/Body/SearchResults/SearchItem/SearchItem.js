@@ -82,6 +82,7 @@ export default function SearchItem({ item }) {
           variant="body1"
         >
           {item?.sourceAsMap?.description}
+          {/* {product.id} */}
         </Typography>
       </Grid>
       <Grid item xs={2}>

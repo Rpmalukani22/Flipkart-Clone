@@ -34,7 +34,11 @@ export default function Cart() {
   const createPaymentIntent = async (amount, currency) => {
     if (!auth?.isAuthenticated) auth.signinRedirect();
     const response = await axios.post(
-      `/api/product-management/create-payment-intent?amount=${amount}&currency=${currency}`
+      `/api/product-management/create-payment-intent?amount=${amount}&currency=${currency}`,{},{
+        headers: {
+          Authorization: `Bearer ${auth.user.access_token}`,
+        },
+      }
     );
     const data = await response.data;
     setClientSecret(data);
