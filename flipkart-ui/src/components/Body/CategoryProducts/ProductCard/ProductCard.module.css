@@ -8,6 +8,11 @@
 .container {
     max-width: 345px;
     margin: 1%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .container:hover {
@@ -20,6 +25,10 @@
 
 .fav-icon {
     color: #e0e0e0;
+    align-self: flex-end;
+    justify-self: flex-end;
+    text-align: right;
+    margin-right: 10px;
 }
 
 .fav-icon:hover {
@@ -28,13 +37,17 @@
 }
 
 .img-container {
-    padding: 2%;
-    height: 250px;
+    padding: 1%;
+    width: 280px;
+    height: auto;
+    max-height: 280px;
+
+    /* width:250px; */
     /* border: 1px solid red; */
     object-fit: contain;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    /* display: block; */
+    /* margin-left: auto;
+    margin-right: auto; */
 
 }
 

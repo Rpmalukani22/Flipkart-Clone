@@ -13,7 +13,7 @@ import styles from "./Filter.module.css";
 
 export function Filters() {
   return (
-    <Box>
+    <Box sx={{width:"100%"}}>
       <Typography className={styles["heading"]} variant="h2">
         Filters
       </Typography>

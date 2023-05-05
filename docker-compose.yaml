@@ -55,13 +55,12 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      KC_DB_NAME: ${KC_DB_NAME:-keycloak} 
+      KC_DB_NAME: ${KC_DB_NAME:-keycloak}
       KC_DB_USER: ${KC_DB_USER:-keycloak}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD:-keycloak}
     volumes:
       - ./postgresdb/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./postgresdb/data:/var/lib/postgresql/data
-
 
   adminer:
     image: adminer
@@ -157,7 +156,7 @@ services:
       - --import-realm
     volumes:
       - ./keycloak/realm.json:/opt/keycloak/data/import/realm.json
-  
+
   opensearch-node1:
     image: opensearchproject/opensearch:latest
     container_name: opensearch-node1
@@ -166,35 +165,35 @@ services:
       - node.name=opensearch-node1
       - discovery.seed_hosts=opensearch-node1
       - cluster.initial_cluster_manager_nodes=opensearch-node1
-      - bootstrap.memory_lock=true 
+      - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
-        soft: -1 
+        soft: -1
         hard: -1
       nofile:
-        soft: 65536 
+        soft: 65536
         hard: 65536
     healthcheck:
-        test: ["CMD", "curl", "-k","-f", "https://admin:admin@localhost:9200"]
-        interval: 30s
-        timeout: 10s
-        retries: 5
+      test: ["CMD", "curl", "-k", "-f", "https://admin:admin@localhost:9200"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
     volumes:
-      - opensearch-data1:/usr/share/opensearch/data 
+      - opensearch-data1:/usr/share/opensearch/data
     ports:
-      - 9200:9200 
-      - 9600:9600 
+      - 9200:9200
+      - 9600:9600
   opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:latest 
+    image: opensearchproject/opensearch-dashboards:latest
     container_name: opensearch-dashboards
     ports:
-      - 5601:5601 
+      - 5601:5601
     expose:
-      - "5601" 
+      - "5601"
     environment:
-      OPENSEARCH_HOSTS: '["https://opensearch-node1:9200"]' 
+      OPENSEARCH_HOSTS: '["https://opensearch-node1:9200"]'
 
   # logstash:
   #   build: ./logstash
@@ -213,18 +212,20 @@ services:
         condition: service_healthy
 
   monstache:
-    image: rwynn/monstache  
+    image: rwynn/monstache
     working_dir: /monstache
-    command: -f ./config.toml        
+    command: -f ./config.toml
     volumes:
       - ./monstache:/monstache/
     ports:
-      - "8123:8080" 
+      - "8123:8080"
     depends_on:
       init_opensearch:
         condition: service_completed_successfully
     restart: always
 
+  maildev:
+    image: maildev/maildev
 volumes:
   sonarqube_data:
   sonarqube_extensions:

@@ -9,12 +9,13 @@ import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import { AuthProvider } from "react-oidc-context";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
-import { store } from "./store";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import oidcConfig from "./services/oidcConfig";
-import { BrowserRouter as Router } from "react-router-dom";
+import { store } from "./store";
+import ScrollToTop from "./components/UtilityComponents/Scroll/ScrollToTop";
 
 export const KeycloakContext = createContext(null);
 
@@ -24,6 +25,7 @@ root.render(
     <Provider store={store}>
       <AuthProvider {...oidcConfig}>
         <Router>
+          <ScrollToTop />
           <App />
         </Router>
       </AuthProvider>
