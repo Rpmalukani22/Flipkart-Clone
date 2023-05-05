@@ -224,8 +224,6 @@ services:
         condition: service_completed_successfully
     restart: always
 
-  maildev:
-    image: maildev/maildev
 volumes:
   sonarqube_data:
   sonarqube_extensions:

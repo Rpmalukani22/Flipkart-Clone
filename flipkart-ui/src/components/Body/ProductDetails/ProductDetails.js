@@ -95,6 +95,7 @@ export default function ProductDetails() {
         <Box style={{ position: "sticky", top: 56, left: 0, width: "100%" }}>
           <Container sx={{ mt: 2 }}>
             <CarouselWrapper
+            wrapperStyle={{maxHeight:450}}
               carouselSettings={{
                 autoPlay: {},
                 modules: [],

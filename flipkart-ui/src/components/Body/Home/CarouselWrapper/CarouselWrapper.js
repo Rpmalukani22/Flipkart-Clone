@@ -46,7 +46,7 @@ export default function CarouselWrapper(props) {
     : defaultSettings;
 
   return (
-    <div className={styles["carousel-wrapper"]}>
+    <div style={props.wrapperStyle} className={styles["carousel-wrapper"]}>
       <button
         id={styles["carousel-arrow-left"]}
         className={`${styles["carousel-arrow"]}`}
