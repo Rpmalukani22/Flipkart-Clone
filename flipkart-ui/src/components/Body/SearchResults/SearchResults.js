@@ -56,6 +56,14 @@ export default function SearchResults() {
     setFilterAttr({ "brand.keyword": {} });
     setSortAttr("Relevance");
   }, [location.state.searchText]);
+
+  useEffect(() => {
+    setPage({
+      size: 10,
+      number: 1,
+    });
+  }, [filterAttr, sortAttr]);
+
   useEffect(() => {
     for (let key of Object.keys(filterAttr)) {
       setFilterState((prev) => {
@@ -75,6 +83,7 @@ export default function SearchResults() {
       });
     }
   }, [filterAttr]);
+
   useEffect(() => {
     axios
       .post(
@@ -111,6 +120,9 @@ export default function SearchResults() {
         console.log("failed to fetch search results...", e);
       });
   }, [location.state.searchText, page, sortAttr, filterState]);
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [results]);
   const brands = useGetData(
     `https://localhost/api/product-management/products/search/unique/brand.keyword?query=${location.state.searchText}&fields=brand&fields=categories&indices=monstache_products`,
     [location.state.searchText]

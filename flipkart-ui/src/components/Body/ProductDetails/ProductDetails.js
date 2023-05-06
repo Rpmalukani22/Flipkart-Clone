@@ -142,7 +142,7 @@ export default function ProductDetails() {
             {categories &&
               categories?.map((categoryPathList) => {
                 return categoryPathList.map((category, index) => {
-                  if (index !== categoryPathList.length - 1) {
+                  if (index !== categoryPathList?.length - 1) {
                     return (
                       <Link
                         key={category}
@@ -168,7 +168,7 @@ export default function ProductDetails() {
           </Breadcrumbs>
           <Typography variant="h6" sx={{ fontSize: "1rem", color: "#878787" }}>
             {product?.brand.replace(
-              categories ? categories[0][categories[0].length - 1] : "",
+              categories ? categories[0]?.[categories[0]?.length - 1] : "",
               ""
             )}
           </Typography>
