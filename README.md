@@ -6,6 +6,12 @@ This project is a clone of the popular e-commerce website Flipkart, built using 
 
 ## Preview
 
+<div align="left">
+      <a href="https://www.youtube.com/watch?v=Si_MIjqSMpk">
+         <img src="https://i3.ytimg.com/vi/Si_MIjqSMpk/maxresdefault.jpg" style="width:100%;">
+      </a>
+</div>
+
 ![Flipkart Home](preview/Flipkart%20Clone-1.gif)
 
 ## Tech Stack
@@ -58,6 +64,18 @@ To execute this project, you'll need to do the following:
 git clone https://github.com/Rpmalukani22/Flipkart-Clone.git
 cd Flipkart-Clone
 docker-compose up -d
+```
+
+## Minimal execution with
+
+```
+docker-compose up -d --build --scale sonarqube=0 --scale s3manager=0 --scale mongo-express=0 --scale opensearch-dashboards=0
+```
+
+## Execute all services
+
+```
+docker-compose up -d --build
 ```
 
 ## Features
