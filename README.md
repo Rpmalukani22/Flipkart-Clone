@@ -12,9 +12,11 @@ This project is a clone of the popular e-commerce website Flipkart, built using 
       </a>
 </div> -->
 
-[![Demo Video](https://markdown-videos.deta.dev/youtube/Si_MIjqSMpk)](https://youtu.be/Si_MIjqSMpk)
+<!-- [![Demo Video](https://markdown-videos.deta.dev/youtube/Si_MIjqSMpk)](https://youtu.be/Si_MIjqSMpk) -->
 
 <!-- ![Flipkart Home](preview/Flipkart%20Clone-1.gif) -->
+
+[![Flipkart Clone Demo](https://yt-embed.herokuapp.com/embed?v=Si_MIjqSMpk)](https://www.youtube.com/watch?v=Si_MIjqSMpk "Flipkart Clone Demo")
 
 ## Tech Stack
 
