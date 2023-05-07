@@ -6,17 +6,25 @@ This project is a clone of the popular e-commerce website Flipkart, built using 
 
 ## Preview
 
-<!-- <div align="left">
-      <a href="https://www.youtube.com/watch?v=Si_MIjqSMpk">
-         <img src="https://i3.ytimg.com/vi/Si_MIjqSMpk/maxresdefault.jpg" style="width:100%;">
-      </a>
-</div> -->
+<div style="position: relative; display: inline-block;">
+   <a href="https://www.youtube.com/watch?v=Si_MIjqSMpk">
+      <div style="position: relative;">
+         <img src="https://i3.ytimg.com/vi/Si_MIjqSMpk/maxresdefault.jpg" alt="Video Thumbnail" style="width: 100%; display: block;">
+         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); opacity: 0; transition: opacity 0.3s ease;"></div>
+         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.7); width:100%; height:100%;text-align:center;display:flex;align-items:center;justify-content:center">
+            <span style="color: #fff; font-size: 24px;">Click Here To Play</i></span>
+         </div>
+      </div>
+   </a>
+</div>
+
+
+
 
 <!-- [![Demo Video](https://markdown-videos.deta.dev/youtube/Si_MIjqSMpk)](https://youtu.be/Si_MIjqSMpk) -->
 
 <!-- ![Flipkart Home](preview/Flipkart%20Clone-1.gif) -->
 
-[![Flipkart Clone Demo](https://yt-embed.herokuapp.com/embed?v=Si_MIjqSMpk)](https://www.youtube.com/watch?v=Si_MIjqSMpk "Flipkart Clone Demo")
 
 ## Tech Stack
 
