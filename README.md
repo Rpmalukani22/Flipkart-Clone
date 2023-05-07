@@ -76,7 +76,7 @@ To execute this project, you'll need to do the following:
 ```
 git clone https://github.com/Rpmalukani22/Flipkart-Clone.git
 cd Flipkart-Clone
-docker-compose up -d
+<!-- docker-compose up -d -->
 ```
 
 ## Minimal execution with
