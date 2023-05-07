@@ -18,9 +18,7 @@ This project is a clone of the popular e-commerce website Flipkart, built using 
    </a>
 </div> -->
 
-[![Flipkart Clone Demo]          // Title
-(https://i3.ytimg.com/vi/Si_MIjqSMpk/maxresdefault.jpg)] // Thumbnail
-(https://www.youtube.com/watch?v=Si_MIjqSMpk "Flipkart Clone Demo")    // Video Link
+[![Flipkart Clone Demo](https://i3.ytimg.com/vi/Si_MIjqSMpk/maxresdefault.jpg)](https://www.youtube.com/watch?v=Si_MIjqSMpk "Flipkart Clone Demo")
 
 
 
