@@ -62,10 +62,10 @@ docker-compose up -d
 
 ## Features
 
-- [x] <b>Flipkart Product Scraping</b>: Scrape Flipkart product data using Selenium, BeautifulSoup, and Python. 
+- [x] <b>Flipkart Product Scraping</b>: Scrape Flipkart product data using Selenium, BeautifulSoup, and Python.
 - [x] <b>Browse through the Product Catalog comprised of 10,000+ products</b>, including categories, subcategories, and individual products, for easy exploration.
 - [x] <b>Search for products</b> using a robust search functionality to find specific items quickly.
-- [x] <b>Improved User Experience with Debouncing</b>: Implement debouncing techniques in search and input fields to enhance performance and responsiveness. Debouncing helps reduce unnecessary API calls by intelligently consolidating and delaying user input, resulting in smoother interactions and improved user experience.
+- [x] <b>Improved User Experience with Debouncing</b>: Implement debouncing techniques in search input fields to enhance performance and responsiveness.
 - [x] Experience <b>search auto-complete</b> suggestions, which dynamically provide recommendations as you type.
 - [x] <b>Dynamic Filters</b>: Filter products by various attributes such as brand, Flipkart Assured and more, to narrow down your search results.
 - [x] <b>Sort Search results</b> by price, ratings and search relevance.
