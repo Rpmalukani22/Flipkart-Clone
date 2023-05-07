@@ -4,7 +4,7 @@ This project is a clone of the popular e-commerce website Flipkart, built using 
 
 <!-- > **Note:** This project is currently in development. -->
 
-## Preview
+## [Demo Video](https://www.youtube.com/watch?v=Si_MIjqSMpk)
 
 <!-- <div style="position: relative; display: inline-flex;">
    <a href="https://www.youtube.com/watch?v=Si_MIjqSMpk">
