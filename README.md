@@ -6,7 +6,7 @@ This project is a clone of the popular e-commerce website Flipkart, built using 
 
 ## Preview
 
-<div style="position: relative; display: inline-block;">
+<!-- <div style="position: relative; display: inline-flex;">
    <a href="https://www.youtube.com/watch?v=Si_MIjqSMpk">
       <div style="position: relative;">
          <img src="https://i3.ytimg.com/vi/Si_MIjqSMpk/maxresdefault.jpg" alt="Video Thumbnail" style="width: 100%; display: block;">
@@ -16,8 +16,11 @@ This project is a clone of the popular e-commerce website Flipkart, built using 
          </div>
       </div>
    </a>
-</div>
+</div> -->
 
+[![Flipkart Clone Demo]          // Title
+(https://i3.ytimg.com/vi/Si_MIjqSMpk/maxresdefault.jpg)] // Thumbnail
+(https://www.youtube.com/watch?v=Si_MIjqSMpk "Flipkart Clone Demo")    // Video Link
 
 
 
