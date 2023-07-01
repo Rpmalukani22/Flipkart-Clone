@@ -35,6 +35,7 @@ This project was built using following technologies:
 - Redux Toolkit
 - Material-UI
 - Spring Boot
+- HATEOAS
 - Keycloak
 - Python
 - Selenium
